@@ -12,11 +12,12 @@ public class Functions : MonoBehaviour
     private Animator animGlobal;
     public float playerSpeed;
     private GameObject Player;
-    private float fixedYPosition = -0.5f;
+    private float fixedYPosition = 0f;
     public GameObject[] Rooms;
     public GameObject LastRoom;
     public GameObject CurrentRoom;
     public GameObject NextRoom;
+    public bool isMoving;
     Door currentDoor;
 
     public void ActivateRA()
@@ -37,7 +38,7 @@ public class Functions : MonoBehaviour
 
     public void ToList()
     {
-        StartCoroutine(GoToList());
+        if(!isMoving){StartCoroutine(GoToList());}
     }
 
     public void ToDoor()
@@ -45,7 +46,7 @@ public class Functions : MonoBehaviour
         CheckForDoor();
         if (DoorObj != null)
         {
-            StartCoroutine(GoToDoor());
+            if(!isMoving){StartCoroutine(GoToDoor());}
         }
     }
 
@@ -74,6 +75,7 @@ public class Functions : MonoBehaviour
 
     public IEnumerator GoToList()
     {
+        isMoving = true;
         playerSpeed = 5f;
         if (anim != null) { anim.SetBool("isRunning", true); }
         Vector3 targetPosition = list.transform.position;
@@ -84,11 +86,12 @@ public class Functions : MonoBehaviour
             Vector3 newPosition = Vector2.MoveTowards(Player.transform.position, new Vector3(targetPosition.x, Player.transform.position.y, Player.transform.position.z), playerSpeed * Time.deltaTime);
             newPosition.y = fixedYPosition; Player.transform.position = newPosition; yield return null;
         }
-        playerSpeed = 0f; if (anim != null) { anim.SetBool("isRunning", false); anim.SetBool("isWatching", true); }
+        playerSpeed = 0f; if (anim != null) { anim.SetBool("isRunning", false); anim.SetBool("isWatching", true); }isMoving = false;
     }
 
     public IEnumerator GoToDoor()
     {
+        isMoving = true;
         playerSpeed = 5f;
         currentDoor.Pressed = false;
         if (anim != null) { anim.SetBool("isWatching", false); anim.SetBool("isRunning", true); }
@@ -103,6 +106,6 @@ public class Functions : MonoBehaviour
         playerSpeed = 0f; if (anim != null) { anim.SetBool("isRunning", false); }
         if (currentDoor.ComingBack) { LastRoom.SetActive(true); CurrentRoom.SetActive(false); }
         else { NextRoom.SetActive(true); CurrentRoom.SetActive(false); }
-        currentDoor.Pressed = false; currentDoor = null; DoorObj = null;
+        currentDoor.Pressed = false; currentDoor = null; DoorObj = null; isMoving = false;
     }
 }
