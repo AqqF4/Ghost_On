@@ -9,6 +9,8 @@ TagManager:
   - Door
   - Room2
   - Ladder
+  - Elevator
+  - ButtonElev
   layers:
   - Default
   - TransparentFX

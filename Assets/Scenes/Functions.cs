@@ -4,199 +4,87 @@ using UnityEngine;
 public class Functions : MonoBehaviour
 {
     private GameObject list;
-    private GameObject Rubbish;
-    private GameObject Exit;
     private GameObject DoorObj;
-    private GameObject LadderObj;
-    private Ladder currentLadder;
-    private Animator anim;
-    private Animator Room2Anim;
-    private GameObject[] pressedDoors;
+    private Animator anim; GameObject elevator;
     private Animator animGlobal;
     public float playerSpeed;
     private GameObject Player;
-    private float fixedYPosition = 0f;
-    public GameObject[] Rooms;
+    private float fixedYPosition = -0.5f;
     public GameObject LastRoom;
     public GameObject CurrentRoom;
     public GameObject NextRoom;
-    private GameObject UnderLadder;
-    public int Etazh = 1;
+    ButtonElevator Button;
+    GameObject[] pressedButtons;
+    public GameObject EtazhCurrent;
+    public GameObject EtazhTop;
+    public GameObject EtazhBottom;
+    GameObject[] pressedDoors;
+    Door currentDoor;
     public bool isMoving;
-    private bool isDown;
-    private GameObject[] Ladders;
-    private Door currentDoor;
 
-    public void ActivateRA()
-    {
-        if (anim != null) { anim.SetBool("isRunning", true); }
-    }
+    public void ActivateRA() { if (anim != null) { anim.SetBool("isRunning", true); } }
 
-    public void DisactivateRA()
-    {
-        if (anim != null) { anim.SetBool("isRunning", false); }
-    }
+    public void DisactivateRA() { if (anim != null) { anim.SetBool("isRunning", false); } }
 
-    public void ToList()
-    {
-        if (!isMoving) { StartCoroutine(GoToList()); }
-    }
+    public void ToList() { if (!isMoving) { StartCoroutine(GoToList()); } }
 
-    public void Ladder()
-    {
-        CheckForLadder();
-        if (LadderObj != null)
-        {
-            if (!isMoving)
-            {
-                if (currentLadder.isHigh) { StartCoroutine(UpToLadder()); }
-                else { StartCoroutine(DownToLadder()); }
-            }
-        }
-    }
+    public void ToDoor() { CheckForDoor(); if (DoorObj != null) { if (!isMoving) { StartCoroutine(GoToDoor()); } } }
 
-    public void ToDoor()
-    {
-        CheckForDoor();
-        if (DoorObj != null)
-        {
-            if (!isMoving) { StartCoroutine(GoToDoor()); }
-        }
-    }
+    public void ToElevator() { CheckForElevator(); if(Button != null) { StartCoroutine(GoToElevator()); } }
 
-    void CheckForDoor()
-    {
-        foreach (GameObject pressedDoor in pressedDoors)
-        {
-            currentDoor = pressedDoor.GetComponent<Door>();
-            if (currentDoor.Pressed)
-            {
-                DoorObj = pressedDoor;
-                break;
-            }
-        }
-    }
+    void CheckForDoor() { foreach (GameObject pressedDoor in pressedDoors) { currentDoor = pressedDoor.GetComponent<Door>(); if (currentDoor.Pressed) { DoorObj = pressedDoor; break; } } }
 
-    void CheckForLadder()
-    {
-        foreach (GameObject pressedLadder in Ladders)
-        {
-            currentLadder = pressedLadder.GetComponent<Ladder>();
-            if (currentLadder.Pressed)
-            {
-                LadderObj = pressedLadder;
-                break;
-            }
-        }
-    }
+    void CheckForElevator() { foreach (GameObject pressedButton in pressedButtons) { Button = pressedButton.GetComponent<ButtonElevator>(); if (!Button.Pressed) { break; } } }
 
-    void Start()
-    {
+    void Start() {
         Player = GameObject.FindGameObjectWithTag("Player");
-        UnderLadder = GameObject.FindGameObjectWithTag("LadderR");
         if (Player != null) { anim = Player.GetComponent<Animator>(); }
-        list = GameObject.FindGameObjectWithTag("List");
-        Room2Anim = GameObject.FindGameObjectWithTag("Room2").GetComponent<Animator>();
+        list = GameObject.FindGameObjectWithTag("List"); elevator = GameObject.FindGameObjectWithTag("Elevator");
         GameObject globalObject = GameObject.FindGameObjectWithTag("Global");
         pressedDoors = GameObject.FindGameObjectsWithTag("Door");
-        Ladders = GameObject.FindGameObjectsWithTag("LadderR");
+        pressedButtons = GameObject.FindGameObjectsWithTag("ButtonElev");
         if (globalObject != null) { animGlobal = globalObject.GetComponent<Animator>(); }
     }
 
-    public IEnumerator GoToList()
-    {
-        isMoving = true;
-        playerSpeed = 5f;
+    public IEnumerator GoToList() {
+        isMoving = true; playerSpeed = 5f;
         if (anim != null) { anim.SetBool("isRunning", true); }
         Vector3 targetPosition = list.transform.position;
-        while (Mathf.Abs(Player.transform.position.x - targetPosition.x) > 0.1f)
-        {
+        while (Mathf.Abs(Player.transform.position.x - targetPosition.x) > 0.1f) {
             if (Player.transform.position.x < targetPosition.x) { Player.transform.localScale = new Vector3(Mathf.Abs(Player.transform.localScale.x), Player.transform.localScale.y, Player.transform.localScale.z); }
             else if (Player.transform.position.x > targetPosition.x) { Player.transform.localScale = new Vector3(-Mathf.Abs(Player.transform.localScale.x), Player.transform.localScale.y, Player.transform.localScale.z); }
             Vector3 newPosition = Vector2.MoveTowards(Player.transform.position, new Vector3(targetPosition.x, Player.transform.position.y, Player.transform.position.z), playerSpeed * Time.deltaTime);
-            newPosition.y = fixedYPosition;
-            Player.transform.position = newPosition;
-            yield return null;
+            newPosition.y = fixedYPosition; Player.transform.position = newPosition; yield return null;
         }
-        playerSpeed = 0f;
-        if (anim != null) { anim.SetBool("isRunning", false); anim.SetBool("isWatching", true); }
-        isMoving = false;
+        playerSpeed = 0f; if (anim != null) { anim.SetBool("isRunning", false); anim.SetBool("isWatching", true); } isMoving = false;
     }
 
-    public IEnumerator GoToDoor()
-    {
-        isMoving = true;
-        playerSpeed = 5f;
-        currentDoor.Pressed = false;
+    public IEnumerator GoToElevator() {
+        isMoving = true; playerSpeed = 5f;
+        if (anim != null) { anim.SetBool("isRunning", true); }
+        Vector3 targetPosition = elevator.transform.position;
+        while (Mathf.Abs(Player.transform.position.x - targetPosition.x) > 0.1f) {
+            if (Player.transform.position.x < targetPosition.x) { Player.transform.localScale = new Vector3(Mathf.Abs(Player.transform.localScale.x), Player.transform.localScale.y, Player.transform.localScale.z); }
+            else if (Player.transform.position.x > targetPosition.x) { Player.transform.localScale = new Vector3(-Mathf.Abs(Player.transform.localScale.x), Player.transform.localScale.y, Player.transform.localScale.z); }
+            Vector3 newPosition = Vector2.MoveTowards(Player.transform.position, new Vector3(targetPosition.x, Player.transform.position.y, Player.transform.position.z), playerSpeed * Time.deltaTime);
+            newPosition.y = fixedYPosition; Player.transform.position = newPosition; yield return null;
+        }
+        playerSpeed = 0f; isMoving = false; if(!Button.Up){EtazhTop.SetActive(true); EtazhCurrent.SetActive(false);}else{EtazhBottom.SetActive(true); EtazhCurrent.SetActive(false);}
+    }
+
+    public IEnumerator GoToDoor() {
+        isMoving = true; playerSpeed = 5f; currentDoor.Pressed = false;
         if (anim != null) { anim.SetBool("isWatching", false); anim.SetBool("isRunning", true); }
         Vector3 targetPosition = DoorObj.transform.position;
-        while (Mathf.Abs(Player.transform.position.x - targetPosition.x) > 0.1f)
-        {
+        while (Mathf.Abs(Player.transform.position.x - targetPosition.x) > 0.1f) {
             if (Player.transform.position.x < targetPosition.x) { Player.transform.localScale = new Vector3(Mathf.Abs(Player.transform.localScale.x), Player.transform.localScale.y, Player.transform.localScale.z); }
             else if (Player.transform.position.x > targetPosition.x) { Player.transform.localScale = new Vector3(-Mathf.Abs(Player.transform.localScale.x), Player.transform.localScale.y, Player.transform.localScale.z); }
             Vector3 newPosition = Vector2.MoveTowards(Player.transform.position, new Vector3(targetPosition.x, Player.transform.position.y, Player.transform.position.z), playerSpeed * Time.deltaTime);
-            newPosition.y = fixedYPosition;
-            Player.transform.position = newPosition;
-            yield return null;
+            newPosition.y = fixedYPosition; Player.transform.position = newPosition; yield return null;
         }
-        playerSpeed = 0f;
-        if (anim != null) { anim.SetBool("isRunning", false); }
+        playerSpeed = 0f; if (anim != null) { anim.SetBool("isRunning", false); }
         if (currentDoor.ComingBack) { LastRoom.SetActive(true); CurrentRoom.SetActive(false); }
         else { NextRoom.SetActive(true); CurrentRoom.SetActive(false); }
-        currentDoor.Pressed = false;
-        currentDoor = null;
-        DoorObj = null;
-        isMoving = false;
-    }
-
-    public IEnumerator UpToLadder()
-    {
-        isMoving = true;
-        playerSpeed = 5f;
-        currentLadder.Pressed = false;
-        if (anim != null) { anim.SetBool("isWatching", false); anim.SetBool("isRunning", true); }
-        Vector3 targetPosition = UnderLadder.transform.position;
-        while (Mathf.Abs(Player.transform.position.x - targetPosition.x) > 0.1f)
-        {
-            if (Player.transform.position.x < targetPosition.x) { Player.transform.localScale = new Vector3(Mathf.Abs(Player.transform.localScale.x), Player.transform.localScale.y, Player.transform.localScale.z); }
-            else if (Player.transform.position.x > targetPosition.x) { Player.transform.localScale = new Vector3(-Mathf.Abs(Player.transform.localScale.x), Player.transform.localScale.y, Player.transform.localScale.z); }
-            Vector3 newPosition = Vector2.MoveTowards(Player.transform.position, new Vector3(targetPosition.x, Player.transform.position.y, Player.transform.position.z), playerSpeed * Time.deltaTime);
-            newPosition.y = fixedYPosition;
-            Player.transform.position = newPosition;
-            yield return null;
-        }
-        playerSpeed = 0f;
-        if (anim != null) { anim.SetBool("isRunning", false); }
-        Etazh += 1;
-        Room2Anim.SetTrigger("Higher");
-        isMoving = false;
-    }
-
-    public IEnumerator DownToLadder()
-    {
-        isMoving = true;
-        playerSpeed = 5f;
-        currentLadder.Pressed = false;
-        if (anim != null) { anim.SetBool("isWatching", false); anim.SetBool("isRunning", true); }
-        Vector3 targetPosition = UnderLadder.transform.position;
-        while (Mathf.Abs(Player.transform.position.x - targetPosition.x) > 0.1f)
-        {
-            if (Player.transform.position.x < targetPosition.x) { Player.transform.localScale = new Vector3(Mathf.Abs(Player.transform.localScale.x), Player.transform.localScale.y, Player.transform.localScale.z); }
-            else if (Player.transform.position.x > targetPosition.x) { Player.transform.localScale = new Vector3(-Mathf.Abs(Player.transform.localScale.x), Player.transform.localScale.y, Player.transform.localScale.z); }
-            Vector3 newPosition = Vector2.MoveTowards(Player.transform.position, new Vector3(targetPosition.x, Player.transform.position.y, Player.transform.position.z), playerSpeed * Time.deltaTime);
-            newPosition.y = fixedYPosition;
-            Player.transform.position = newPosition;
-            yield return null;
-        }
-        playerSpeed = 0f;
-        if (anim != null) { anim.SetBool("isRunning", false); }
-        Etazh -= 1;
-        Room2Anim.SetTrigger("Lower");
-        isMoving = false;
-    }
-
-    public void NotMove()
-    {
-        isMoving = false;
+        currentDoor = null; DoorObj = null; isMoving = false;
     }
 }
