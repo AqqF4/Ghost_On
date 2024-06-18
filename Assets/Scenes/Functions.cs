@@ -9,14 +9,16 @@ public class Functions : MonoBehaviour
     private Animator animGlobal;
     public float playerSpeed;
     private GameObject Player;
-    private float fixedYPosition = -0.5f;
+    public float fixedYPosition = -0.5f;
     public GameObject LastRoom;
     public GameObject CurrentRoom;
     public GameObject NextRoom;
     ButtonElevator Button;
     GameObject[] pressedButtons;
+    public bool On1stFloor;
     public GameObject EtazhCurrent;
     public GameObject EtazhTop;
+    public GameObject Clone;
     public GameObject EtazhBottom;
     GameObject[] pressedDoors;
     Door currentDoor;
@@ -68,6 +70,12 @@ public class Functions : MonoBehaviour
             else if (Player.transform.position.x > targetPosition.x) { Player.transform.localScale = new Vector3(-Mathf.Abs(Player.transform.localScale.x), Player.transform.localScale.y, Player.transform.localScale.z); }
             Vector3 newPosition = Vector2.MoveTowards(Player.transform.position, new Vector3(targetPosition.x, Player.transform.position.y, Player.transform.position.z), playerSpeed * Time.deltaTime);
             newPosition.y = fixedYPosition; Player.transform.position = newPosition; yield return null;
+        }
+        if(On1stFloor)
+        {
+            Clone.SetActive(true);
+            Player.SetActive(false);
+            Player = Clone;
         }
         playerSpeed = 0f; isMoving = false; if(!Button.Up){EtazhTop.SetActive(true); EtazhCurrent.SetActive(false);}else{EtazhBottom.SetActive(true); EtazhCurrent.SetActive(false);}
     }
