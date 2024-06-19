@@ -25,6 +25,7 @@ public class Functions : MonoBehaviour
     public bool isMoving;
     bool canDelete = false;
     GameObject trashObj;
+    GameObject tubeObj;
     SpriteRenderer Menu;
 
     public void ActivateRA() { if (anim != null) { anim.SetBool("isRunning", true); } }
@@ -50,6 +51,12 @@ public class Functions : MonoBehaviour
     {
         Menu = GameObject.FindGameObjectWithTag("TrashM").GetComponent<SpriteRenderer>();
         StartCoroutine(GoToTrash());
+    }
+
+    public void ToTube()
+    {
+        Menu = GameObject.FindGameObjectWithTag("TubeM").GetComponent<SpriteRenderer>();
+        StartCoroutine(GoToTube());
     }
 
     public void ToElevator()
@@ -93,7 +100,7 @@ public class Functions : MonoBehaviour
         if (Player != null) { anim = Player.GetComponent<Animator>(); }
         list = GameObject.FindGameObjectWithTag("List"); 
         ElevatorObj = GameObject.FindGameObjectWithTag("Elevator");
-        trashObj = GameObject.FindGameObjectWithTag("Trash");
+        trashObj = GameObject.FindGameObjectWithTag("Trash"); tubeObj = GameObject.FindGameObjectWithTag("Tube");
         GameObject globalObject = GameObject.FindGameObjectWithTag("Global");
         pressedDoors = GameObject.FindGameObjectsWithTag("Door");
         pressedElevators = GameObject.FindGameObjectsWithTag("ButtonElev"); // Находим все объекты с тегом "ButtonElev"
@@ -136,6 +143,35 @@ public class Functions : MonoBehaviour
         if (anim != null) { anim.SetBool("isWatching", false); anim.SetBool("isRunning", true); }
         DisActMenu();
         Vector3 targetPosition = trashObj.transform.position;
+        while (Mathf.Abs(Player.transform.position.x - targetPosition.x) > 0.1f)
+        {
+            if (Player.transform.position.x < targetPosition.x)
+            {
+                Player.transform.localScale = new Vector3(Mathf.Abs(Player.transform.localScale.x), Player.transform.localScale.y, Player.transform.localScale.z);
+            }
+            else if (Player.transform.position.x > targetPosition.x)
+            {
+                Player.transform.localScale = new Vector3(-Mathf.Abs(Player.transform.localScale.x), Player.transform.localScale.y, Player.transform.localScale.z);
+            }
+            Vector3 newPosition = Vector2.MoveTowards(Player.transform.position, new Vector3(targetPosition.x, Player.transform.position.y, Player.transform.position.z), playerSpeed * Time.deltaTime);
+            newPosition.y = fixedYPosition;
+            Player.transform.position = newPosition;
+            yield return null;
+        }
+        playerSpeed = 0f;
+        if (anim != null) { anim.SetBool("isRunning", false); anim.SetBool("isWatching", true); }
+        isMoving = false;
+        ActivateMenu(Menu);
+        canDelete = true;
+    }
+
+    public IEnumerator GoToTube()
+    {
+        isMoving = true;
+        playerSpeed = 5f;
+        if (anim != null) { anim.SetBool("isWatching", false); anim.SetBool("isRunning", true); }
+        DisActMenu();
+        Vector3 targetPosition = tubeObj.transform.position;
         while (Mathf.Abs(Player.transform.position.x - targetPosition.x) > 0.1f)
         {
             if (Player.transform.position.x < targetPosition.x)
