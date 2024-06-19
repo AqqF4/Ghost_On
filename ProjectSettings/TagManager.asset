@@ -11,6 +11,9 @@ TagManager:
   - Ladder
   - Elevator
   - ButtonElev
+  - ListM
+  - TrashM
+  - Trash
   layers:
   - Default
   - TransparentFX

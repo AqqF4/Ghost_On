@@ -12,9 +12,5 @@ public class ButtonElevator : MonoBehaviour
         Pressed = true;
     }
 
-    
-    void Update()
-    {
-        Pressed = false;
-    }
+   
 }
