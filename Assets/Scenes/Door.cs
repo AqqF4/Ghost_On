@@ -7,7 +7,7 @@ public class Door : MonoBehaviour
     public bool Pressed;
     public bool ComingBack;
     
-    void Unnpress()
+    public void Unnpress()
     {
        Pressed = false; 
     }

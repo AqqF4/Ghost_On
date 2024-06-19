@@ -87,11 +87,12 @@ public class Functions : MonoBehaviour
         }
     }
 
-    void Awake()
+    void Start()
     {
         Player = GameObject.FindGameObjectWithTag("Player");
         if (Player != null) { anim = Player.GetComponent<Animator>(); }
-        list = GameObject.FindGameObjectWithTag("List"); ElevatorObj = GameObject.FindGameObjectWithTag("Elevator");
+        list = GameObject.FindGameObjectWithTag("List"); 
+        ElevatorObj = GameObject.FindGameObjectWithTag("Elevator");
         trashObj = GameObject.FindGameObjectWithTag("Trash");
         GameObject globalObject = GameObject.FindGameObjectWithTag("Global");
         pressedDoors = GameObject.FindGameObjectsWithTag("Door");
@@ -103,7 +104,7 @@ public class Functions : MonoBehaviour
     {
         isMoving = true;
         playerSpeed = 5f;
-        if (anim != null) {anim.SetBool("isWatching", false); anim.SetBool("isRunning", true); }
+        if (anim != null) { anim.SetBool("isWatching", false); anim.SetBool("isRunning", true); }
         DisActMenu();
         Vector3 targetPosition = list.transform.position;
         while (Mathf.Abs(Player.transform.position.x - targetPosition.x) > 0.1f)
@@ -124,7 +125,7 @@ public class Functions : MonoBehaviour
         playerSpeed = 0f;
         if (anim != null) { anim.SetBool("isRunning", false); anim.SetBool("isWatching", true); }
         isMoving = false;
-        Menu.color = new Color(1, 1, 1, 1);
+        ActivateMenu(Menu);
         canDelete = true;
     }
 
@@ -132,7 +133,7 @@ public class Functions : MonoBehaviour
     {
         isMoving = true;
         playerSpeed = 5f;
-        if (anim != null) {anim.SetBool("isWatching", false); anim.SetBool("isRunning", true); }
+        if (anim != null) { anim.SetBool("isWatching", false); anim.SetBool("isRunning", true); }
         DisActMenu();
         Vector3 targetPosition = trashObj.transform.position;
         while (Mathf.Abs(Player.transform.position.x - targetPosition.x) > 0.1f)
@@ -153,7 +154,7 @@ public class Functions : MonoBehaviour
         playerSpeed = 0f;
         if (anim != null) { anim.SetBool("isRunning", false); anim.SetBool("isWatching", true); }
         isMoving = false;
-        Menu.color = new Color(1, 1, 1, 1);
+        ActivateMenu(Menu);
         canDelete = true;
     }
 
@@ -162,6 +163,24 @@ public class Functions : MonoBehaviour
         if (Menu != null)
         {
             Menu.color = new Color(0, 0, 0, 0);
+            SetChildrenActive(Menu.gameObject, false);
+        }
+    }
+
+    void ActivateMenu(SpriteRenderer menu)
+    {
+        if (menu != null)
+        {
+            menu.color = new Color(1, 1, 1, 1);
+            SetChildrenActive(menu.gameObject, true);
+        }
+    }
+
+    void SetChildrenActive(GameObject parent, bool isActive)
+    {
+        foreach (Transform child in parent.transform)
+        {
+            child.gameObject.SetActive(isActive);
         }
     }
 
@@ -169,7 +188,6 @@ public class Functions : MonoBehaviour
     {
         isMoving = true;
         playerSpeed = 5f;
-        currentDoor.Pressed = false;
         DisActMenu();
         if (anim != null) { anim.SetBool("isWatching", false); anim.SetBool("isRunning", true); }
         Vector3 targetPosition = DoorObj.transform.position;
@@ -200,6 +218,7 @@ public class Functions : MonoBehaviour
             NextRoom.SetActive(true);
             CurrentRoom.SetActive(false);
         }
+        currentDoor.Unnpress();
         currentDoor = null;
         DoorObj = null;
         isMoving = false;
@@ -241,7 +260,6 @@ public class Functions : MonoBehaviour
             CurrentEtazh.SetActive(false);
         }
         currentElevator = null;
-        //ElevatorObj = null;
         isMoving = false;
     }
 
