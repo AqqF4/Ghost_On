@@ -9,6 +9,8 @@ public class Functions : MonoBehaviour
     private GameObject ElevatorObj; // Объект лифта
     private Animator anim;
     private Animator animGlobal;
+    private Animator animGlobalUp;
+    private Animator animGlobalDown;
     public float playerSpeed;
     private GameObject Player;
     public float fixedYPosition = -0.5f;
@@ -30,6 +32,7 @@ public class Functions : MonoBehaviour
     GameObject gunObj;
     GameObject tubeObj;
     bool WantDestroy;
+    GameObject PlusObject;
     SpriteRenderer Menu;
 
     public void ActivateRA() { if (anim != null) { anim.SetBool("isRunning", true); } }
@@ -71,6 +74,7 @@ public class Functions : MonoBehaviour
 
     public void ToTable()
     {
+        PlusObject = GameObject.FindGameObjectWithTag("Marker");
         WantDestroy = true;
         Menu = GameObject.FindGameObjectWithTag("TableM").GetComponent<SpriteRenderer>();
         if (!isMoving) { StartCoroutine(GoToTable());}
@@ -124,10 +128,12 @@ public class Functions : MonoBehaviour
         list = GameObject.FindGameObjectWithTag("List"); exitObj = GameObject.FindGameObjectWithTag("Exit");
         ElevatorObj = GameObject.FindGameObjectWithTag("Elevator");
         trashObj = GameObject.FindGameObjectWithTag("Trash"); tubeObj = GameObject.FindGameObjectWithTag("Tube"); tableObj = GameObject.FindGameObjectWithTag("Table");
-        GameObject globalObject = GameObject.FindGameObjectWithTag("Global");
+
         pressedDoors = GameObject.FindGameObjectsWithTag("Door");
         pressedElevators = GameObject.FindGameObjectsWithTag("ButtonElev"); // Находим все объекты с тегом "ButtonElev"
-        if (globalObject != null) { animGlobal = globalObject.GetComponent<Animator>(); }
+        if (CurrentEtazh != null) { animGlobal = CurrentEtazh.GetComponent<Animator>(); }
+        if (TopEtazh != null) { animGlobalUp = TopEtazh.GetComponent<Animator>(); }
+        if (BottomEtazh != null) { animGlobalDown = BottomEtazh.GetComponent<Animator>(); }
     }
 
     public IEnumerator GoToList()
@@ -397,13 +403,21 @@ public class Functions : MonoBehaviour
         if (anim != null) { anim.SetBool("isRunning", false); }
         if (currentElevator.Up)
         {
-            TopEtazh.SetActive(true);
-            CurrentEtazh.SetActive(false);
+            if(animGlobal != null)
+            {
+                animGlobal.SetTrigger("Start");
+                yield return new WaitForSeconds(1);
+                GoTop();
+            }
         }
         else
         {
-            BottomEtazh.SetActive(true);
-            CurrentEtazh.SetActive(false);
+            if(animGlobal != null)
+            {
+                animGlobal.SetTrigger("Start");
+                yield return new WaitForSeconds(1);
+                GoBottom();
+            }
         }
         currentElevator = null;
         isMoving = false;
@@ -416,9 +430,23 @@ public class Functions : MonoBehaviour
             if (Input.anyKey)
             {
                 if(!WantDestroy){DisActMenu();}
-                else{Destroy(Menu.gameObject); Menu = null; WantDestroy = false;}
+                else{if(PlusObject != null){Destroy(PlusObject);} Destroy(Menu.gameObject); Menu = null; WantDestroy = false;}
                 canDelete = false;
             }
         }
+    }
+
+    public void GoTop()
+    {
+        TopEtazh.SetActive(true);
+        animGlobalUp.SetTrigger("End");
+        CurrentEtazh.SetActive(false);
+    }
+
+    public void GoBottom()
+    {
+        BottomEtazh.SetActive(true);
+        animGlobalDown.SetTrigger("End");
+        CurrentEtazh.SetActive(false);
     }
 }

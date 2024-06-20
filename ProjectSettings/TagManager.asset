@@ -23,6 +23,7 @@ TagManager:
   - GunM
   - Gun
   - Flash
+  - Marker
   layers:
   - Default
   - TransparentFX
