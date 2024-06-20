@@ -25,8 +25,11 @@ public class Functions : MonoBehaviour
     public bool isMoving;
     bool canDelete = false;
     GameObject trashObj;
+    GameObject tableObj;
     GameObject exitObj;
+    GameObject gunObj;
     GameObject tubeObj;
+    bool WantDestroy;
     SpriteRenderer Menu;
 
     public void ActivateRA() { if (anim != null) { anim.SetBool("isRunning", true); } }
@@ -57,13 +60,26 @@ public class Functions : MonoBehaviour
     public void ToTrash()
     {
         Menu = GameObject.FindGameObjectWithTag("TrashM").GetComponent<SpriteRenderer>();
-        StartCoroutine(GoToTrash());
+        if (!isMoving) { StartCoroutine(GoToTrash());}
     }
 
     public void ToTube()
     {
         Menu = GameObject.FindGameObjectWithTag("TubeM").GetComponent<SpriteRenderer>();
-        StartCoroutine(GoToTube());
+        if (!isMoving) { StartCoroutine(GoToTube());}
+    }
+
+    public void ToTable()
+    {
+        WantDestroy = true;
+        Menu = GameObject.FindGameObjectWithTag("TableM").GetComponent<SpriteRenderer>();
+        if (!isMoving) { StartCoroutine(GoToTable());}
+    }
+
+    public void ToGun()
+    {
+        Menu = GameObject.FindGameObjectWithTag("GunM").GetComponent<SpriteRenderer>();
+        if (!isMoving) { StartCoroutine(GoToGun());}
     }
 
     public void ToElevator()
@@ -104,10 +120,10 @@ public class Functions : MonoBehaviour
     void Start()
     {
         Player = GameObject.FindGameObjectWithTag("Player");
-        if (Player != null) { anim = Player.GetComponent<Animator>(); }
+        if (Player != null) { anim = Player.GetComponent<Animator>(); } gunObj = GameObject.FindGameObjectWithTag("Gun");
         list = GameObject.FindGameObjectWithTag("List"); exitObj = GameObject.FindGameObjectWithTag("Exit");
         ElevatorObj = GameObject.FindGameObjectWithTag("Elevator");
-        trashObj = GameObject.FindGameObjectWithTag("Trash"); tubeObj = GameObject.FindGameObjectWithTag("Tube");
+        trashObj = GameObject.FindGameObjectWithTag("Trash"); tubeObj = GameObject.FindGameObjectWithTag("Tube"); tableObj = GameObject.FindGameObjectWithTag("Table");
         GameObject globalObject = GameObject.FindGameObjectWithTag("Global");
         pressedDoors = GameObject.FindGameObjectsWithTag("Door");
         pressedElevators = GameObject.FindGameObjectsWithTag("ButtonElev"); // Находим все объекты с тегом "ButtonElev"
@@ -116,7 +132,7 @@ public class Functions : MonoBehaviour
 
     public IEnumerator GoToList()
     {
-        isMoving = true;
+        isMoving = true; canDelete = false;
         playerSpeed = 5f;
         if (anim != null) { anim.SetBool("isWatching", false); anim.SetBool("isRunning", true); }
         DisActMenu();
@@ -143,9 +159,67 @@ public class Functions : MonoBehaviour
         canDelete = true;
     }
 
+    public IEnumerator GoToGun()
+    {
+        isMoving = true; canDelete = false;
+        playerSpeed = 5f;
+        if (anim != null) { anim.SetBool("isWatching", false); anim.SetBool("isRunning", true); }
+        DisActMenu();
+        Vector3 targetPosition = gunObj.transform.position;
+        while (Mathf.Abs(Player.transform.position.x - targetPosition.x) > 0.1f)
+        {
+            if (Player.transform.position.x < targetPosition.x)
+            {
+                Player.transform.localScale = new Vector3(Mathf.Abs(Player.transform.localScale.x), Player.transform.localScale.y, Player.transform.localScale.z);
+            }
+            else if (Player.transform.position.x > targetPosition.x)
+            {
+                Player.transform.localScale = new Vector3(-Mathf.Abs(Player.transform.localScale.x), Player.transform.localScale.y, Player.transform.localScale.z);
+            }
+            Vector3 newPosition = Vector2.MoveTowards(Player.transform.position, new Vector3(targetPosition.x, Player.transform.position.y, Player.transform.position.z), playerSpeed * Time.deltaTime);
+            newPosition.y = fixedYPosition;
+            Player.transform.position = newPosition;
+            yield return null;
+        }
+        playerSpeed = 0f;
+        if (anim != null) { anim.SetBool("isRunning", false); anim.SetBool("isWatching", true); }
+        isMoving = false;
+        ActivateMenu(Menu);
+        canDelete = true;
+    }
+
+    public IEnumerator GoToTable()
+    {
+        isMoving = true; canDelete = false;
+        playerSpeed = 5f;
+        if (anim != null) { anim.SetBool("isWatching", false); anim.SetBool("isRunning", true); }
+        DisActMenu();
+        Vector3 targetPosition = tableObj.transform.position;
+        while (Mathf.Abs(Player.transform.position.x - targetPosition.x) > 0.1f)
+        {
+            if (Player.transform.position.x < targetPosition.x)
+            {
+                Player.transform.localScale = new Vector3(Mathf.Abs(Player.transform.localScale.x), Player.transform.localScale.y, Player.transform.localScale.z);
+            }
+            else if (Player.transform.position.x > targetPosition.x)
+            {
+                Player.transform.localScale = new Vector3(-Mathf.Abs(Player.transform.localScale.x), Player.transform.localScale.y, Player.transform.localScale.z);
+            }
+            Vector3 newPosition = Vector2.MoveTowards(Player.transform.position, new Vector3(targetPosition.x, Player.transform.position.y, Player.transform.position.z), playerSpeed * Time.deltaTime);
+            newPosition.y = fixedYPosition;
+            Player.transform.position = newPosition;
+            yield return null;
+        }
+        playerSpeed = 0f;
+        if (anim != null) { anim.SetBool("isRunning", false); anim.SetBool("isWatching", true); }
+        isMoving = false;
+        ActivateMenu(Menu);
+        canDelete = true;
+    }
+
     public IEnumerator GoToExit()
     {
-        isMoving = true;
+        isMoving = true; canDelete = false;
         playerSpeed = 5f;
         if (anim != null) { anim.SetBool("isWatching", false); anim.SetBool("isRunning", true); }
         DisActMenu();
@@ -174,7 +248,7 @@ public class Functions : MonoBehaviour
 
     public IEnumerator GoToTrash()
     {
-        isMoving = true;
+        isMoving = true; canDelete = false;
         playerSpeed = 5f;
         if (anim != null) { anim.SetBool("isWatching", false); anim.SetBool("isRunning", true); }
         DisActMenu();
@@ -203,7 +277,7 @@ public class Functions : MonoBehaviour
 
     public IEnumerator GoToTube()
     {
-        isMoving = true;
+        isMoving = true; canDelete = false;
         playerSpeed = 5f;
         if (anim != null) { anim.SetBool("isWatching", false); anim.SetBool("isRunning", true); }
         DisActMenu();
@@ -258,7 +332,7 @@ public class Functions : MonoBehaviour
 
     public IEnumerator GoToDoor()
     {
-        isMoving = true;
+        isMoving = true; canDelete = false;
         playerSpeed = 5f;
         DisActMenu();
         if (anim != null) { anim.SetBool("isWatching", false); anim.SetBool("isRunning", true); }
@@ -298,7 +372,7 @@ public class Functions : MonoBehaviour
 
     public IEnumerator GoToElevator()
     {
-        isMoving = true;
+        isMoving = true; canDelete = false;
         playerSpeed = 5f;
         currentElevator.Pressed = false;
         DisActMenu(); 
@@ -341,7 +415,9 @@ public class Functions : MonoBehaviour
         {
             if (Input.anyKey)
             {
-                DisActMenu();
+                if(!WantDestroy){DisActMenu();}
+                else{Destroy(Menu.gameObject); Menu = null; WantDestroy = false;}
+                canDelete = false;
             }
         }
     }

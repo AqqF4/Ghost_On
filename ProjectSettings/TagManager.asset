@@ -18,6 +18,11 @@ TagManager:
   - Tube
   - Exit
   - ExitM
+  - TableM
+  - Table
+  - GunM
+  - Gun
+  - Flash
   layers:
   - Default
   - TransparentFX
