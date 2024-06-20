@@ -16,6 +16,8 @@ TagManager:
   - Trash
   - TubeM
   - Tube
+  - Exit
+  - ExitM
   layers:
   - Default
   - TransparentFX

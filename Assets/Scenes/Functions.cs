@@ -25,6 +25,7 @@ public class Functions : MonoBehaviour
     public bool isMoving;
     bool canDelete = false;
     GameObject trashObj;
+    GameObject exitObj;
     GameObject tubeObj;
     SpriteRenderer Menu;
 
@@ -36,6 +37,12 @@ public class Functions : MonoBehaviour
     {
         Menu = GameObject.FindGameObjectWithTag("ListM").GetComponent<SpriteRenderer>();
         if (!isMoving) { StartCoroutine(GoToList()); }
+    }
+
+    public void ToExit()
+    {
+        Menu = GameObject.FindGameObjectWithTag("ExitM").GetComponent<SpriteRenderer>();
+        if (!isMoving) { StartCoroutine(GoToExit()); }
     }
 
     public void ToDoor()
@@ -98,7 +105,7 @@ public class Functions : MonoBehaviour
     {
         Player = GameObject.FindGameObjectWithTag("Player");
         if (Player != null) { anim = Player.GetComponent<Animator>(); }
-        list = GameObject.FindGameObjectWithTag("List"); 
+        list = GameObject.FindGameObjectWithTag("List"); exitObj = GameObject.FindGameObjectWithTag("Exit");
         ElevatorObj = GameObject.FindGameObjectWithTag("Elevator");
         trashObj = GameObject.FindGameObjectWithTag("Trash"); tubeObj = GameObject.FindGameObjectWithTag("Tube");
         GameObject globalObject = GameObject.FindGameObjectWithTag("Global");
@@ -114,6 +121,35 @@ public class Functions : MonoBehaviour
         if (anim != null) { anim.SetBool("isWatching", false); anim.SetBool("isRunning", true); }
         DisActMenu();
         Vector3 targetPosition = list.transform.position;
+        while (Mathf.Abs(Player.transform.position.x - targetPosition.x) > 0.1f)
+        {
+            if (Player.transform.position.x < targetPosition.x)
+            {
+                Player.transform.localScale = new Vector3(Mathf.Abs(Player.transform.localScale.x), Player.transform.localScale.y, Player.transform.localScale.z);
+            }
+            else if (Player.transform.position.x > targetPosition.x)
+            {
+                Player.transform.localScale = new Vector3(-Mathf.Abs(Player.transform.localScale.x), Player.transform.localScale.y, Player.transform.localScale.z);
+            }
+            Vector3 newPosition = Vector2.MoveTowards(Player.transform.position, new Vector3(targetPosition.x, Player.transform.position.y, Player.transform.position.z), playerSpeed * Time.deltaTime);
+            newPosition.y = fixedYPosition;
+            Player.transform.position = newPosition;
+            yield return null;
+        }
+        playerSpeed = 0f;
+        if (anim != null) { anim.SetBool("isRunning", false); anim.SetBool("isWatching", true); }
+        isMoving = false;
+        ActivateMenu(Menu);
+        canDelete = true;
+    }
+
+    public IEnumerator GoToExit()
+    {
+        isMoving = true;
+        playerSpeed = 5f;
+        if (anim != null) { anim.SetBool("isWatching", false); anim.SetBool("isRunning", true); }
+        DisActMenu();
+        Vector3 targetPosition = exitObj.transform.position;
         while (Mathf.Abs(Player.transform.position.x - targetPosition.x) > 0.1f)
         {
             if (Player.transform.position.x < targetPosition.x)
