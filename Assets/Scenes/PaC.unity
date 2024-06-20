@@ -3957,6 +3957,7 @@ GameObject:
   - component: {fileID: 312465208}
   - component: {fileID: 312465206}
   - component: {fileID: 312465207}
+  - component: {fileID: 312465209}
   m_Layer: 0
   m_Name: Cam
   m_TagString: MainCamera
@@ -4038,6 +4039,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 886082058}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &312465209
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 312465205}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42cd8dcae69d178488f5efa28e7c7e78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shader: {fileID: 4800000, guid: 95703b29f49b899499233ea7308bb800, type: 3}
+  BlockCount: 512
 --- !u!1 &340999534
 GameObject:
   m_ObjectHideFlags: 0
@@ -7610,6 +7625,7 @@ GameObject:
   - component: {fileID: 758501347}
   - component: {fileID: 758501345}
   - component: {fileID: 758501346}
+  - component: {fileID: 758501348}
   m_Layer: 0
   m_Name: Cam
   m_TagString: MainCamera
@@ -7691,6 +7707,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2064202431}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &758501348
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 758501344}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42cd8dcae69d178488f5efa28e7c7e78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shader: {fileID: 4800000, guid: 95703b29f49b899499233ea7308bb800, type: 3}
+  BlockCount: 128
 --- !u!1 &759475018
 GameObject:
   m_ObjectHideFlags: 0
@@ -15305,6 +15335,7 @@ GameObject:
   - component: {fileID: 1956620444}
   - component: {fileID: 1956620442}
   - component: {fileID: 1956620443}
+  - component: {fileID: 1956620445}
   m_Layer: 0
   m_Name: Cam
   m_TagString: MainCamera
@@ -15386,6 +15417,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 185464834}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -180}
+--- !u!114 &1956620445
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1956620441}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42cd8dcae69d178488f5efa28e7c7e78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shader: {fileID: 4800000, guid: 95703b29f49b899499233ea7308bb800, type: 3}
+  BlockCount: 512
 --- !u!1 &1967137071
 GameObject:
   m_ObjectHideFlags: 0
