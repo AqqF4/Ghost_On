@@ -5,12 +5,16 @@ using UnityEngine.UI;
 public class Functions : MonoBehaviour
 {
     private GameObject list;
+    public GameObject PlayerLadder; GameObject LadderPlus;
     private GameObject DoorObj;
     private GameObject ElevatorObj; // Объект лифта
     private Animator anim;
     private Animator animGlobal;
     private Animator animGlobalUp;
     private Animator animGlobalDown;
+    public bool CanGround;
+    public GameObject FlashlightPref;
+    public Transform Flashpoint;
     public float playerSpeed;
     private GameObject Player;
     public float fixedYPosition = -0.5f;
@@ -27,11 +31,14 @@ public class Functions : MonoBehaviour
     public bool isMoving;
     bool canDelete = false;
     GameObject trashObj;
+    GameObject GravObj;
     GameObject tableObj;
     GameObject exitObj;
     GameObject gunObj;
+    GameObject ladderObj;
     GameObject tubeObj;
-    bool WantDestroy;
+    bool WantDestroy; Transform LadderPoint;
+    PlayerTook PP;
     GameObject PlusObject;
     SpriteRenderer Menu;
 
@@ -66,6 +73,12 @@ public class Functions : MonoBehaviour
         if (!isMoving) { StartCoroutine(GoToTrash());}
     }
 
+    public void ToNite()
+    {
+        Menu = null; GravObj = GameObject.FindGameObjectWithTag("GravityCh"); 
+        if (!isMoving) { StartCoroutine(GoToGravity());}
+    }
+
     public void ToTube()
     {
         Menu = GameObject.FindGameObjectWithTag("TubeM").GetComponent<SpriteRenderer>();
@@ -78,6 +91,13 @@ public class Functions : MonoBehaviour
         WantDestroy = true;
         Menu = GameObject.FindGameObjectWithTag("TableM").GetComponent<SpriteRenderer>();
         if (!isMoving) { StartCoroutine(GoToTable());}
+    }
+
+    public void ToLadder()
+    {
+        WantDestroy = true;
+        Menu = GameObject.FindGameObjectWithTag("LadderM").GetComponent<SpriteRenderer>();
+        if (!isMoving) { StartCoroutine(GoToLadder());}
     }
 
     public void ToGun()
@@ -123,11 +143,13 @@ public class Functions : MonoBehaviour
 
     void Start()
     {
-        Player = GameObject.FindGameObjectWithTag("Player");
+        Player = GameObject.FindGameObjectWithTag("Player"); LadderPoint = GameObject.FindGameObjectWithTag("PointL").GetComponent<Transform>();  
         if (Player != null) { anim = Player.GetComponent<Animator>(); } gunObj = GameObject.FindGameObjectWithTag("Gun");
-        list = GameObject.FindGameObjectWithTag("List"); exitObj = GameObject.FindGameObjectWithTag("Exit");
-        ElevatorObj = GameObject.FindGameObjectWithTag("Elevator");
+        list = GameObject.FindGameObjectWithTag("List"); exitObj = GameObject.FindGameObjectWithTag("Exit");  GravObj = GameObject.FindGameObjectWithTag("GravityCh"); 
+        ElevatorObj = GameObject.FindGameObjectWithTag("Elevator"); ladderObj = GameObject.FindGameObjectWithTag("Ladder");
         trashObj = GameObject.FindGameObjectWithTag("Trash"); tubeObj = GameObject.FindGameObjectWithTag("Tube"); tableObj = GameObject.FindGameObjectWithTag("Table");
+        PP = Player.GetComponent<PlayerTook>(); GameObject UnGrounded = GameObject.FindGameObjectWithTag("UnGrounded");
+        if(CurrentRoom.CompareTag("CanChange")){Menu = GameObject.FindGameObjectWithTag("Grounded").GetComponent<SpriteRenderer>(); UnGrounded.SetActive(false); ActivateMenu(Menu);}
 
         pressedDoors = GameObject.FindGameObjectsWithTag("Door");
         pressedElevators = GameObject.FindGameObjectsWithTag("ButtonElev"); // Находим все объекты с тегом "ButtonElev"
@@ -165,6 +187,36 @@ public class Functions : MonoBehaviour
         canDelete = true;
     }
 
+    public IEnumerator GoToGravity()
+    {
+        isMoving = true; canDelete = false;
+        playerSpeed = 5f;
+        if (anim != null) { anim.SetBool("isWatching", false); anim.SetBool("isRunning", true); }
+        DisActMenu();
+        Vector3 targetPosition = GravObj.transform.position;
+        while (Mathf.Abs(Player.transform.position.x - targetPosition.x) > 0.1f)
+        {
+            if (Player.transform.position.x < targetPosition.x)
+            {
+                Player.transform.localScale = new Vector3(Mathf.Abs(Player.transform.localScale.x), Player.transform.localScale.y, Player.transform.localScale.z);
+            }
+            else if (Player.transform.position.x > targetPosition.x)
+            {
+                Player.transform.localScale = new Vector3(-Mathf.Abs(Player.transform.localScale.x), Player.transform.localScale.y, Player.transform.localScale.z);
+            }
+            Vector3 newPosition = Vector2.MoveTowards(Player.transform.position, new Vector3(targetPosition.x, Player.transform.position.y, Player.transform.position.z), playerSpeed * Time.deltaTime);
+            newPosition.y = fixedYPosition;
+            Player.transform.position = newPosition;
+            yield return null;
+        }
+        playerSpeed = 0f;
+        if (anim != null) { anim.SetBool("isRunning", false); anim.SetBool("isWatching", true); }
+        if(PP.hasFlashlight){Instantiate(FlashlightPref, Flashpoint.position, Quaternion.identity); }
+        PP.turnedLight = true;
+        isMoving = false;
+        CanGround = true;
+    }
+
     public IEnumerator GoToGun()
     {
         isMoving = true; canDelete = false;
@@ -188,9 +240,11 @@ public class Functions : MonoBehaviour
             yield return null;
         }
         playerSpeed = 0f;
-        if (anim != null) { anim.SetBool("isRunning", false); anim.SetBool("isWatching", true); }
+        if (anim != null) {if(!PP.hasLadder){ anim.SetBool("isRunning", false); anim.SetBool("isWatching", true); }else{ anim.SetBool("isRunning", false); anim.SetBool("isWatching", false); anim.SetBool("isClimbing", true);}}
         isMoving = false;
+        if(PP.hasLadder){LadderPlus = Instantiate(PlayerLadder, LadderPoint.position, Quaternion.identity); anim.SetBool("isClumbing", true); PP.hasGun = true; WantDestroy = true;}
         ActivateMenu(Menu);
+        
         canDelete = true;
     }
 
@@ -220,7 +274,40 @@ public class Functions : MonoBehaviour
         if (anim != null) { anim.SetBool("isRunning", false); anim.SetBool("isWatching", true); }
         isMoving = false;
         ActivateMenu(Menu);
+        PP.hasMarker = true;
         canDelete = true;
+    }
+
+    public IEnumerator GoToLadder()
+    {
+        isMoving = true; canDelete = false;
+        playerSpeed = 5f;
+        if (anim != null) { anim.SetBool("isWatching", false); anim.SetBool("isRunning", true); }
+        DisActMenu();
+        Vector3 targetPosition = ladderObj.transform.position;
+        while (Mathf.Abs(Player.transform.position.x - targetPosition.x) > 0.1f)
+        {
+            if (Player.transform.position.x < targetPosition.x)
+            {
+                Player.transform.localScale = new Vector3(Mathf.Abs(Player.transform.localScale.x), Player.transform.localScale.y, Player.transform.localScale.z);
+            }
+            else if (Player.transform.position.x > targetPosition.x)
+            {
+                Player.transform.localScale = new Vector3(-Mathf.Abs(Player.transform.localScale.x), Player.transform.localScale.y, Player.transform.localScale.z);
+            }
+            Vector3 newPosition = Vector2.MoveTowards(Player.transform.position, new Vector3(targetPosition.x, Player.transform.position.y, Player.transform.position.z), playerSpeed * Time.deltaTime);
+            newPosition.y = fixedYPosition;
+            Player.transform.position = newPosition;
+            yield return null;
+        }
+        playerSpeed = 0f;
+        if (anim != null) { anim.SetBool("isRunning", false); anim.SetBool("isWatching", true); }
+        isMoving = false; PlusObject = GameObject.FindGameObjectWithTag("Ladder");
+        WantDestroy = true; canDelete = true; PP.hasLadder = true;
+        ActivateMenu(Menu);
+
+        
+        canDelete = true; PP.hasLadder = true;
     }
 
     public IEnumerator GoToExit()
@@ -247,7 +334,8 @@ public class Functions : MonoBehaviour
         }
         playerSpeed = 0f;
         if (anim != null) { anim.SetBool("isRunning", false); anim.SetBool("isWatching", true); }
-        isMoving = false;
+        isMoving = false; 
+        if(PP.hasPassword){Menu = GameObject.FindGameObjectWithTag("ExitPassM").GetComponent<SpriteRenderer>();}
         ActivateMenu(Menu);
         canDelete = true;
     }
@@ -277,6 +365,7 @@ public class Functions : MonoBehaviour
         playerSpeed = 0f;
         if (anim != null) { anim.SetBool("isRunning", false); anim.SetBool("isWatching", true); }
         isMoving = false;
+        if(PP.hasBucket){Menu = GameObject.FindGameObjectWithTag("EndingFall").GetComponent<SpriteRenderer>();}
         ActivateMenu(Menu);
         canDelete = true;
     }
@@ -304,8 +393,9 @@ public class Functions : MonoBehaviour
             yield return null;
         }
         playerSpeed = 0f;
-        if (anim != null) { anim.SetBool("isRunning", false); anim.SetBool("isWatching", true); }
+        if (anim != null) {if(!PP.hasLadder){ anim.SetBool("isRunning", false); anim.SetBool("isWatching", true); }else{ anim.SetBool("isRunning", false); anim.SetBool("isWatching", false); anim.SetBool("isClimbing", true);}}
         isMoving = false;
+        if(PP.hasLadder){anim.SetBool("isClimbing", true); Menu = GameObject.FindGameObjectWithTag("TubeNothingM").GetComponent<SpriteRenderer>(); WantDestroy = true;}
         ActivateMenu(Menu);
         canDelete = true;
     }
@@ -375,13 +465,13 @@ public class Functions : MonoBehaviour
         DoorObj = null;
         isMoving = false;
     }
-
+    
     public IEnumerator GoToElevator()
     {
         isMoving = true; canDelete = false;
         playerSpeed = 5f;
         currentElevator.Pressed = false;
-        DisActMenu(); 
+        DisActMenu();
         if (anim != null) { anim.SetBool("isWatching", false); anim.SetBool("isRunning", true); }
         Vector3 targetPosition = ElevatorObj.transform.position;
         while (Mathf.Abs(Player.transform.position.x - targetPosition.x) > 0.1f)
@@ -424,14 +514,40 @@ public class Functions : MonoBehaviour
     }
 
     void Update()
-    {
+    {   
+        if(anim == null)
+        {
+            anim = Player.GetComponent<Animator>();
+        }
+
+        if(PP == null)
+        {
+            PP = Player.GetComponent<PlayerTook>();
+        }
+
+        if(DoorObj == null)
+        {
+            pressedDoors = GameObject.FindGameObjectsWithTag("Door");
+
+        }
+
+        if(GravObj == null)
+        {
+            GravObj = GameObject.FindGameObjectWithTag("GravityCh"); 
+        }
+
+        if(ladderObj == null)
+        {
+            ladderObj = GameObject.FindGameObjectWithTag("Ladder");
+        }
+
         if (canDelete)
         {
             if (Input.anyKey)
             {
                 if(!WantDestroy){DisActMenu();}
-                else{if(PlusObject != null){Destroy(PlusObject);} Destroy(Menu.gameObject); Menu = null; WantDestroy = false;}
-                canDelete = false;
+                else{Destroy(Menu.gameObject); Menu = null; WantDestroy = false; if(PlusObject != null){Destroy(PlusObject);}}
+                canDelete = false; anim.SetBool("isClimbing", false); Destroy(LadderPlus);
             }
         }
     }

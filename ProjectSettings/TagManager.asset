@@ -24,6 +24,26 @@ TagManager:
   - Gun
   - Flash
   - Marker
+  - LadderM
+  - Cola
+  - ColaM
+  - FlashM
+  - Bucket
+  - BucketM
+  - Luck
+  - LuckM
+  - ExitPassM
+  - LuckPassM
+  - FlashUseM
+  - Key
+  - Grounded
+  - UnGrouded
+  - PointL
+  - CanChange
+  - UnGrounded
+  - Grounded
+  - TubeNothingM
+  - GravityCh
   layers:
   - Default
   - TransparentFX
