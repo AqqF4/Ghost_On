@@ -111,7 +111,11 @@ public class Functions : MonoBehaviour
         CheckForElevator();
         if (ElevatorObj != null)
         {
-            if (!isMoving) { StartCoroutine(GoToElevator()); }
+            if (!isMoving && currentElevator != null) { StartCoroutine(GoToElevator()); }
+        }
+        else
+        {
+            CheckForElevator();
         }
     }
 
@@ -124,6 +128,7 @@ public class Functions : MonoBehaviour
             {
                 DoorObj = pressedDoor;
                 break;
+                ToElevator();
             }
         }
     }
@@ -136,7 +141,12 @@ public class Functions : MonoBehaviour
             if (currentElevator.Pressed)
             {
                 ElevatorObj = ElevatorObj;
+                
                 break;
+            }
+            else
+            {
+                currentElevator = null;
             }
         }
     }
@@ -241,7 +251,7 @@ public class Functions : MonoBehaviour
         }
         playerSpeed = 0f;
         if (anim != null) {if(!PP.hasLadder){ anim.SetBool("isRunning", false); anim.SetBool("isWatching", true); }else{ anim.SetBool("isRunning", false); anim.SetBool("isWatching", false); anim.SetBool("isClimbing", true);}}
-        isMoving = false;
+        isMoving = false; LadderPlus = null;
         if(PP.hasLadder){LadderPlus = Instantiate(PlayerLadder, LadderPoint.position, Quaternion.identity); anim.SetBool("isClumbing", true); PP.hasGun = true; WantDestroy = true;}
         ActivateMenu(Menu);
         
@@ -392,10 +402,10 @@ public class Functions : MonoBehaviour
             Player.transform.position = newPosition;
             yield return null;
         }
-        playerSpeed = 0f;
+        playerSpeed = 0f;  LadderPlus = null;
         if (anim != null) {if(!PP.hasLadder){ anim.SetBool("isRunning", false); anim.SetBool("isWatching", true); }else{ anim.SetBool("isRunning", false); anim.SetBool("isWatching", false); anim.SetBool("isClimbing", true);}}
         isMoving = false;
-        if(PP.hasLadder){anim.SetBool("isClimbing", true); Menu = GameObject.FindGameObjectWithTag("TubeNothingM").GetComponent<SpriteRenderer>(); WantDestroy = true;}
+        if(PP.hasLadder){LadderPlus = Instantiate(PlayerLadder, LadderPoint.position, Quaternion.identity); anim.SetBool("isClimbing", true); Menu = GameObject.FindGameObjectWithTag("TubeNothingM").GetComponent<SpriteRenderer>(); WantDestroy = true;}
         ActivateMenu(Menu);
         canDelete = true;
     }
@@ -498,6 +508,7 @@ public class Functions : MonoBehaviour
                 animGlobal.SetTrigger("Start");
                 yield return new WaitForSeconds(1);
                 GoTop();
+                currentElevator = null;
             }
         }
         else
@@ -507,6 +518,7 @@ public class Functions : MonoBehaviour
                 animGlobal.SetTrigger("Start");
                 yield return new WaitForSeconds(1);
                 GoBottom();
+                currentElevator = null;
             }
         }
         currentElevator = null;
@@ -514,7 +526,34 @@ public class Functions : MonoBehaviour
     }
 
     void Update()
-    {   
+    {    
+        if(pressedElevators == null)
+        {
+            pressedElevators = GameObject.FindGameObjectsWithTag("ButtonElev");
+        }
+
+        if(currentElevator == null)
+        {
+            CheckForElevator();
+        }
+
+        if(ElevatorObj == null)
+        {
+            ElevatorObj = GameObject.FindGameObjectWithTag("Elevator");
+        }
+
+        if(animGlobal == null)
+        {
+            if (CurrentEtazh != null) { animGlobal = CurrentEtazh.GetComponent<Animator>(); }
+        }
+
+        if(animGlobalUp == null)
+        {if (TopEtazh != null) { animGlobalUp = TopEtazh.GetComponent<Animator>(); }}
+
+
+        if(animGlobalDown == null)
+        {if (BottomEtazh != null) { animGlobalDown = BottomEtazh.GetComponent<Animator>(); }}
+
         if(anim == null)
         {
             anim = Player.GetComponent<Animator>();
