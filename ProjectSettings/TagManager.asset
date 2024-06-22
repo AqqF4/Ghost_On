@@ -50,6 +50,12 @@ TagManager:
   - KeyM
   - NiteM
   - NiteMFlashlight
+  - VentEnd
+  - HeartEnd
+  - BearEnd
+  - ElektroEnd
+  - FallEnd
+  - Chair
   layers:
   - Default
   - TransparentFX
