@@ -47,6 +47,9 @@ TagManager:
   - Paint
   - PaintM
   - PaintedM
+  - KeyM
+  - NiteM
+  - NiteMFlashlight
   layers:
   - Default
   - TransparentFX

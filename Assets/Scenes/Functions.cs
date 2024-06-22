@@ -16,7 +16,7 @@ public class Functions : MonoBehaviour
     public GameObject FlashlightPref;
     public Transform Flashpoint;
     public float playerSpeed;
-    private GameObject Player;
+    private GameObject Player; bool Pulled;
     public float fixedYPosition = -0.5f;
     public GameObject LastRoom;
     public GameObject CurrentRoom;
@@ -31,10 +31,11 @@ public class Functions : MonoBehaviour
     public bool isMoving;
     bool canDelete = false;
     GameObject trashObj;
-    GameObject GravObj;
+    GameObject GravObj; public GameObject CanTube;
+    public GameObject CantTube;
     GameObject tableObj;
     GameObject exitObj;
-    GameObject gunObj;
+    GameObject gunObj; GameObject keyObj;
     GameObject luckObj;
     GameObject paintObj;
     GameObject ladderObj;
@@ -94,6 +95,12 @@ public class Functions : MonoBehaviour
     {
         Menu = GameObject.FindGameObjectWithTag("TubeM").GetComponent<SpriteRenderer>();
         if (!isMoving) { StartCoroutine(GoToTube());}
+    }
+
+    public void ToKey()
+    {
+        Menu = GameObject.FindGameObjectWithTag("KeyM").GetComponent<SpriteRenderer>();
+        if (!isMoving) { StartCoroutine(GoToKey());}
     }
 
     public void ToTable()
@@ -175,7 +182,7 @@ public class Functions : MonoBehaviour
         Player = GameObject.FindGameObjectWithTag("Player"); LadderPoint = GameObject.FindGameObjectWithTag("PointL").GetComponent<Transform>();  
         if (Player != null) { anim = Player.GetComponent<Animator>(); } gunObj = GameObject.FindGameObjectWithTag("Gun"); paintObj = GameObject.FindGameObjectWithTag("Paint");
         list = GameObject.FindGameObjectWithTag("List"); exitObj = GameObject.FindGameObjectWithTag("Exit");  GravObj = GameObject.FindGameObjectWithTag("GravityCh"); 
-        ElevatorObj = GameObject.FindGameObjectWithTag("Elevator"); ladderObj = GameObject.FindGameObjectWithTag("Ladder");
+        ElevatorObj = GameObject.FindGameObjectWithTag("Elevator"); ladderObj = GameObject.FindGameObjectWithTag("Ladder"); keyObj = GameObject.FindGameObjectWithTag("Key"); 
         trashObj = GameObject.FindGameObjectWithTag("Trash"); tubeObj = GameObject.FindGameObjectWithTag("Tube"); tableObj = GameObject.FindGameObjectWithTag("Table");
         PP = Player.GetComponent<PlayerTook>(); GameObject UnGrounded = GameObject.FindGameObjectWithTag("UnGrounded"); luckObj = GameObject.FindGameObjectWithTag("Luck");
         if(CurrentRoom.CompareTag("CanChange")){Menu = GameObject.FindGameObjectWithTag("Grounded").GetComponent<SpriteRenderer>(); UnGrounded.SetActive(false); ActivateMenu(Menu);}
@@ -238,11 +245,16 @@ public class Functions : MonoBehaviour
             Player.transform.position = newPosition;
             yield return null;
         }
-        playerSpeed = 0f;
+        playerSpeed = 0f; Menu = GameObject.FindGameObjectWithTag("NiteM").GetComponent<SpriteRenderer>();
         if (anim != null) { anim.SetBool("isRunning", false); anim.SetBool("isWatching", true); }
-        if(PP.hasFlashlight){Instantiate(FlashlightPref, Flashpoint.position, Quaternion.identity); }
-        PP.turnedLight = true;
+
+        if(!Pulled && !PP.hasFlashlight){Menu = GameObject.FindGameObjectWithTag("NiteM").GetComponent<SpriteRenderer>(); Pulled = true; ActivateMenu(Menu);}else
+        if(!Pulled && PP.hasFlashlight){Menu = GameObject.FindGameObjectWithTag("NiteM").GetComponent<SpriteRenderer>(); Pulled = true; ActivateMenu(Menu);}else
+        if(Pulled && PP.hasFlashlight){PP.turnedLight = true; Instantiate(FlashlightPref, Flashpoint.position, Quaternion.identity); PP.hasFlashlight = false; Menu = GameObject.FindGameObjectWithTag("NiteMFlashlight").GetComponent<SpriteRenderer>(); WantDestroy = true; ActivateMenu(Menu);}
+        
+        
         isMoving = false;
+        canDelete = true;
         CanGround = true;
     }
 
@@ -304,6 +316,36 @@ public class Functions : MonoBehaviour
         isMoving = false;
         ActivateMenu(Menu);
         PP.hasMarker = true;
+        canDelete = true;
+    }
+
+    public IEnumerator GoToKey()
+    {
+        isMoving = true; canDelete = false;
+        playerSpeed = 5f;
+        if (anim != null) { anim.SetBool("isWatching", false); anim.SetBool("isRunning", true); }
+        DisActMenu();
+        Vector3 targetPosition = keyObj.transform.position;
+        while (Mathf.Abs(Player.transform.position.x - targetPosition.x) > 0.1f)
+        {
+            if (Player.transform.position.x < targetPosition.x)
+            {
+                Player.transform.localScale = new Vector3(Mathf.Abs(Player.transform.localScale.x), Player.transform.localScale.y, Player.transform.localScale.z);
+            }
+            else if (Player.transform.position.x > targetPosition.x)
+            {
+                Player.transform.localScale = new Vector3(-Mathf.Abs(Player.transform.localScale.x), Player.transform.localScale.y, Player.transform.localScale.z);
+            }
+            Vector3 newPosition = Vector2.MoveTowards(Player.transform.position, new Vector3(targetPosition.x, Player.transform.position.y, Player.transform.position.z), playerSpeed * Time.deltaTime);
+            newPosition.y = fixedYPosition;
+            Player.transform.position = newPosition;
+            yield return null;
+        }
+        playerSpeed = 0f;
+        if (anim != null) { anim.SetBool("isRunning", false); anim.SetBool("isWatching", true); }
+        isMoving = false; PlusObject = GameObject.FindGameObjectWithTag("Key"); WantDestroy = true;
+        ActivateMenu(Menu);
+        PP.hasKey = true;
         canDelete = true;
     }
 
@@ -487,7 +529,7 @@ public class Functions : MonoBehaviour
         playerSpeed = 0f;  LadderPlus = null;
         if (anim != null) {if(!PP.hasLadder){ anim.SetBool("isRunning", false); anim.SetBool("isWatching", true); }else{ anim.SetBool("isRunning", false); anim.SetBool("isWatching", false); anim.SetBool("isClimbing", true);}}
         isMoving = false;
-        if(PP.hasLadder){LadderPlus = Instantiate(PlayerLadder, LadderPoint.position, Quaternion.identity); anim.SetBool("isClimbing", true); Menu = GameObject.FindGameObjectWithTag("TubeNothingM").GetComponent<SpriteRenderer>(); WantDestroy = true;}
+        if(PP.hasLadder){LadderPlus = Instantiate(PlayerLadder, LadderPoint.position, Quaternion.identity); anim.SetBool("isClimbing", true); Menu = GameObject.FindGameObjectWithTag("TubeNothingM").GetComponent<SpriteRenderer>(); WantDestroy = true; CanTube.SetActive(false); CantTube.SetActive(true);}
         ActivateMenu(Menu);
         canDelete = true;
     }
@@ -610,7 +652,7 @@ public class Functions : MonoBehaviour
     void Update()
     {
 
-        if(luckObj == null){luckObj = GameObject.FindGameObjectWithTag("Luck");}
+        if(luckObj == null){luckObj = GameObject.FindGameObjectWithTag("Luck");} if(keyObj == null){keyObj = GameObject.FindGameObjectWithTag("Key"); }
         if(paintObj == null){paintObj = GameObject.FindGameObjectWithTag("Paint");}
 
         if(pressedElevators == null)
