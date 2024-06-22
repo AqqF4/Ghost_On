@@ -44,6 +44,9 @@ TagManager:
   - Grounded
   - TubeNothingM
   - GravityCh
+  - Paint
+  - PaintM
+  - PaintedM
   layers:
   - Default
   - TransparentFX

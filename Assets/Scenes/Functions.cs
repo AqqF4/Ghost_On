@@ -35,10 +35,14 @@ public class Functions : MonoBehaviour
     GameObject tableObj;
     GameObject exitObj;
     GameObject gunObj;
+    GameObject paintObj;
     GameObject ladderObj;
     GameObject tubeObj;
+    public GameObject Painted;
     bool WantDestroy; Transform LadderPoint;
     PlayerTook PP;
+    public GameObject PaintedR;
+    public GameObject UnPaintedR;
     GameObject PlusObject;
     SpriteRenderer Menu;
 
@@ -91,6 +95,14 @@ public class Functions : MonoBehaviour
         WantDestroy = true;
         Menu = GameObject.FindGameObjectWithTag("TableM").GetComponent<SpriteRenderer>();
         if (!isMoving) { StartCoroutine(GoToTable());}
+    }
+
+    public void ToPainting()
+    {
+        PlusObject = GameObject.FindGameObjectWithTag("Paint");
+        WantDestroy = true;
+        Menu = GameObject.FindGameObjectWithTag("PaintM").GetComponent<SpriteRenderer>();
+        if (!isMoving) { StartCoroutine(GoToPaint());}
     }
 
     public void ToLadder()
@@ -154,7 +166,7 @@ public class Functions : MonoBehaviour
     void Start()
     {
         Player = GameObject.FindGameObjectWithTag("Player"); LadderPoint = GameObject.FindGameObjectWithTag("PointL").GetComponent<Transform>();  
-        if (Player != null) { anim = Player.GetComponent<Animator>(); } gunObj = GameObject.FindGameObjectWithTag("Gun");
+        if (Player != null) { anim = Player.GetComponent<Animator>(); } gunObj = GameObject.FindGameObjectWithTag("Gun"); paintObj = GameObject.FindGameObjectWithTag("Paint");
         list = GameObject.FindGameObjectWithTag("List"); exitObj = GameObject.FindGameObjectWithTag("Exit");  GravObj = GameObject.FindGameObjectWithTag("GravityCh"); 
         ElevatorObj = GameObject.FindGameObjectWithTag("Elevator"); ladderObj = GameObject.FindGameObjectWithTag("Ladder");
         trashObj = GameObject.FindGameObjectWithTag("Trash"); tubeObj = GameObject.FindGameObjectWithTag("Tube"); tableObj = GameObject.FindGameObjectWithTag("Table");
@@ -285,6 +297,38 @@ public class Functions : MonoBehaviour
         isMoving = false;
         ActivateMenu(Menu);
         PP.hasMarker = true;
+        canDelete = true;
+    }
+
+    public IEnumerator GoToPaint()
+    {
+        isMoving = true; canDelete = false;
+        playerSpeed = 5f;
+        if (anim != null) { anim.SetBool("isWatching", false); anim.SetBool("isRunning", true); }
+        DisActMenu();
+        Vector3 targetPosition = paintObj.transform.position;
+        while (Mathf.Abs(Player.transform.position.x - targetPosition.x) > 0.1f)
+        {
+            if (Player.transform.position.x < targetPosition.x)
+            {
+                Player.transform.localScale = new Vector3(Mathf.Abs(Player.transform.localScale.x), Player.transform.localScale.y, Player.transform.localScale.z);
+            }
+            else if (Player.transform.position.x > targetPosition.x)
+            {
+                Player.transform.localScale = new Vector3(-Mathf.Abs(Player.transform.localScale.x), Player.transform.localScale.y, Player.transform.localScale.z);
+            }
+            Vector3 newPosition = Vector2.MoveTowards(Player.transform.position, new Vector3(targetPosition.x, Player.transform.position.y, Player.transform.position.z), playerSpeed * Time.deltaTime);
+            newPosition.y = fixedYPosition;
+            Player.transform.position = newPosition;
+            yield return null;
+        }
+        playerSpeed = 0f;
+        if (anim != null) { anim.SetBool("isRunning", false); anim.SetBool("isWatching", true); }
+        isMoving = false;
+        if(PP.hasMarker){Menu = Painted.GetComponent<SpriteRenderer>(); PaintedR.SetActive(true); UnPaintedR.SetActive(false); PP.hasMarker = false;}
+        ActivateMenu(Menu);
+        if(!PP.hasMarker){PP.hasMarker = true; WantDestroy = false;}else{WantDestroy = true; canDelete = true;}
+        
         canDelete = true;
     }
 
@@ -527,6 +571,8 @@ public class Functions : MonoBehaviour
 
     void Update()
     {    
+        if(paintObj == null){paintObj = GameObject.FindGameObjectWithTag("Paint");}
+
         if(pressedElevators == null)
         {
             pressedElevators = GameObject.FindGameObjectsWithTag("ButtonElev");
