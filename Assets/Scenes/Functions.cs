@@ -35,6 +35,7 @@ public class Functions : MonoBehaviour
     GameObject tableObj;
     GameObject exitObj;
     GameObject gunObj;
+    GameObject luckObj;
     GameObject paintObj;
     GameObject ladderObj;
     GameObject tubeObj;
@@ -75,6 +76,12 @@ public class Functions : MonoBehaviour
     {
         Menu = GameObject.FindGameObjectWithTag("TrashM").GetComponent<SpriteRenderer>();
         if (!isMoving) { StartCoroutine(GoToTrash());}
+    }
+
+    public void ToHatch()
+    {
+        Menu = GameObject.FindGameObjectWithTag("LuckM").GetComponent<SpriteRenderer>();
+        if (!isMoving) { StartCoroutine(GoToLuck());}
     }
 
     public void ToNite()
@@ -170,11 +177,11 @@ public class Functions : MonoBehaviour
         list = GameObject.FindGameObjectWithTag("List"); exitObj = GameObject.FindGameObjectWithTag("Exit");  GravObj = GameObject.FindGameObjectWithTag("GravityCh"); 
         ElevatorObj = GameObject.FindGameObjectWithTag("Elevator"); ladderObj = GameObject.FindGameObjectWithTag("Ladder");
         trashObj = GameObject.FindGameObjectWithTag("Trash"); tubeObj = GameObject.FindGameObjectWithTag("Tube"); tableObj = GameObject.FindGameObjectWithTag("Table");
-        PP = Player.GetComponent<PlayerTook>(); GameObject UnGrounded = GameObject.FindGameObjectWithTag("UnGrounded");
+        PP = Player.GetComponent<PlayerTook>(); GameObject UnGrounded = GameObject.FindGameObjectWithTag("UnGrounded"); luckObj = GameObject.FindGameObjectWithTag("Luck");
         if(CurrentRoom.CompareTag("CanChange")){Menu = GameObject.FindGameObjectWithTag("Grounded").GetComponent<SpriteRenderer>(); UnGrounded.SetActive(false); ActivateMenu(Menu);}
 
         pressedDoors = GameObject.FindGameObjectsWithTag("Door");
-        pressedElevators = GameObject.FindGameObjectsWithTag("ButtonElev"); // Находим все объекты с тегом "ButtonElev"
+        pressedElevators = GameObject.FindGameObjectsWithTag("ButtonElev");
         if (CurrentEtazh != null) { animGlobal = CurrentEtazh.GetComponent<Animator>(); }
         if (TopEtazh != null) { animGlobalUp = TopEtazh.GetComponent<Animator>(); }
         if (BottomEtazh != null) { animGlobalDown = BottomEtazh.GetComponent<Animator>(); }
@@ -424,6 +431,37 @@ public class Functions : MonoBehaviour
         canDelete = true;
     }
 
+
+    public IEnumerator GoToLuck()
+    {
+        isMoving = true; canDelete = false;
+        playerSpeed = 5f;
+        if (anim != null) { anim.SetBool("isWatching", false); anim.SetBool("isRunning", true); }
+        DisActMenu();
+        Vector3 targetPosition = luckObj.transform.position;
+        while (Mathf.Abs(Player.transform.position.x - targetPosition.x) > 0.1f)
+        {
+            if (Player.transform.position.x < targetPosition.x)
+            {
+                Player.transform.localScale = new Vector3(Mathf.Abs(Player.transform.localScale.x), Player.transform.localScale.y, Player.transform.localScale.z);
+            }
+            else if (Player.transform.position.x > targetPosition.x)
+            {
+                Player.transform.localScale = new Vector3(-Mathf.Abs(Player.transform.localScale.x), Player.transform.localScale.y, Player.transform.localScale.z);
+            }
+            Vector3 newPosition = Vector2.MoveTowards(Player.transform.position, new Vector3(targetPosition.x, Player.transform.position.y, Player.transform.position.z), playerSpeed * Time.deltaTime);
+            newPosition.y = fixedYPosition;
+            Player.transform.position = newPosition;
+            yield return null;
+        }
+        playerSpeed = 0f;
+        if (anim != null) { anim.SetBool("isRunning", false); anim.SetBool("isWatching", true); }
+        isMoving = false;
+        if(PP.hasKey){Menu = GameObject.FindGameObjectWithTag("EndingVent").GetComponent<SpriteRenderer>();}
+        ActivateMenu(Menu);
+        canDelete = true;
+    }
+
     public IEnumerator GoToTube()
     {
         isMoving = true; canDelete = false;
@@ -570,7 +608,9 @@ public class Functions : MonoBehaviour
     }
 
     void Update()
-    {    
+    {
+
+        if(luckObj == null){luckObj = GameObject.FindGameObjectWithTag("Luck");}
         if(paintObj == null){paintObj = GameObject.FindGameObjectWithTag("Paint");}
 
         if(pressedElevators == null)
