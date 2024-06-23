@@ -193,6 +193,7 @@ public class Functions : MonoBehaviour
         PP = Player.GetComponent<PlayerTook>(); GameObject UnGrounded = GameObject.FindGameObjectWithTag("UnGrounded"); luckObj = GameObject.FindGameObjectWithTag("Luck");
         if(CurrentRoom.CompareTag("CanChange")){Menu = GameObject.FindGameObjectWithTag("Grounded").GetComponent<SpriteRenderer>(); UnGrounded.SetActive(false); ActivateMenu(Menu);}
 
+
         pressedDoors = GameObject.FindGameObjectsWithTag("Door");
         pressedElevators = GameObject.FindGameObjectsWithTag("ButtonElev");
         if (CurrentEtazh != null) { animGlobal = CurrentEtazh.GetComponent<Animator>(); }
@@ -694,6 +695,11 @@ public class Functions : MonoBehaviour
         if(pressedElevators == null)
         {
             pressedElevators = GameObject.FindGameObjectsWithTag("ButtonElev");
+        }
+
+        if(GameObject.FindGameObjectWithTag("LightedRoom3"))
+        {
+            PP.hasPassword = true;
         }
 
 
