@@ -31,7 +31,7 @@ public class Functions : MonoBehaviour
     public GameObject BottomEtazh;
     public bool isMoving;
     bool canDelete = false;
-    GameObject trashObj;
+    GameObject trashObj; GameObject bodyObj;
     GameObject GravObj; public GameObject CanTube;
     public GameObject CantTube;
     GameObject tableObj; GameObject flashObj;
@@ -126,6 +126,12 @@ public class Functions : MonoBehaviour
     {
         Menu = GameObject.FindGameObjectWithTag("FlashlightM").GetComponent<SpriteRenderer>();
         if (!isMoving) { StartCoroutine(GoToFlashlight());}
+    }
+
+    public void ToBody()
+    {
+        Menu = GameObject.FindGameObjectWithTag("BodyM").GetComponent<SpriteRenderer>();
+        if (!isMoving) { StartCoroutine(GoToBody());}
     }
 
     public void ToTable()
@@ -245,6 +251,35 @@ public class Functions : MonoBehaviour
         playerSpeed = 0f;
         if (anim != null) { anim.SetBool("isRunning", false); anim.SetBool("isWatching", true); }
         isMoving = false;
+        ActivateMenu(Menu);
+        canDelete = true;
+    }
+
+    public IEnumerator GoToBody()
+    {
+        isMoving = true; canDelete = false;
+        playerSpeed = 5f;
+        if (anim != null) { anim.SetBool("isWatching", false); anim.SetBool("isRunning", true); }
+        DisActMenu();
+        Vector3 targetPosition = bodyObj.transform.position;
+        while (Mathf.Abs(Player.transform.position.x - targetPosition.x) > 0.1f)
+        {
+            if (Player.transform.position.x < targetPosition.x)
+            {
+                Player.transform.localScale = new Vector3(Mathf.Abs(Player.transform.localScale.x), Player.transform.localScale.y, Player.transform.localScale.z);
+            }
+            else if (Player.transform.position.x > targetPosition.x)
+            {
+                Player.transform.localScale = new Vector3(-Mathf.Abs(Player.transform.localScale.x), Player.transform.localScale.y, Player.transform.localScale.z);
+            }
+            Vector3 newPosition = Vector2.MoveTowards(Player.transform.position, new Vector3(targetPosition.x, Player.transform.position.y, Player.transform.position.z), playerSpeed * Time.deltaTime);
+            newPosition.y = fixedYPosition;
+            Player.transform.position = newPosition;
+            yield return null;
+        }
+        playerSpeed = 0f;
+        if (anim != null) { anim.SetBool("isRunning", false); anim.SetBool("isWatching", true); }
+        isMoving = false; PlusObject = bodyObj; WantDestroy = true;
         ActivateMenu(Menu);
         canDelete = true;
     }
@@ -904,6 +939,11 @@ public class Functions : MonoBehaviour
         if(GravObj == null)
         {
             GravObj = GameObject.FindGameObjectWithTag("GravityCh"); 
+        }
+
+        if(bodyObj == null)
+        {
+            bodyObj = GameObject.FindGameObjectWithTag("Body"); 
         }
 
         if(ladderObj == null)

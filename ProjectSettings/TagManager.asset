@@ -64,6 +64,8 @@ TagManager:
   - TubeNothingMVent
   - BadEnd
   - HappyEnd
+  - Body
+  - BodyM
   layers:
   - Default
   - TransparentFX
