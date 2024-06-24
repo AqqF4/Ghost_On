@@ -66,7 +66,7 @@ public class Functions : MonoBehaviour
 
     public void ToBucket()
     {
-        Menu = GameObject.FindGameObjectWithTag("Bucket").GetComponent<SpriteRenderer>();
+        Menu = GameObject.FindGameObjectWithTag("BucketM").GetComponent<SpriteRenderer>();
         if (!isMoving) { StartCoroutine(GoToBucket()); }
     }
 
@@ -297,6 +297,7 @@ public class Functions : MonoBehaviour
         if (anim != null) { anim.SetBool("isRunning", false); anim.SetBool("isWatching", true); }
         isMoving = false;
         ActivateMenu(Menu);
+        canDelete = true;
     }
 
     public IEnumerator GoToGravity()
@@ -357,7 +358,7 @@ public class Functions : MonoBehaviour
             yield return null;
         }
         playerSpeed = 0f;
-        if (anim != null) {if(!PP.hasLadder){ anim.SetBool("isRunning", false); anim.SetBool("isWatching", true); }else{ anim.SetBool("isRunning", false); anim.SetBool("isWatching", false); anim.SetBool("isClimbing", true);} Menu = GameObject.FindGameObjectWithTag("GunMTook").GetComponent<SpriteRenderer>(); WantDestroy = true; PlusObject = gunObj; }
+        if (anim != null) {if(!PP.hasLadder){ anim.SetBool("isRunning", false); anim.SetBool("isWatching", true); }else{ anim.SetBool("isRunning", false); anim.SetBool("isWatching", false); anim.SetBool("isClimbing", true); Menu = GameObject.FindGameObjectWithTag("GunMTook").GetComponent<SpriteRenderer>(); WantDestroy = true; PlusObject = gunObj; }}
         isMoving = false; LadderPlus = null;
         if(PP.hasLadder){LadderPlus = Instantiate(PlayerLadder, LadderPoint.position, Quaternion.identity); anim.SetBool("isClumbing", true); PP.hasGun = true; WantDestroy = true;}
         ActivateMenu(Menu);
