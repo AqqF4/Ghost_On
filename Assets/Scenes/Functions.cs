@@ -4,11 +4,12 @@ using UnityEngine.UI;
 
 public class Functions : MonoBehaviour
 {
-    private GameObject list;
+    private GameObject list; public bool isDeadinVent;
+    public bool isDeadonChair; public bool isntDead;
     public GameObject PlayerLadder; GameObject LadderPlus;
     private GameObject DoorObj;
     private GameObject ElevatorObj; // Объект лифта
-    private Animator anim;
+    private Animator anim; public GameObject TMP;
     private Animator animGlobal;
     private Animator animGlobalUp;
     private Animator animGlobalDown;
@@ -36,7 +37,7 @@ public class Functions : MonoBehaviour
     GameObject tableObj; GameObject flashObj;
     GameObject exitObj;
     GameObject gunObj; GameObject keyObj;
-    GameObject luckObj;
+    GameObject luckObj; GameObject colaObj;
     GameObject paintObj;GameObject chairObj;
     GameObject ladderObj; GameObject bucketObj;
     GameObject tubeObj;
@@ -74,6 +75,12 @@ public class Functions : MonoBehaviour
     {
         Menu = GameObject.FindGameObjectWithTag("ExitM").GetComponent<SpriteRenderer>();
         if (!isMoving) { StartCoroutine(GoToExit()); }
+    }
+
+    public void ToCola()
+    {
+        Menu = GameObject.FindGameObjectWithTag("ColaM").GetComponent<SpriteRenderer>();
+        if (!isMoving) { StartCoroutine(GoToCola()); }
     }
 
     public void ToDoor()
@@ -520,6 +527,38 @@ public class Functions : MonoBehaviour
         canDelete = true; PP.hasLadder = true;
     }
 
+    public IEnumerator GoToCola()
+    {
+        isMoving = true; canDelete = false;
+        playerSpeed = 5f;
+        if (anim != null) { anim.SetBool("isWatching", false); anim.SetBool("isRunning", true); }
+        DisActMenu();
+        Vector3 targetPosition = colaObj.transform.position;
+        while (Mathf.Abs(Player.transform.position.x - targetPosition.x) > 0.1f)
+        {
+            if (Player.transform.position.x < targetPosition.x)
+            {
+                Player.transform.localScale = new Vector3(Mathf.Abs(Player.transform.localScale.x), Player.transform.localScale.y, Player.transform.localScale.z);
+            }
+            else if (Player.transform.position.x > targetPosition.x)
+            {
+                Player.transform.localScale = new Vector3(-Mathf.Abs(Player.transform.localScale.x), Player.transform.localScale.y, Player.transform.localScale.z);
+            }
+            Vector3 newPosition = Vector2.MoveTowards(Player.transform.position, new Vector3(targetPosition.x, Player.transform.position.y, Player.transform.position.z), playerSpeed * Time.deltaTime);
+            newPosition.y = fixedYPosition;
+            Player.transform.position = newPosition;
+            yield return null;
+        }
+        playerSpeed = 0f;
+        if (anim != null) { anim.SetBool("isRunning", false); anim.SetBool("isWatching", true); }
+        isMoving = false; PlusObject = GameObject.FindGameObjectWithTag("Cola");
+        WantDestroy = true; canDelete = true; PP.hasCola = true;
+        ActivateMenu(Menu);
+
+        
+        canDelete = true; PP.hasCola = true; playerSpeed += 2f;
+    }
+
     public IEnumerator GoToExit()
     {
         isMoving = true; canDelete = false;
@@ -544,8 +583,21 @@ public class Functions : MonoBehaviour
         }
         playerSpeed = 0f;
         if (anim != null) { anim.SetBool("isRunning", false); anim.SetBool("isWatching", true); }
-        isMoving = false; ActivateMenu(Menu);
+        isMoving = false; 
         canDelete = true;
+        if(isntDead && PP.hasPassword)
+        {
+            if(PP.hasCola)
+            {
+                Menu = GameObject.FindGameObjectWithTag("HappyEnd").GetComponent<SpriteRenderer>();
+            }
+            else
+            {
+                Menu = GameObject.FindGameObjectWithTag("BadEnd").GetComponent<SpriteRenderer>();
+            }
+            ActivateMenu(Menu); canDelete = false;
+        }
+        
         if(PP.hasPassword){Menu = GameObject.FindGameObjectWithTag("BearEnd").GetComponent<SpriteRenderer>();}
         ActivateMenu(Menu); PP.Ending = 1;
         
@@ -606,9 +658,10 @@ public class Functions : MonoBehaviour
             yield return null;
         }
         playerSpeed = 0f;
-        if (anim != null) { anim.SetBool("isRunning", false); anim.SetBool("isWatching", true); }
+        if (anim != null) { anim.SetBool("isRunning", false); anim.SetBool("isWatching", true); PP.Ending = 2;}
         isMoving = false;
-        if(PP.hasKey){Menu = GameObject.FindGameObjectWithTag("VentEnd").GetComponent<SpriteRenderer>(); PP.Ending = 2;}
+        if(PP.hasKey){Menu = GameObject.FindGameObjectWithTag("VentEnd").GetComponent<SpriteRenderer>();}
+        if(isDeadinVent){Menu = GameObject.FindGameObjectWithTag("TubeNothingMVent").GetComponent<SpriteRenderer>(); PP.Ending = 5;}
         ActivateMenu(Menu);
         if(!PP.hasKey){canDelete = true;} 
         
@@ -640,8 +693,9 @@ public class Functions : MonoBehaviour
         if (anim != null) {if(!PP.hasLadder){ anim.SetBool("isRunning", false); anim.SetBool("isWatching", true); }else{ anim.SetBool("isRunning", false); anim.SetBool("isWatching", false); anim.SetBool("isClimbing", true);}}
         isMoving = false;
         if(PP.hasLadder){LadderPlus = Instantiate(PlayerLadder, LadderPoint.position, Quaternion.identity); anim.SetBool("isClimbing", true); Menu = GameObject.FindGameObjectWithTag("TubeNothingM").GetComponent<SpriteRenderer>(); WantDestroy = true; CanTube.SetActive(false); CantTube.SetActive(true);}
-        ActivateMenu(Menu);
-        canDelete = true;
+        ActivateMenu(Menu); 
+        if(!isDeadinVent){canDelete = true;}else{PP.Ending = 5;}
+        
     }
 
     void DisActMenu()
@@ -672,6 +726,7 @@ public class Functions : MonoBehaviour
 
     public IEnumerator GoToDoor()
     {
+        
         isMoving = true; canDelete = false;
         playerSpeed = 5f;
         DisActMenu();
@@ -692,6 +747,8 @@ public class Functions : MonoBehaviour
             Player.transform.position = newPosition;
             yield return null;
         }
+        if(TMP != null){Destroy(TMP);}
+        
         playerSpeed = 0f;
         if (anim != null) { anim.SetBool("isRunning", false); }
         if (currentDoor.ComingBack)
@@ -705,7 +762,8 @@ public class Functions : MonoBehaviour
             CurrentRoom.SetActive(false);
         }
         currentDoor.Unnpress();
-        currentDoor = null;
+        currentDoor = null; 
+
         DoorObj = null;
         isMoving = false;
     }
@@ -761,6 +819,10 @@ public class Functions : MonoBehaviour
 
     void Update()
     {
+        if(PP == null)
+        {
+            PP = Player.GetComponent<PlayerTook>();
+        }
 
         if(luckObj == null){luckObj = GameObject.FindGameObjectWithTag("Luck");} if(keyObj == null){keyObj = GameObject.FindGameObjectWithTag("Key"); }
         if(paintObj == null){paintObj = GameObject.FindGameObjectWithTag("Paint");} if(chairObj == null){chairObj = GameObject.FindGameObjectWithTag("Chair");}
@@ -804,6 +866,11 @@ public class Functions : MonoBehaviour
             anim = Player.GetComponent<Animator>();
         }
 
+        if(PP.hasCola)
+        {
+            playerSpeed = 7f;
+        }
+
         if(isPainted)
         {
             PP.Ending = 4;
@@ -817,6 +884,11 @@ public class Functions : MonoBehaviour
         if(DoorObj == null)
         {
             pressedDoors = GameObject.FindGameObjectsWithTag("Door");
+        }
+
+        if(colaObj == null)
+        {
+            colaObj = GameObject.FindGameObjectWithTag("Cola");
         }
 
         if(flashObj == null)

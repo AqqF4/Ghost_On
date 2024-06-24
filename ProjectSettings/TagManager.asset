@@ -61,6 +61,9 @@ TagManager:
   - Flashlight
   - GunMTook
   - NitePoint
+  - TubeNothingMVent
+  - BadEnd
+  - HappyEnd
   layers:
   - Default
   - TransparentFX
