@@ -15,7 +15,7 @@ public class Functions : MonoBehaviour
     public bool CanGround; public GameObject LightedRoom; public GameObject UnlightedRoom;
     public GameObject FlashlightPref;
     public Transform Flashpoint;
-    public float playerSpeed;
+    public float playerSpeed; public bool isPainted;
     private GameObject Player; bool Pulled;
     public float fixedYPosition = -0.5f;
     public GameObject LastRoom;
@@ -33,12 +33,12 @@ public class Functions : MonoBehaviour
     GameObject trashObj;
     GameObject GravObj; public GameObject CanTube;
     public GameObject CantTube;
-    GameObject tableObj;
+    GameObject tableObj; GameObject flashObj;
     GameObject exitObj;
     GameObject gunObj; GameObject keyObj;
     GameObject luckObj;
     GameObject paintObj;GameObject chairObj;
-    GameObject ladderObj;
+    GameObject ladderObj; GameObject bucketObj;
     GameObject tubeObj;
     public GameObject Painted;
     bool WantDestroy; Transform LadderPoint;
@@ -62,6 +62,12 @@ public class Functions : MonoBehaviour
     {
         Menu = GameObject.FindGameObjectWithTag("ElektroEnd").GetComponent<SpriteRenderer>();
         if (!isMoving) { StartCoroutine(GoToChair()); }
+    }
+
+    public void ToBucket()
+    {
+        Menu = GameObject.FindGameObjectWithTag("Bucket").GetComponent<SpriteRenderer>();
+        if (!isMoving) { StartCoroutine(GoToBucket()); }
     }
 
     public void ToExit()
@@ -107,6 +113,12 @@ public class Functions : MonoBehaviour
     {
         Menu = GameObject.FindGameObjectWithTag("KeyM").GetComponent<SpriteRenderer>();
         if (!isMoving) { StartCoroutine(GoToKey());}
+    }
+
+    public void ToFlashlight()
+    {
+        Menu = GameObject.FindGameObjectWithTag("FlashlightM").GetComponent<SpriteRenderer>();
+        if (!isMoving) { StartCoroutine(GoToFlashlight());}
     }
 
     public void ToTable()
@@ -256,7 +268,35 @@ public class Functions : MonoBehaviour
         if (anim != null) { anim.SetBool("isRunning", false); anim.SetBool("isWatching", true); }
         isMoving = false;
         ActivateMenu(Menu);
-        canDelete = true;
+        PP.Ending = 3;
+    }
+
+    public IEnumerator GoToBucket()
+    {
+        isMoving = true; canDelete = false;
+        playerSpeed = 5f;
+        if (anim != null) { anim.SetBool("isWatching", false); anim.SetBool("isRunning", true); }
+        DisActMenu();
+        Vector3 targetPosition = bucketObj.transform.position;
+        while (Mathf.Abs(Player.transform.position.x - targetPosition.x) > 0.1f)
+        {
+            if (Player.transform.position.x < targetPosition.x)
+            {
+                Player.transform.localScale = new Vector3(Mathf.Abs(Player.transform.localScale.x), Player.transform.localScale.y, Player.transform.localScale.z);
+            }
+            else if (Player.transform.position.x > targetPosition.x)
+            {
+                Player.transform.localScale = new Vector3(-Mathf.Abs(Player.transform.localScale.x), Player.transform.localScale.y, Player.transform.localScale.z);
+            }
+            Vector3 newPosition = Vector2.MoveTowards(Player.transform.position, new Vector3(targetPosition.x, Player.transform.position.y, Player.transform.position.z), playerSpeed * Time.deltaTime);
+            newPosition.y = fixedYPosition;
+            Player.transform.position = newPosition;
+            yield return null;
+        }
+        playerSpeed = 0f; WantDestroy = true; PlusObject = bucketObj; PP.hasBucket = true;
+        if (anim != null) { anim.SetBool("isRunning", false); anim.SetBool("isWatching", true); }
+        isMoving = false;
+        ActivateMenu(Menu);
     }
 
     public IEnumerator GoToGravity()
@@ -286,7 +326,7 @@ public class Functions : MonoBehaviour
 
         if(!Pulled && !PP.hasFlashlight){Menu = GameObject.FindGameObjectWithTag("NiteM").GetComponent<SpriteRenderer>(); Pulled = true; ActivateMenu(Menu);}else
         if(!Pulled && PP.hasFlashlight){Menu = GameObject.FindGameObjectWithTag("NiteM").GetComponent<SpriteRenderer>(); Pulled = true; ActivateMenu(Menu);}else
-        if(Pulled && PP.hasFlashlight){PP.turnedLight = true; Instantiate(FlashlightPref, Flashpoint.position, Quaternion.identity); PP.hasFlashlight = false; Menu = GameObject.FindGameObjectWithTag("NiteMFlashlight").GetComponent<SpriteRenderer>(); WantDestroy = true; ActivateMenu(Menu); LightedRoom.SetActive(true); UnlightedRoom.SetActive(false);}
+        if(Pulled && PP.hasFlashlight){PP.turnedLight = true; Instantiate(FlashlightPref, Flashpoint.position, Quaternion.identity); PP.hasFlashlight = false; Menu = GameObject.FindGameObjectWithTag("NitePoint").GetComponent<SpriteRenderer>(); ActivateMenu(Menu); Menu = GameObject.FindGameObjectWithTag("NiteMFlashlight").GetComponent<SpriteRenderer>(); WantDestroy = true; ActivateMenu(Menu); LightedRoom.SetActive(true); UnlightedRoom.SetActive(false);}
         
         
         isMoving = false;
@@ -317,7 +357,7 @@ public class Functions : MonoBehaviour
             yield return null;
         }
         playerSpeed = 0f;
-        if (anim != null) {if(!PP.hasLadder){ anim.SetBool("isRunning", false); anim.SetBool("isWatching", true); }else{ anim.SetBool("isRunning", false); anim.SetBool("isWatching", false); anim.SetBool("isClimbing", true);}}
+        if (anim != null) {if(!PP.hasLadder){ anim.SetBool("isRunning", false); anim.SetBool("isWatching", true); }else{ anim.SetBool("isRunning", false); anim.SetBool("isWatching", false); anim.SetBool("isClimbing", true);} Menu = GameObject.FindGameObjectWithTag("GunMTook").GetComponent<SpriteRenderer>(); WantDestroy = true; PlusObject = gunObj; }
         isMoving = false; LadderPlus = null;
         if(PP.hasLadder){LadderPlus = Instantiate(PlayerLadder, LadderPoint.position, Quaternion.identity); anim.SetBool("isClumbing", true); PP.hasGun = true; WantDestroy = true;}
         ActivateMenu(Menu);
@@ -385,6 +425,36 @@ public class Functions : MonoBehaviour
         canDelete = true;
     }
 
+    public IEnumerator GoToFlashlight()
+    {
+        isMoving = true; canDelete = false;
+        playerSpeed = 5f;
+        if (anim != null) { anim.SetBool("isWatching", false); anim.SetBool("isRunning", true); }
+        DisActMenu();
+        Vector3 targetPosition = flashObj.transform.position;
+        while (Mathf.Abs(Player.transform.position.x - targetPosition.x) > 0.1f)
+        {
+            if (Player.transform.position.x < targetPosition.x)
+            {
+                Player.transform.localScale = new Vector3(Mathf.Abs(Player.transform.localScale.x), Player.transform.localScale.y, Player.transform.localScale.z);
+            }
+            else if (Player.transform.position.x > targetPosition.x)
+            {
+                Player.transform.localScale = new Vector3(-Mathf.Abs(Player.transform.localScale.x), Player.transform.localScale.y, Player.transform.localScale.z);
+            }
+            Vector3 newPosition = Vector2.MoveTowards(Player.transform.position, new Vector3(targetPosition.x, Player.transform.position.y, Player.transform.position.z), playerSpeed * Time.deltaTime);
+            newPosition.y = fixedYPosition;
+            Player.transform.position = newPosition;
+            yield return null;
+        }
+        playerSpeed = 0f;
+        if (anim != null) { anim.SetBool("isRunning", false); anim.SetBool("isWatching", true); }
+        isMoving = false; PlusObject = GameObject.FindGameObjectWithTag("Flashlight"); WantDestroy = true;
+        ActivateMenu(Menu);
+        PP.hasFlashlight = true;
+        canDelete = true;
+    }
+
     public IEnumerator GoToPaint()
     {
         isMoving = true; canDelete = false;
@@ -413,7 +483,7 @@ public class Functions : MonoBehaviour
         if(PP.hasMarker){Menu = Painted.GetComponent<SpriteRenderer>(); PaintedR.SetActive(true); UnPaintedR.SetActive(false); PP.hasMarker = false;}
         ActivateMenu(Menu);
         if(!PP.hasMarker){PP.hasMarker = true; WantDestroy = false;}else{WantDestroy = true; canDelete = true;}
-        
+        isPainted = true;
         canDelete = true;
     }
 
@@ -476,7 +546,7 @@ public class Functions : MonoBehaviour
         isMoving = false; ActivateMenu(Menu);
         canDelete = true;
         if(PP.hasPassword){Menu = GameObject.FindGameObjectWithTag("BearEnd").GetComponent<SpriteRenderer>();}
-        ActivateMenu(Menu);
+        ActivateMenu(Menu); PP.Ending = 1;
         
     }
 
@@ -503,11 +573,12 @@ public class Functions : MonoBehaviour
             yield return null;
         }
         playerSpeed = 0f;
-        if (anim != null) { anim.SetBool("isRunning", false); anim.SetBool("isWatching", true); }
+        if (anim != null) { anim.SetBool("isRunning", false); anim.SetBool("isWatching", true);}
         isMoving = false;
-        if(PP.hasBucket){Menu = GameObject.FindGameObjectWithTag("FallEnd").GetComponent<SpriteRenderer>();}
+        if(PP.hasBucket){Menu = GameObject.FindGameObjectWithTag("FallEnd").GetComponent<SpriteRenderer>();PP.Ending = 6;}
         ActivateMenu(Menu);
-        canDelete = true;
+        
+        if(!PP.hasBucket){canDelete = true;}
     }
 
 
@@ -536,9 +607,10 @@ public class Functions : MonoBehaviour
         playerSpeed = 0f;
         if (anim != null) { anim.SetBool("isRunning", false); anim.SetBool("isWatching", true); }
         isMoving = false;
-        if(PP.hasKey){Menu = GameObject.FindGameObjectWithTag("VentEnd").GetComponent<SpriteRenderer>();}
+        if(PP.hasKey){Menu = GameObject.FindGameObjectWithTag("VentEnd").GetComponent<SpriteRenderer>(); PP.Ending = 2;}
         ActivateMenu(Menu);
-        canDelete = true;
+        if(!PP.hasKey){canDelete = true;} 
+        
     }
 
     public IEnumerator GoToTube()
@@ -731,6 +803,11 @@ public class Functions : MonoBehaviour
             anim = Player.GetComponent<Animator>();
         }
 
+        if(isPainted)
+        {
+            PP.Ending = 4;
+        }
+
         if(PP == null)
         {
             PP = Player.GetComponent<PlayerTook>();
@@ -739,7 +816,16 @@ public class Functions : MonoBehaviour
         if(DoorObj == null)
         {
             pressedDoors = GameObject.FindGameObjectsWithTag("Door");
+        }
 
+        if(flashObj == null)
+        {
+            flashObj = GameObject.FindGameObjectWithTag("Flashlight");
+        }
+
+        if(bucketObj == null)
+        {
+            bucketObj = GameObject.FindGameObjectWithTag("Bucket");
         }
 
         if(GravObj == null)

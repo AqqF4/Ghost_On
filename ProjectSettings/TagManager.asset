@@ -57,6 +57,10 @@ TagManager:
   - FallEnd
   - Chair
   - LightedRoom3
+  - FlashlightM
+  - Flashlight
+  - GunMTook
+  - NitePoint
   layers:
   - Default
   - TransparentFX
