@@ -4,15 +4,17 @@ using UnityEngine.UI;
 
 public class Functions : MonoBehaviour
 {
-    private GameObject list; public bool isDeadinVent;
-    public bool isDeadonChair; public bool isntDead;
+    private GameObject list; public bool isDeadinVent; public bool isntDead;
     public GameObject PlayerLadder; GameObject LadderPlus;
-    private GameObject DoorObj;
+    private GameObject DoorObj; Functions NextF;
+    Functions PreviosF; public bool CanWalk;
+    public GameObject WalkSound;
+    public GameObject DoorSound; public GameObject ElevatorSound;
     private GameObject ElevatorObj; // Объект лифта
     private Animator anim; public GameObject TMP;
-    private Animator animGlobal;
-    private Animator animGlobalUp;
-    private Animator animGlobalDown;
+    private Animator animGlobal; Ending EE;
+    private Animator animGlobalUp; float CCC = 0.3f;
+    private Animator animGlobalDown; public GameObject WalkSoundFast;
     public bool CanGround; public GameObject LightedRoom; public GameObject UnlightedRoom;
     public GameObject FlashlightPref;
     public Transform Flashpoint;
@@ -40,7 +42,7 @@ public class Functions : MonoBehaviour
     GameObject luckObj; GameObject colaObj;
     GameObject paintObj;GameObject chairObj;
     GameObject ladderObj; GameObject bucketObj;
-    GameObject tubeObj;
+    GameObject tubeObj; public GameObject Sound;
     public GameObject Painted;
     bool WantDestroy; Transform LadderPoint;
     PlayerTook PP;
@@ -54,117 +56,117 @@ public class Functions : MonoBehaviour
     public void DisactivateRA() { if (anim != null) { anim.SetBool("isRunning", false); } }
 
     public void ToList()
-    {
+    {  if(CanWalk){
         Menu = GameObject.FindGameObjectWithTag("ListM").GetComponent<SpriteRenderer>();
         if (!isMoving) { StartCoroutine(GoToList()); }
-    }
+    }}
 
     public void ToChair()
-    {
+    {if(CanWalk){
         Menu = GameObject.FindGameObjectWithTag("ElektroEnd").GetComponent<SpriteRenderer>();
         if (!isMoving) { StartCoroutine(GoToChair()); }
-    }
+    }}
 
     public void ToBucket()
-    {
+    {if(CanWalk){
         Menu = GameObject.FindGameObjectWithTag("BucketM").GetComponent<SpriteRenderer>();
         if (!isMoving) { StartCoroutine(GoToBucket()); }
-    }
+    }}
 
     public void ToExit()
-    {
+    {if(CanWalk){
         Menu = GameObject.FindGameObjectWithTag("ExitM").GetComponent<SpriteRenderer>();
         if (!isMoving) { StartCoroutine(GoToExit()); }
-    }
+    }}
 
     public void ToCola()
-    {
+    {if(CanWalk){
         Menu = GameObject.FindGameObjectWithTag("ColaM").GetComponent<SpriteRenderer>();
         if (!isMoving) { StartCoroutine(GoToCola()); }
-    }
+    }}
 
     public void ToDoor()
-    {
+    {if(CanWalk){
         CheckForDoor();
         if (DoorObj != null)
         {
             if (!isMoving) { StartCoroutine(GoToDoor()); }
         }
-    }
+    }}
 
     public void ToTrash()
-    {
+    {if(CanWalk){
         Menu = GameObject.FindGameObjectWithTag("TrashM").GetComponent<SpriteRenderer>();
         if (!isMoving) { StartCoroutine(GoToTrash());}
-    }
+    }}
 
     public void ToHatch()
-    {
+    {if(CanWalk){
         Menu = GameObject.FindGameObjectWithTag("LuckM").GetComponent<SpriteRenderer>();
         if (!isMoving) { StartCoroutine(GoToLuck());}
-    }
+    }}
 
     public void ToNite()
-    {
+    {if(CanWalk){
         Menu = null; GravObj = GameObject.FindGameObjectWithTag("GravityCh"); 
         if (!isMoving) { StartCoroutine(GoToGravity());}
-    }
+    }}
 
     public void ToTube()
-    {
+    {if(CanWalk){
         Menu = GameObject.FindGameObjectWithTag("TubeM").GetComponent<SpriteRenderer>();
         if (!isMoving) { StartCoroutine(GoToTube());}
-    }
+    }}
 
     public void ToKey()
-    {
+    {if(CanWalk){
         Menu = GameObject.FindGameObjectWithTag("KeyM").GetComponent<SpriteRenderer>();
         if (!isMoving) { StartCoroutine(GoToKey());}
-    }
+    }}
 
     public void ToFlashlight()
-    {
+    {if(CanWalk){
         Menu = GameObject.FindGameObjectWithTag("FlashlightM").GetComponent<SpriteRenderer>();
         if (!isMoving) { StartCoroutine(GoToFlashlight());}
-    }
+    }}
 
     public void ToBody()
-    {
+    {if(CanWalk){
         Menu = GameObject.FindGameObjectWithTag("BodyM").GetComponent<SpriteRenderer>();
         if (!isMoving) { StartCoroutine(GoToBody());}
-    }
+    }}
 
     public void ToTable()
-    {
+    {if(CanWalk){
         PlusObject = GameObject.FindGameObjectWithTag("Marker");
         WantDestroy = true;
         Menu = GameObject.FindGameObjectWithTag("TableM").GetComponent<SpriteRenderer>();
         if (!isMoving) { StartCoroutine(GoToTable());}
-    }
+    }}
 
     public void ToPainting()
-    {
+    {if(CanWalk){
         PlusObject = GameObject.FindGameObjectWithTag("Paint");
         WantDestroy = true;
         Menu = GameObject.FindGameObjectWithTag("PaintM").GetComponent<SpriteRenderer>();
         if (!isMoving) { StartCoroutine(GoToPaint());}
-    }
+    }}
 
     public void ToLadder()
-    {
+    {if(CanWalk){
         WantDestroy = true;
         Menu = GameObject.FindGameObjectWithTag("LadderM").GetComponent<SpriteRenderer>();
         if (!isMoving) { StartCoroutine(GoToLadder());}
-    }
+    }}
 
     public void ToGun()
-    {
+    {if(CanWalk){
         Menu = GameObject.FindGameObjectWithTag("GunM").GetComponent<SpriteRenderer>();
         if (!isMoving) { StartCoroutine(GoToGun());}
-    }
+    }}
 
     public void ToElevator()
-    {
+    {if(CanWalk){
         CheckForElevator();
         if (ElevatorObj != null)
         {
@@ -174,7 +176,7 @@ public class Functions : MonoBehaviour
         {
             CheckForElevator();
         }
-    }
+    }}
 
     void CheckForDoor()
     {
@@ -218,6 +220,8 @@ public class Functions : MonoBehaviour
         PP = Player.GetComponent<PlayerTook>(); GameObject UnGrounded = GameObject.FindGameObjectWithTag("UnGrounded"); luckObj = GameObject.FindGameObjectWithTag("Luck");
         if(CurrentRoom.CompareTag("CanChange")){Menu = GameObject.FindGameObjectWithTag("Grounded").GetComponent<SpriteRenderer>(); UnGrounded.SetActive(false); ActivateMenu(Menu);}
 
+        
+        StartCoroutine(WaitForWalk());
 
         pressedDoors = GameObject.FindGameObjectsWithTag("Door");
         pressedElevators = GameObject.FindGameObjectsWithTag("ButtonElev");
@@ -226,15 +230,24 @@ public class Functions : MonoBehaviour
         if (BottomEtazh != null) { animGlobalDown = BottomEtazh.GetComponent<Animator>(); }
     }
 
+    IEnumerator WaitForWalk()
+    {
+        yield return new WaitForSeconds(CCC);
+        Sound = GameObject.FindGameObjectWithTag("SoundEffect");
+        Destroy(Sound);
+        Sound = null;
+    }
+
     public IEnumerator GoToList()
     {
         isMoving = true; canDelete = false;
         playerSpeed = 5f;
         if (anim != null) { anim.SetBool("isWatching", false); anim.SetBool("isRunning", true); }
         DisActMenu();
-        Vector3 targetPosition = list.transform.position;
+        Vector3 targetPosition = list.transform.position;Sound = Instantiate(WalkSound, transform.position, Quaternion.identity);
         while (Mathf.Abs(Player.transform.position.x - targetPosition.x) > 0.1f)
         {
+            
             if (Player.transform.position.x < targetPosition.x)
             {
                 Player.transform.localScale = new Vector3(Mathf.Abs(Player.transform.localScale.x), Player.transform.localScale.y, Player.transform.localScale.z);
@@ -248,7 +261,7 @@ public class Functions : MonoBehaviour
             Player.transform.position = newPosition;
             yield return null;
         }
-        playerSpeed = 0f;
+        playerSpeed = 0f; Destroy(Sound);
         if (anim != null) { anim.SetBool("isRunning", false); anim.SetBool("isWatching", true); }
         isMoving = false;
         ActivateMenu(Menu);
@@ -260,8 +273,8 @@ public class Functions : MonoBehaviour
         isMoving = true; canDelete = false;
         playerSpeed = 5f;
         if (anim != null) { anim.SetBool("isWatching", false); anim.SetBool("isRunning", true); }
-        DisActMenu();
-        Vector3 targetPosition = bodyObj.transform.position;
+        DisActMenu(); 
+        Vector3 targetPosition = bodyObj.transform.position; Sound = Instantiate(WalkSound, transform.position, Quaternion.identity);
         while (Mathf.Abs(Player.transform.position.x - targetPosition.x) > 0.1f)
         {
             if (Player.transform.position.x < targetPosition.x)
@@ -277,7 +290,7 @@ public class Functions : MonoBehaviour
             Player.transform.position = newPosition;
             yield return null;
         }
-        playerSpeed = 0f;
+        playerSpeed = 0f; Destroy(Sound);
         if (anim != null) { anim.SetBool("isRunning", false); anim.SetBool("isWatching", true); }
         isMoving = false; PlusObject = bodyObj; WantDestroy = true;
         ActivateMenu(Menu);
@@ -290,7 +303,7 @@ public class Functions : MonoBehaviour
         playerSpeed = 5f;
         if (anim != null) { anim.SetBool("isWatching", false); anim.SetBool("isRunning", true); }
         DisActMenu();
-        Vector3 targetPosition = chairObj.transform.position;
+        Vector3 targetPosition = chairObj.transform.position; Sound = Instantiate(WalkSound, transform.position, Quaternion.identity);
         while (Mathf.Abs(Player.transform.position.x - targetPosition.x) > 0.1f)
         {
             if (Player.transform.position.x < targetPosition.x)
@@ -306,11 +319,11 @@ public class Functions : MonoBehaviour
             Player.transform.position = newPosition;
             yield return null;
         }
-        playerSpeed = 0f;
+        playerSpeed = 0f; Destroy(Sound);
         if (anim != null) { anim.SetBool("isRunning", false); anim.SetBool("isWatching", true); }
         isMoving = false;
-        ActivateMenu(Menu);
-        PP.Ending = 3;
+        ActivateMenu(Menu);  
+        PP.Ending = 3; EE = GameObject.FindGameObjectWithTag("ElektroEnd").GetComponent<Ending>(); CanWalk = false; yield return new WaitForSeconds(2); EE.BackToMenu();
     }
 
     public IEnumerator GoToBucket()
@@ -319,7 +332,7 @@ public class Functions : MonoBehaviour
         playerSpeed = 5f;
         if (anim != null) { anim.SetBool("isWatching", false); anim.SetBool("isRunning", true); }
         DisActMenu();
-        Vector3 targetPosition = bucketObj.transform.position;
+        Vector3 targetPosition = bucketObj.transform.position; Sound = Instantiate(WalkSound, transform.position, Quaternion.identity);
         while (Mathf.Abs(Player.transform.position.x - targetPosition.x) > 0.1f)
         {
             if (Player.transform.position.x < targetPosition.x)
@@ -335,7 +348,7 @@ public class Functions : MonoBehaviour
             Player.transform.position = newPosition;
             yield return null;
         }
-        playerSpeed = 0f; WantDestroy = true; PlusObject = bucketObj; PP.hasBucket = true;
+        playerSpeed = 0f; WantDestroy = true; PlusObject = bucketObj; PP.hasBucket = true; Destroy(Sound);
         if (anim != null) { anim.SetBool("isRunning", false); anim.SetBool("isWatching", true); }
         isMoving = false;
         ActivateMenu(Menu);
@@ -348,7 +361,7 @@ public class Functions : MonoBehaviour
         playerSpeed = 5f;
         if (anim != null) { anim.SetBool("isWatching", false); anim.SetBool("isRunning", true); }
         DisActMenu();
-        Vector3 targetPosition = GravObj.transform.position;
+        Vector3 targetPosition = GravObj.transform.position; Sound = Instantiate(WalkSound, transform.position, Quaternion.identity);
         while (Mathf.Abs(Player.transform.position.x - targetPosition.x) > 0.1f)
         {
             if (Player.transform.position.x < targetPosition.x)
@@ -364,7 +377,7 @@ public class Functions : MonoBehaviour
             Player.transform.position = newPosition;
             yield return null;
         }
-        playerSpeed = 0f; Menu = GameObject.FindGameObjectWithTag("NiteM").GetComponent<SpriteRenderer>();
+        playerSpeed = 0f; Menu = GameObject.FindGameObjectWithTag("NiteM").GetComponent<SpriteRenderer>(); Destroy(Sound);
         if (anim != null) { anim.SetBool("isRunning", false); anim.SetBool("isWatching", true); }
 
         if(!Pulled && !PP.hasFlashlight){Menu = GameObject.FindGameObjectWithTag("NiteM").GetComponent<SpriteRenderer>(); Pulled = true; ActivateMenu(Menu);}else
@@ -380,10 +393,10 @@ public class Functions : MonoBehaviour
     public IEnumerator GoToGun()
     {
         isMoving = true; canDelete = false;
-        playerSpeed = 5f;
+        playerSpeed = 5f; 
         if (anim != null) { anim.SetBool("isWatching", false); anim.SetBool("isRunning", true); }
         DisActMenu();
-        Vector3 targetPosition = gunObj.transform.position;
+        Vector3 targetPosition = gunObj.transform.position; Sound = Instantiate(WalkSound, transform.position, Quaternion.identity);
         while (Mathf.Abs(Player.transform.position.x - targetPosition.x) > 0.1f)
         {
             if (Player.transform.position.x < targetPosition.x)
@@ -399,7 +412,7 @@ public class Functions : MonoBehaviour
             Player.transform.position = newPosition;
             yield return null;
         }
-        playerSpeed = 0f;
+        playerSpeed = 0f; Destroy(Sound);
         if (anim != null) {if(!PP.hasLadder){ anim.SetBool("isRunning", false); anim.SetBool("isWatching", true); }else{ anim.SetBool("isRunning", false); anim.SetBool("isWatching", false); anim.SetBool("isClimbing", true); Menu = GameObject.FindGameObjectWithTag("GunMTook").GetComponent<SpriteRenderer>(); WantDestroy = true; PlusObject = gunObj; }}
         isMoving = false; LadderPlus = null;
         if(PP.hasLadder){LadderPlus = Instantiate(PlayerLadder, LadderPoint.position, Quaternion.identity); anim.SetBool("isClumbing", true); PP.hasGun = true; WantDestroy = true;}
@@ -414,7 +427,7 @@ public class Functions : MonoBehaviour
         playerSpeed = 5f;
         if (anim != null) { anim.SetBool("isWatching", false); anim.SetBool("isRunning", true); }
         DisActMenu();
-        Vector3 targetPosition = tableObj.transform.position;
+        Vector3 targetPosition = tableObj.transform.position; Sound = Instantiate(WalkSound, transform.position, Quaternion.identity);
         while (Mathf.Abs(Player.transform.position.x - targetPosition.x) > 0.1f)
         {
             if (Player.transform.position.x < targetPosition.x)
@@ -430,7 +443,7 @@ public class Functions : MonoBehaviour
             Player.transform.position = newPosition;
             yield return null;
         }
-        playerSpeed = 0f;
+        playerSpeed = 0f; Destroy(Sound);
         if (anim != null) { anim.SetBool("isRunning", false); anim.SetBool("isWatching", true); }
         isMoving = false;
         ActivateMenu(Menu);
@@ -444,7 +457,7 @@ public class Functions : MonoBehaviour
         playerSpeed = 5f;
         if (anim != null) { anim.SetBool("isWatching", false); anim.SetBool("isRunning", true); }
         DisActMenu();
-        Vector3 targetPosition = keyObj.transform.position;
+        Vector3 targetPosition = keyObj.transform.position; Sound = Instantiate(WalkSound, transform.position, Quaternion.identity);
         while (Mathf.Abs(Player.transform.position.x - targetPosition.x) > 0.1f)
         {
             if (Player.transform.position.x < targetPosition.x)
@@ -460,7 +473,7 @@ public class Functions : MonoBehaviour
             Player.transform.position = newPosition;
             yield return null;
         }
-        playerSpeed = 0f;
+        playerSpeed = 0f; Destroy(Sound);
         if (anim != null) { anim.SetBool("isRunning", false); anim.SetBool("isWatching", true); }
         isMoving = false; PlusObject = GameObject.FindGameObjectWithTag("Key"); WantDestroy = true;
         ActivateMenu(Menu);
@@ -474,7 +487,7 @@ public class Functions : MonoBehaviour
         playerSpeed = 5f;
         if (anim != null) { anim.SetBool("isWatching", false); anim.SetBool("isRunning", true); }
         DisActMenu();
-        Vector3 targetPosition = flashObj.transform.position;
+        Vector3 targetPosition = flashObj.transform.position; Sound = Instantiate(WalkSound, transform.position, Quaternion.identity);
         while (Mathf.Abs(Player.transform.position.x - targetPosition.x) > 0.1f)
         {
             if (Player.transform.position.x < targetPosition.x)
@@ -490,7 +503,7 @@ public class Functions : MonoBehaviour
             Player.transform.position = newPosition;
             yield return null;
         }
-        playerSpeed = 0f;
+        playerSpeed = 0f; Destroy(Sound);
         if (anim != null) { anim.SetBool("isRunning", false); anim.SetBool("isWatching", true); }
         isMoving = false; PlusObject = GameObject.FindGameObjectWithTag("Flashlight"); WantDestroy = true;
         ActivateMenu(Menu);
@@ -504,7 +517,7 @@ public class Functions : MonoBehaviour
         playerSpeed = 5f;
         if (anim != null) { anim.SetBool("isWatching", false); anim.SetBool("isRunning", true); }
         DisActMenu();
-        Vector3 targetPosition = paintObj.transform.position;
+        Vector3 targetPosition = paintObj.transform.position; Sound = Instantiate(WalkSound, transform.position, Quaternion.identity);
         while (Mathf.Abs(Player.transform.position.x - targetPosition.x) > 0.1f)
         {
             if (Player.transform.position.x < targetPosition.x)
@@ -520,7 +533,7 @@ public class Functions : MonoBehaviour
             Player.transform.position = newPosition;
             yield return null;
         }
-        playerSpeed = 0f;
+        playerSpeed = 0f; Destroy(Sound);
         if (anim != null) { anim.SetBool("isRunning", false); anim.SetBool("isWatching", true); }
         isMoving = false;
         if(PP.hasMarker){Menu = Painted.GetComponent<SpriteRenderer>(); PaintedR.SetActive(true); UnPaintedR.SetActive(false); PP.hasMarker = false;}
@@ -536,7 +549,7 @@ public class Functions : MonoBehaviour
         playerSpeed = 5f;
         if (anim != null) { anim.SetBool("isWatching", false); anim.SetBool("isRunning", true); }
         DisActMenu();
-        Vector3 targetPosition = ladderObj.transform.position;
+        Vector3 targetPosition = ladderObj.transform.position; Sound = Instantiate(WalkSound, transform.position, Quaternion.identity);
         while (Mathf.Abs(Player.transform.position.x - targetPosition.x) > 0.1f)
         {
             if (Player.transform.position.x < targetPosition.x)
@@ -552,7 +565,7 @@ public class Functions : MonoBehaviour
             Player.transform.position = newPosition;
             yield return null;
         }
-        playerSpeed = 0f;
+        playerSpeed = 0f; Destroy(Sound);
         if (anim != null) { anim.SetBool("isRunning", false); anim.SetBool("isWatching", true); }
         isMoving = false; PlusObject = GameObject.FindGameObjectWithTag("Ladder");
         WantDestroy = true; canDelete = true; PP.hasLadder = true;
@@ -568,7 +581,7 @@ public class Functions : MonoBehaviour
         playerSpeed = 5f;
         if (anim != null) { anim.SetBool("isWatching", false); anim.SetBool("isRunning", true); }
         DisActMenu();
-        Vector3 targetPosition = colaObj.transform.position;
+        Vector3 targetPosition = colaObj.transform.position; Sound = Instantiate(WalkSound, transform.position, Quaternion.identity);
         while (Mathf.Abs(Player.transform.position.x - targetPosition.x) > 0.1f)
         {
             if (Player.transform.position.x < targetPosition.x)
@@ -584,7 +597,7 @@ public class Functions : MonoBehaviour
             Player.transform.position = newPosition;
             yield return null;
         }
-        playerSpeed = 0f;
+        playerSpeed = 0f; Destroy(Sound);
         if (anim != null) { anim.SetBool("isRunning", false); anim.SetBool("isWatching", true); }
         isMoving = false; PlusObject = GameObject.FindGameObjectWithTag("Cola");
         WantDestroy = true; canDelete = true; PP.hasCola = true;
@@ -600,7 +613,7 @@ public class Functions : MonoBehaviour
         playerSpeed = 5f;
         if (anim != null) { anim.SetBool("isWatching", false); anim.SetBool("isRunning", true); }
         DisActMenu();
-        Vector3 targetPosition = exitObj.transform.position;
+        Vector3 targetPosition = exitObj.transform.position; Sound = Instantiate(WalkSound, transform.position, Quaternion.identity);
         while (Mathf.Abs(Player.transform.position.x - targetPosition.x) > 0.1f)
         {
             if (Player.transform.position.x < targetPosition.x)
@@ -616,25 +629,29 @@ public class Functions : MonoBehaviour
             Player.transform.position = newPosition;
             yield return null;
         }
-        playerSpeed = 0f;
+        playerSpeed = 0f; Destroy(Sound);
         if (anim != null) { anim.SetBool("isRunning", false); anim.SetBool("isWatching", true); }
         isMoving = false; 
-        canDelete = true;
+        if(!isntDead && !PP.hasPassword){canDelete = true;}
         if(isntDead && PP.hasPassword)
         {
             if(PP.hasCola)
             {
                 Menu = GameObject.FindGameObjectWithTag("HappyEnd").GetComponent<SpriteRenderer>();
+                EE = GameObject.FindGameObjectWithTag("HappyEnd").GetComponent<Ending>(); CanWalk = false; yield return new WaitForSeconds(2); EE.BackToMenu();
             }
             else
             {
                 Menu = GameObject.FindGameObjectWithTag("BadEnd").GetComponent<SpriteRenderer>();
+                EE = GameObject.FindGameObjectWithTag("BadEnd").GetComponent<Ending>(); CanWalk = false; yield return new WaitForSeconds(2); EE.BackToMenu();
             }
             ActivateMenu(Menu); canDelete = false;
         }
         
-        if(PP.hasPassword){Menu = GameObject.FindGameObjectWithTag("BearEnd").GetComponent<SpriteRenderer>();}
-        ActivateMenu(Menu); PP.Ending = 1;
+        if(PP.hasPassword){Menu = GameObject.FindGameObjectWithTag("BearEnd").GetComponent<SpriteRenderer>(); PP.Ending = 1;} 
+        
+        ActivateMenu(Menu); if(!isntDead && PP.hasPassword){EE = GameObject.FindGameObjectWithTag("BearEnd").GetComponent<Ending>(); CanWalk = false; yield return new WaitForSeconds(2); EE.BackToMenu();}
+
         
     }
 
@@ -644,7 +661,7 @@ public class Functions : MonoBehaviour
         playerSpeed = 5f;
         if (anim != null) { anim.SetBool("isWatching", false); anim.SetBool("isRunning", true); }
         DisActMenu();
-        Vector3 targetPosition = trashObj.transform.position;
+        Vector3 targetPosition = trashObj.transform.position; Sound = Instantiate(WalkSound, transform.position, Quaternion.identity);
         while (Mathf.Abs(Player.transform.position.x - targetPosition.x) > 0.1f)
         {
             if (Player.transform.position.x < targetPosition.x)
@@ -660,10 +677,10 @@ public class Functions : MonoBehaviour
             Player.transform.position = newPosition;
             yield return null;
         }
-        playerSpeed = 0f;
+        playerSpeed = 0f; Destroy(Sound);
         if (anim != null) { anim.SetBool("isRunning", false); anim.SetBool("isWatching", true);}
         isMoving = false;
-        if(PP.hasBucket){Menu = GameObject.FindGameObjectWithTag("FallEnd").GetComponent<SpriteRenderer>();PP.Ending = 6;}
+        if(PP.hasBucket){Menu = GameObject.FindGameObjectWithTag("FallEnd").GetComponent<SpriteRenderer>();PP.Ending = 6; EE = GameObject.FindGameObjectWithTag("FallEnd").GetComponent<Ending>(); CanWalk = false; yield return new WaitForSeconds(2); EE.BackToMenu();}
         ActivateMenu(Menu);
         
         if(!PP.hasBucket){canDelete = true;}
@@ -676,7 +693,7 @@ public class Functions : MonoBehaviour
         playerSpeed = 5f;
         if (anim != null) { anim.SetBool("isWatching", false); anim.SetBool("isRunning", true); }
         DisActMenu();
-        Vector3 targetPosition = luckObj.transform.position;
+        Vector3 targetPosition = luckObj.transform.position; Sound = Instantiate(WalkSound, transform.position, Quaternion.identity);
         while (Mathf.Abs(Player.transform.position.x - targetPosition.x) > 0.1f)
         {
             if (Player.transform.position.x < targetPosition.x)
@@ -692,13 +709,13 @@ public class Functions : MonoBehaviour
             Player.transform.position = newPosition;
             yield return null;
         }
-        playerSpeed = 0f;
+        playerSpeed = 0f; Destroy(Sound);
         if (anim != null) { anim.SetBool("isRunning", false); anim.SetBool("isWatching", true); PP.Ending = 2;}
         isMoving = false;
         if(PP.hasKey){Menu = GameObject.FindGameObjectWithTag("VentEnd").GetComponent<SpriteRenderer>();}
-        if(isDeadinVent){Menu = GameObject.FindGameObjectWithTag("TubeNothingMVent").GetComponent<SpriteRenderer>(); PP.Ending = 5;}
+        if(isDeadinVent){Menu = GameObject.FindGameObjectWithTag("TubeNothingMVent").GetComponent<SpriteRenderer>(); PP.Ending = 5; EE = GameObject.FindGameObjectWithTag("HeartEnd").GetComponent<Ending>(); yield return new WaitForSeconds(2); EE.BackToMenu();}
         ActivateMenu(Menu);
-        if(!PP.hasKey){canDelete = true;} 
+        if(!PP.hasKey){canDelete = true;}else{EE = GameObject.FindGameObjectWithTag("VentEnd").GetComponent<Ending>(); CanWalk = false; yield return new WaitForSeconds(2); EE.BackToMenu();}
         
     }
 
@@ -707,8 +724,8 @@ public class Functions : MonoBehaviour
         isMoving = true; canDelete = false;
         playerSpeed = 5f;
         if (anim != null) { anim.SetBool("isWatching", false); anim.SetBool("isRunning", true); }
-        DisActMenu();
-        Vector3 targetPosition = tubeObj.transform.position;
+        DisActMenu(); 
+        Vector3 targetPosition = tubeObj.transform.position; Sound = Instantiate(WalkSound, transform.position, Quaternion.identity);
         while (Mathf.Abs(Player.transform.position.x - targetPosition.x) > 0.1f)
         {
             if (Player.transform.position.x < targetPosition.x)
@@ -724,7 +741,7 @@ public class Functions : MonoBehaviour
             Player.transform.position = newPosition;
             yield return null;
         }
-        playerSpeed = 0f;  LadderPlus = null;
+        playerSpeed = 0f;  LadderPlus = null; Destroy(Sound);
         if (anim != null) {if(!PP.hasLadder){ anim.SetBool("isRunning", false); anim.SetBool("isWatching", true); }else{ anim.SetBool("isRunning", false); anim.SetBool("isWatching", false); anim.SetBool("isClimbing", true);}}
         isMoving = false;
         if(PP.hasLadder){LadderPlus = Instantiate(PlayerLadder, LadderPoint.position, Quaternion.identity); anim.SetBool("isClimbing", true); Menu = GameObject.FindGameObjectWithTag("TubeNothingM").GetComponent<SpriteRenderer>(); WantDestroy = true; CanTube.SetActive(false); CantTube.SetActive(true);}
@@ -766,7 +783,7 @@ public class Functions : MonoBehaviour
         playerSpeed = 5f;
         DisActMenu();
         if (anim != null) { anim.SetBool("isWatching", false); anim.SetBool("isRunning", true); }
-        Vector3 targetPosition = DoorObj.transform.position;
+        Vector3 targetPosition = DoorObj.transform.position; Sound = Instantiate(WalkSound, transform.position, Quaternion.identity);
         while (Mathf.Abs(Player.transform.position.x - targetPosition.x) > 0.1f)
         {
             if (Player.transform.position.x < targetPosition.x)
@@ -784,23 +801,31 @@ public class Functions : MonoBehaviour
         }
         if(TMP != null){Destroy(TMP);}
         
-        playerSpeed = 0f;
+        playerSpeed = 0f; Destroy(Sound);
         if (anim != null) { anim.SetBool("isRunning", false); }
         if (currentDoor.ComingBack)
         {
             LastRoom.SetActive(true);
+            Instantiate(DoorSound, transform.position, Quaternion.identity);
+            PreviosF = LastRoom.GetComponent<Functions>();
+            PreviosF.Sound = Sound;
             CurrentRoom.SetActive(false);
+            
         }
         else
         {
-            NextRoom.SetActive(true);
+            NextRoom.SetActive(true); 
+            Instantiate(DoorSound, transform.position, Quaternion.identity);
+            NextF = NextRoom.GetComponent<Functions>();
+            NextF.Sound = Sound; 
             CurrentRoom.SetActive(false);
+            
         }
         currentDoor.Unnpress();
         currentDoor = null; 
 
         DoorObj = null;
-        isMoving = false;
+        isMoving = false; Destroy(Sound);
     }
     
     public IEnumerator GoToElevator()
@@ -810,7 +835,7 @@ public class Functions : MonoBehaviour
         currentElevator.Pressed = false;
         DisActMenu();
         if (anim != null) { anim.SetBool("isWatching", false); anim.SetBool("isRunning", true); }
-        Vector3 targetPosition = ElevatorObj.transform.position;
+        Vector3 targetPosition = ElevatorObj.transform.position; Sound = Instantiate(WalkSound, transform.position, Quaternion.identity);
         while (Mathf.Abs(Player.transform.position.x - targetPosition.x) > 0.1f)
         {
             if (Player.transform.position.x < targetPosition.x)
@@ -826,7 +851,7 @@ public class Functions : MonoBehaviour
             Player.transform.position = newPosition;
             yield return null;
         }
-        playerSpeed = 0f;
+        playerSpeed = 0f; Destroy(Sound); GameObject ElevatorSD = Instantiate(ElevatorSound, transform.position, Quaternion.identity);
         if (anim != null) { anim.SetBool("isRunning", false); }
         if (currentElevator.Up)
         {
@@ -857,6 +882,12 @@ public class Functions : MonoBehaviour
         if(PP == null)
         {
             PP = Player.GetComponent<PlayerTook>();
+        }
+
+        if(!isMoving && Sound != null)
+        {
+            Destroy(Sound);
+            Sound = null;
         }
 
         if(luckObj == null){luckObj = GameObject.FindGameObjectWithTag("Luck");} if(keyObj == null){keyObj = GameObject.FindGameObjectWithTag("Key"); }
@@ -904,6 +935,7 @@ public class Functions : MonoBehaviour
         if(PP.hasCola)
         {
             playerSpeed = 7f;
+            WalkSound = WalkSoundFast;
         }
 
         if(isPainted)
@@ -934,6 +966,11 @@ public class Functions : MonoBehaviour
         if(bucketObj == null)
         {
             bucketObj = GameObject.FindGameObjectWithTag("Bucket");
+        }
+
+        if(Sound == null)
+        {
+            Sound = GameObject.FindGameObjectWithTag("SoundEffect");
         }
 
         if(GravObj == null)
