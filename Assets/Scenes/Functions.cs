@@ -7,7 +7,7 @@ public class Functions : MonoBehaviour
     private GameObject list; public bool isDeadinVent; public bool isntDead;
     public GameObject PlayerLadder; GameObject LadderPlus;
     private GameObject DoorObj; Functions NextF;
-    Functions PreviosF; public bool CanWalk;
+    Functions PreviosF; public bool CanWalk = true;
     public GameObject WalkSound;
     public GameObject DoorSound; public GameObject ElevatorSound;
     private GameObject ElevatorObj; // Объект лифта
@@ -211,7 +211,7 @@ public class Functions : MonoBehaviour
     }
 
     void Start()
-    {
+    { CanWalk = true;
         Player = GameObject.FindGameObjectWithTag("Player"); LadderPoint = GameObject.FindGameObjectWithTag("PointL").GetComponent<Transform>();  
         if (Player != null) { anim = Player.GetComponent<Animator>(); } gunObj = GameObject.FindGameObjectWithTag("Gun"); paintObj = GameObject.FindGameObjectWithTag("Paint");
         list = GameObject.FindGameObjectWithTag("List"); exitObj = GameObject.FindGameObjectWithTag("Exit");  GravObj = GameObject.FindGameObjectWithTag("GravityCh");  chairObj = GameObject.FindGameObjectWithTag("Chair"); 
