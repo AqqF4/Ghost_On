@@ -450,6 +450,7 @@ MonoBehaviour:
   isDeadinVent: 0
   isntDead: 0
   PlayerLadder: {fileID: 1392750422285858168, guid: 7206805b2d198ac46836cee06e3d7eeb, type: 3}
+  CanWalk: 1
   WalkSound: {fileID: 6102545546976090533, guid: a26a9f71f0f2c3f40966ddb97a485921, type: 3}
   DoorSound: {fileID: 5355795933644847322, guid: 2383f5d84ca6b6f4f94563e05bbff351, type: 3}
   ElevatorSound: {fileID: 3045268881264705906, guid: f496f7358424e3148add3539abbaf44e, type: 3}
@@ -716,7 +717,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 3
+  m_SortingOrder: 4
   m_Sprite: {fileID: 21300000, guid: ae52d8106f8519e4eaa991fdb8ef164c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_FlipX: 0
@@ -801,7 +802,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 5
+  m_SortingOrder: 4
   m_Sprite: {fileID: 21300000, guid: ae52d8106f8519e4eaa991fdb8ef164c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_FlipX: 0
@@ -886,7 +887,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 3
+  m_SortingOrder: 4
   m_Sprite: {fileID: 21300000, guid: ae52d8106f8519e4eaa991fdb8ef164c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_FlipX: 0
@@ -1737,7 +1738,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 3
+  m_SortingOrder: 4
   m_Sprite: {fileID: 21300000, guid: ae52d8106f8519e4eaa991fdb8ef164c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_FlipX: 0
@@ -2624,6 +2625,7 @@ MonoBehaviour:
   isDeadinVent: 0
   isntDead: 0
   PlayerLadder: {fileID: 1392750422285858168, guid: 7206805b2d198ac46836cee06e3d7eeb, type: 3}
+  CanWalk: 1
   WalkSound: {fileID: 6102545546976090533, guid: a26a9f71f0f2c3f40966ddb97a485921, type: 3}
   DoorSound: {fileID: 5355795933644847322, guid: 2383f5d84ca6b6f4f94563e05bbff351, type: 3}
   ElevatorSound: {fileID: 3045268881264705906, guid: f496f7358424e3148add3539abbaf44e, type: 3}
@@ -6159,7 +6161,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 3
+  m_SortingOrder: 4
   m_Sprite: {fileID: 21300000, guid: ae52d8106f8519e4eaa991fdb8ef164c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_FlipX: 0
@@ -9179,7 +9181,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 3
+  m_SortingOrder: 4
   m_Sprite: {fileID: 21300000, guid: ae52d8106f8519e4eaa991fdb8ef164c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_FlipX: 0
@@ -9745,7 +9747,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 3
+  m_SortingOrder: 4
   m_Sprite: {fileID: 21300000, guid: 93f9d8892ca4bd84abfb1cd4bb531bd4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_FlipX: 0
@@ -9830,7 +9832,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 3
+  m_SortingOrder: 4
   m_Sprite: {fileID: 21300000, guid: ae52d8106f8519e4eaa991fdb8ef164c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_FlipX: 0
@@ -10623,7 +10625,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 3
+  m_SortingOrder: 4
   m_Sprite: {fileID: 21300000, guid: ae52d8106f8519e4eaa991fdb8ef164c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_FlipX: 0
@@ -11182,6 +11184,7 @@ MonoBehaviour:
   isDeadinVent: 0
   isntDead: 0
   PlayerLadder: {fileID: 1392750422285858168, guid: 7206805b2d198ac46836cee06e3d7eeb, type: 3}
+  CanWalk: 1
   WalkSound: {fileID: 6102545546976090533, guid: a26a9f71f0f2c3f40966ddb97a485921, type: 3}
   DoorSound: {fileID: 5355795933644847322, guid: 2383f5d84ca6b6f4f94563e05bbff351, type: 3}
   ElevatorSound: {fileID: 3045268881264705906, guid: f496f7358424e3148add3539abbaf44e, type: 3}
@@ -11415,7 +11418,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 3
+  m_SortingOrder: 4
   m_Sprite: {fileID: 21300000, guid: ae52d8106f8519e4eaa991fdb8ef164c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_FlipX: 0
@@ -12105,7 +12108,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 3
+  m_SortingOrder: 4
   m_Sprite: {fileID: 21300000, guid: ae52d8106f8519e4eaa991fdb8ef164c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_FlipX: 0
@@ -13943,7 +13946,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 3
+  m_SortingOrder: 4
   m_Sprite: {fileID: 21300000, guid: ae52d8106f8519e4eaa991fdb8ef164c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_FlipX: 0
@@ -14933,7 +14936,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 3
+  m_SortingOrder: 4
   m_Sprite: {fileID: 21300000, guid: ae52d8106f8519e4eaa991fdb8ef164c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_FlipX: 0
@@ -15018,7 +15021,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 5
+  m_SortingOrder: 4
   m_Sprite: {fileID: 21300000, guid: ae52d8106f8519e4eaa991fdb8ef164c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_FlipX: 0
@@ -16370,7 +16373,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 3
+  m_SortingOrder: 4
   m_Sprite: {fileID: 21300000, guid: ae52d8106f8519e4eaa991fdb8ef164c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_FlipX: 0
@@ -18972,7 +18975,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 3
+  m_SortingOrder: 4
   m_Sprite: {fileID: 21300000, guid: ae52d8106f8519e4eaa991fdb8ef164c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_FlipX: 0
@@ -19594,6 +19597,7 @@ MonoBehaviour:
   isDeadinVent: 0
   isntDead: 0
   PlayerLadder: {fileID: 1392750422285858168, guid: 7206805b2d198ac46836cee06e3d7eeb, type: 3}
+  CanWalk: 1
   WalkSound: {fileID: 6102545546976090533, guid: a26a9f71f0f2c3f40966ddb97a485921, type: 3}
   DoorSound: {fileID: 5355795933644847322, guid: 2383f5d84ca6b6f4f94563e05bbff351, type: 3}
   ElevatorSound: {fileID: 3045268881264705906, guid: f496f7358424e3148add3539abbaf44e, type: 3}
@@ -20248,7 +20252,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 3
+  m_SortingOrder: 4
   m_Sprite: {fileID: 21300000, guid: ae52d8106f8519e4eaa991fdb8ef164c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_FlipX: 0
@@ -21890,7 +21894,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 3
+  m_SortingOrder: 4
   m_Sprite: {fileID: 21300000, guid: ae52d8106f8519e4eaa991fdb8ef164c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_FlipX: 0
@@ -22296,6 +22300,7 @@ MonoBehaviour:
   isDeadinVent: 0
   isntDead: 0
   PlayerLadder: {fileID: 1392750422285858168, guid: 7206805b2d198ac46836cee06e3d7eeb, type: 3}
+  CanWalk: 1
   WalkSound: {fileID: 6102545546976090533, guid: a26a9f71f0f2c3f40966ddb97a485921, type: 3}
   DoorSound: {fileID: 5355795933644847322, guid: 2383f5d84ca6b6f4f94563e05bbff351, type: 3}
   ElevatorSound: {fileID: 3045268881264705906, guid: f496f7358424e3148add3539abbaf44e, type: 3}
@@ -22396,6 +22401,7 @@ MonoBehaviour:
   isDeadinVent: 0
   isntDead: 0
   PlayerLadder: {fileID: 1392750422285858168, guid: 7206805b2d198ac46836cee06e3d7eeb, type: 3}
+  CanWalk: 1
   WalkSound: {fileID: 6102545546976090533, guid: a26a9f71f0f2c3f40966ddb97a485921, type: 3}
   DoorSound: {fileID: 5355795933644847322, guid: 2383f5d84ca6b6f4f94563e05bbff351, type: 3}
   ElevatorSound: {fileID: 3045268881264705906, guid: f496f7358424e3148add3539abbaf44e, type: 3}

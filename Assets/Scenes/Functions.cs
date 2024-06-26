@@ -680,9 +680,9 @@ public class Functions : MonoBehaviour
         playerSpeed = 0f; Destroy(Sound);
         if (anim != null) { anim.SetBool("isRunning", false); anim.SetBool("isWatching", true);}
         isMoving = false;
-        if(PP.hasBucket){Menu = GameObject.FindGameObjectWithTag("FallEnd").GetComponent<SpriteRenderer>();PP.Ending = 6; EE = GameObject.FindGameObjectWithTag("FallEnd").GetComponent<Ending>(); CanWalk = false; yield return new WaitForSeconds(2); EE.BackToMenu();}
+        if(PP.hasBucket){Menu = GameObject.FindGameObjectWithTag("FallEnd").GetComponent<SpriteRenderer>();PP.Ending = 6;}
         ActivateMenu(Menu);
-        
+        if(PP.hasBucket){EE = GameObject.FindGameObjectWithTag("FallEnd").GetComponent<Ending>(); CanWalk = false; yield return new WaitForSeconds(2); EE.BackToMenu();}
         if(!PP.hasBucket){canDelete = true;}
     }
 
@@ -744,10 +744,9 @@ public class Functions : MonoBehaviour
         playerSpeed = 0f;  LadderPlus = null; Destroy(Sound);
         if (anim != null) {if(!PP.hasLadder){ anim.SetBool("isRunning", false); anim.SetBool("isWatching", true); }else{ anim.SetBool("isRunning", false); anim.SetBool("isWatching", false); anim.SetBool("isClimbing", true);}}
         isMoving = false;
-        if(PP.hasLadder){LadderPlus = Instantiate(PlayerLadder, LadderPoint.position, Quaternion.identity); anim.SetBool("isClimbing", true); Menu = GameObject.FindGameObjectWithTag("TubeNothingM").GetComponent<SpriteRenderer>(); WantDestroy = true; CanTube.SetActive(false); CantTube.SetActive(true);}
+        if(PP.hasLadder){LadderPlus = Instantiate(PlayerLadder, LadderPoint.position, Quaternion.identity); anim.SetBool("isClimbing", true); Menu = GameObject.FindGameObjectWithTag("TubeNothingM").GetComponent<SpriteRenderer>(); WantDestroy = true; PlusObject = tubeObj; CanTube.SetActive(false); CantTube.SetActive(true);}
         ActivateMenu(Menu); 
         if(!isDeadinVent){canDelete = true;}else{PP.Ending = 5;}
-        
     }
 
     void DisActMenu()
