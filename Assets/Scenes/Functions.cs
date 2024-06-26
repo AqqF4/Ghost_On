@@ -940,6 +940,12 @@ public class Functions : MonoBehaviour
         if(isPainted)
         {
             PP.Ending = 4;
+            PP.SaveEnding();
+        }
+
+        if(PP.Ending != 0)
+        {
+            PP.SaveEnding();
         }
 
         if(PP == null)

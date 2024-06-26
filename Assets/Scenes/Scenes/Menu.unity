@@ -218,6 +218,7 @@ RectTransform:
   m_Children:
   - {fileID: 308018484}
   - {fileID: 1541824209}
+  - {fileID: 1903216085}
   - {fileID: 719080320}
   - {fileID: 1126633033}
   - {fileID: 1630375536}
@@ -233,7 +234,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1920.0001, y: 1080}
+  m_SizeDelta: {x: 1920, y: 1080}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &20859890
 GameObject:
@@ -618,7 +619,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -703, y: 0.000045776367}
+  m_AnchoredPosition: {x: -703, y: 0.00004577637}
   m_SizeDelta: {x: 430, y: 192}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &69098697
@@ -729,6 +730,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DarkImage: {fileID: 435407353}
   NormalText: {fileID: 20859890}
+  SoundIn: {fileID: 7839923322533644555, guid: 84e5fa1f84170b54797fca96b45a8f67, type: 3}
+  SoundOut: {fileID: 2787090918837504295, guid: 4b36e868f2fd23a46946bff0b4d9c3f8, type: 3}
 --- !u!61 &69098701
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -947,7 +950,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 1213.9999, y: -431.99994}
+  m_AnchoredPosition: {x: 1214, y: -431.9999}
   m_SizeDelta: {x: 430, y: 192}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &153860715
@@ -1050,6 +1053,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DarkImage: {fileID: 999704373}
   NormalText: {fileID: 35738475}
+  SoundIn: {fileID: 7839923322533644555, guid: 84e5fa1f84170b54797fca96b45a8f67, type: 3}
+  SoundOut: {fileID: 2787090918837504295, guid: 4b36e868f2fd23a46946bff0b4d9c3f8, type: 3}
 --- !u!61 &153860718
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1333,7 +1338,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &231025778
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1398,7 +1403,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 231025780}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 519420035}
+        m_TargetAssemblyTypeName: CloneButtons, Assembly-CSharp
+        m_MethodName: L325
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &231025780
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1443,6 +1460,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DarkImage: {fileID: 1030858783}
   NormalText: {fileID: 2015088564}
+  SoundIn: {fileID: 7839923322533644555, guid: 84e5fa1f84170b54797fca96b45a8f67, type: 3}
+  SoundOut: {fileID: 2787090918837504295, guid: 4b36e868f2fd23a46946bff0b4d9c3f8, type: 3}
 --- !u!61 &231025782
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1732,6 +1751,7 @@ GameObject:
   - component: {fileID: 519420029}
   - component: {fileID: 519420033}
   - component: {fileID: 519420034}
+  - component: {fileID: 519420035}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1757,7 +1777,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.7554068, g: 0.8396226, b: 0.122774996, a: 0}
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -1847,6 +1867,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   anim: {fileID: 519420033}
+--- !u!114 &519420035
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519420028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e88b311fb74a763489b1106fdc8523bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Ending: 0
+  C047: {fileID: 875518874}
+  C325: {fileID: 231025777}
+  C586: {fileID: 1580420075}
+  C993: {fileID: 1809620689}
+  W047: 0
+  W325: 0
+  W586: 0
+  W993: 0
+  WasOn047: 0
+  WasOn325: 0
+  WasOn586: 0
+  WasOn993: 0
 --- !u!1 &533915984
 GameObject:
   m_ObjectHideFlags: 0
@@ -2232,7 +2277,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &875518875
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2297,7 +2342,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 875518877}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 519420035}
+        m_TargetAssemblyTypeName: CloneButtons, Assembly-CSharp
+        m_MethodName: L047
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &875518877
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2342,6 +2399,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DarkImage: {fileID: 186080844}
   NormalText: {fileID: 1404980992}
+  SoundIn: {fileID: 7839923322533644555, guid: 84e5fa1f84170b54797fca96b45a8f67, type: 3}
+  SoundOut: {fileID: 2787090918837504295, guid: 4b36e868f2fd23a46946bff0b4d9c3f8, type: 3}
 --- !u!61 &875518879
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -3196,6 +3255,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DarkImage: {fileID: 1498517559}
   NormalText: {fileID: 1136706027}
+  SoundIn: {fileID: 7839923322533644555, guid: 84e5fa1f84170b54797fca96b45a8f67, type: 3}
+  SoundOut: {fileID: 2787090918837504295, guid: 4b36e868f2fd23a46946bff0b4d9c3f8, type: 3}
 --- !u!61 &1144334103
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -3956,7 +4017,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1580420076
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4021,7 +4082,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1580420078}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 519420035}
+        m_TargetAssemblyTypeName: CloneButtons, Assembly-CSharp
+        m_MethodName: L586
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1580420078
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4066,6 +4139,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DarkImage: {fileID: 1360428302}
   NormalText: {fileID: 533915984}
+  SoundIn: {fileID: 7839923322533644555, guid: 84e5fa1f84170b54797fca96b45a8f67, type: 3}
+  SoundOut: {fileID: 2787090918837504295, guid: 4b36e868f2fd23a46946bff0b4d9c3f8, type: 3}
 --- !u!61 &1580420080
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -4204,7 +4279,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1630375538}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 519420035}
+        m_TargetAssemblyTypeName: CloneButtons, Assembly-CSharp
+        m_MethodName: L000
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1630375538
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4257,6 +4344,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DarkImage: {fileID: 35767776}
   NormalText: {fileID: 1073696685}
+  SoundIn: {fileID: 7839923322533644555, guid: 84e5fa1f84170b54797fca96b45a8f67, type: 3}
+  SoundOut: {fileID: 2787090918837504295, guid: 4b36e868f2fd23a46946bff0b4d9c3f8, type: 3}
 --- !u!61 &1630375541
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -4456,7 +4545,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1809620690
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4521,7 +4610,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1809620692}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 519420035}
+        m_TargetAssemblyTypeName: CloneButtons, Assembly-CSharp
+        m_MethodName: L993
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1809620692
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4566,6 +4667,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DarkImage: {fileID: 2099523764}
   NormalText: {fileID: 989446250}
+  SoundIn: {fileID: 7839923322533644555, guid: 84e5fa1f84170b54797fca96b45a8f67, type: 3}
+  SoundOut: {fileID: 2787090918837504295, guid: 4b36e868f2fd23a46946bff0b4d9c3f8, type: 3}
 --- !u!61 &1809620694
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -4618,6 +4721,153 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1809620689}
+  m_CullTransparentMesh: 1
+--- !u!1 &1903216084
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1903216085}
+  - component: {fileID: 1903216089}
+  - component: {fileID: 1903216088}
+  - component: {fileID: 1903216087}
+  - component: {fileID: 1903216086}
+  m_Layer: 5
+  m_Name: Back (2)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1903216085
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1903216084}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1.00008, y: 1.00008, z: 1.00008}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 20167798}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -0.0001220703, y: -1107}
+  m_SizeDelta: {x: 1972, y: 1126}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!212 &1903216086
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1903216084}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 21300000, guid: aa9b53fff13d59b489f2abdaa26f7695, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 108, y: 48}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
+--- !u!95 &1903216087
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1903216084}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: bcef82b11ee467f42a1276121c3ed681, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1903216088
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1903216084}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1344c3c82d62a2a41a3576d8abb8e3ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Texture: {fileID: 2800000, guid: fac8c13019dc95a49a0af9c2cfdc32b5, type: 3}
+  m_UVRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+--- !u!222 &1903216089
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1903216084}
   m_CullTransparentMesh: 1
 --- !u!1 &1904565605
 GameObject:

@@ -19,6 +19,8 @@ public class CameraAnima : MonoBehaviour
     public void Exit()
     {
         Application.Quit();
+        PlayerPrefs.DeleteAll();
+        PlayerPrefs.Save();
     }
 
 

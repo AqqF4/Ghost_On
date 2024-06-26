@@ -23,4 +23,10 @@ public class PlayerTook : MonoBehaviour
     // 4 - Whatever, but painted
     // 5 - Heart
     // 6 - Fall
+
+    public void SaveEnding()
+    {
+        PlayerPrefs.SetInt("Ending", Ending);
+        PlayerPrefs.Save();
+    }
 }
