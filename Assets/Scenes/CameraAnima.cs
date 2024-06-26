@@ -16,11 +16,19 @@ public class CameraAnima : MonoBehaviour
         anim.SetTrigger("Back");
     }
 
+    public void Down()
+    {
+        anim.SetTrigger("Down");
+    }
+
+    public void Up()
+    {
+        anim.SetTrigger("Up");
+    }
+
     public void Exit()
     {
         Application.Quit();
-        PlayerPrefs.DeleteAll();
-        PlayerPrefs.Save();
     }
 
 
