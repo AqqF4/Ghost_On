@@ -23,4 +23,10 @@ public class ChangeSprite : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         NormalText.SetActive(true);
         Instantiate(SoundOut, transform.position, Quaternion.identity);
     }
+
+    public void DisActMe()
+    {
+        DarkImage.SetActive(false);
+        NormalText.SetActive(true);
+    }
 }

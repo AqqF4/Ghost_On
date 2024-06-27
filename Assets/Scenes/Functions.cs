@@ -680,10 +680,33 @@ public class Functions : MonoBehaviour
         playerSpeed = 0f; Destroy(Sound);
         if (anim != null) { anim.SetBool("isRunning", false); anim.SetBool("isWatching", true);}
         isMoving = false;
-        if(PP.hasBucket){Player.GetComponent<Animator>().SetTrigger("Fall"); yield return new WaitForSeconds(3); Menu = GameObject.FindGameObjectWithTag("FallEnd").GetComponent<SpriteRenderer>();PP.Ending = 6;}
+        if(PP.hasBucket){Menu = GameObject.FindGameObjectWithTag("FallM").GetComponent<SpriteRenderer>();}
+        ActivateMenu(Menu);
+        if(!PP.hasBucket){canDelete = true;}
+    }
+
+    public void FallOut()
+    {
+        StartCoroutine(FallIn());
+    }
+
+    IEnumerator FallIn()
+    {
+        DisActMenu();
+        if(PP.hasBucket){Player.GetComponent<Animator>().SetTrigger("Fall"); yield return new WaitForSeconds(3); Menu = GameObject.FindGameObjectWithTag("FallEnd").GetComponent<SpriteRenderer>(); PP.Ending = 6;}
         ActivateMenu(Menu);
         if(PP.hasBucket){EE = GameObject.FindGameObjectWithTag("FallEnd").GetComponent<Ending>(); CanWalk = false; yield return new WaitForSeconds(2); EE.BackToMenu();}
-        if(!PP.hasBucket){canDelete = true;}
+    }
+
+    public void Stay()
+    {
+        if(anim != null) 
+        {
+            anim.SetBool("isRunning", false);
+            anim.SetBool("isWatching", false);
+        }
+        DisActMenu();
+        isMoving = false;
     }
 
 
