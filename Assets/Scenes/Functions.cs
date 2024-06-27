@@ -735,12 +735,43 @@ public class Functions : MonoBehaviour
         playerSpeed = 0f; Destroy(Sound);
         if (anim != null) { anim.SetBool("isRunning", false); anim.SetBool("isWatching", true); PP.Ending = 2;}
         isMoving = false;
-        if(PP.hasKey){Menu = GameObject.FindGameObjectWithTag("VentEnd").GetComponent<SpriteRenderer>();}
-        if(isDeadinVent){Menu = GameObject.FindGameObjectWithTag("TubeNothingMVent").GetComponent<SpriteRenderer>(); PP.Ending = 5; EE = GameObject.FindGameObjectWithTag("HeartEnd").GetComponent<Ending>(); yield return new WaitForSeconds(2); EE.BackToMenu();}
-        ActivateMenu(Menu);
-        if(!PP.hasKey){canDelete = true;}else{EE = GameObject.FindGameObjectWithTag("VentEnd").GetComponent<Ending>(); CanWalk = false; yield return new WaitForSeconds(2); EE.BackToMenu();}
         
+        if(PP.hasKey){Menu = GameObject.FindGameObjectWithTag("TubeNothingMVent").GetComponent<SpriteRenderer>(); GameObject.FindGameObjectWithTag("Grounded").GetComponent<Animator>().SetTrigger("Open"); }else{Menu = GameObject.FindGameObjectWithTag("LuckM").GetComponent<SpriteRenderer>();}
+        ActivateMenu(Menu);
+        if(!PP.hasKey){canDelete = true;}
     }
+
+
+    public void GetInVent()
+    {
+        StartCoroutine(InVent());
+    }
+
+    IEnumerator InVent()
+    {
+        DisActMenu(); canDelete = false;
+        Player.transform.localScale = new Vector3(Mathf.Abs(Player.transform.localScale.x), Player.transform.localScale.y, Player.transform.localScale.z);
+        Menu = null;
+        Menu = GameObject.FindGameObjectWithTag("VentEnd").GetComponent<SpriteRenderer>(); Player.GetComponent<Animator>().SetTrigger("Stuck");
+        yield return new WaitForSeconds(1); ActivateMenu(Menu);
+        EE = GameObject.FindGameObjectWithTag("VentEnd").GetComponent<Ending>(); CanWalk = false; yield return new WaitForSeconds(2); EE.BackToMenu();
+    }
+
+    public void GetScaredV()
+    {
+        StartCoroutine(ScareVent());
+    }
+
+    IEnumerator ScareVent()
+    {
+        DisActMenu(); canDelete = false;
+        Player.transform.localScale = new Vector3(Mathf.Abs(Player.transform.localScale.x), Player.transform.localScale.y, Player.transform.localScale.z);
+        Menu = null;
+        Menu = GameObject.FindGameObjectWithTag("HeartEnd").GetComponent<SpriteRenderer>(); Player.GetComponent<Animator>().SetTrigger("ScareV");
+        yield return new WaitForSeconds(3); ActivateMenu(Menu);
+        EE = GameObject.FindGameObjectWithTag("HeartEnd").GetComponent<Ending>(); CanWalk = false; yield return new WaitForSeconds(2); EE.BackToMenu();
+    }
+
 
     public IEnumerator GoToTube()
     {
