@@ -645,11 +645,11 @@ public class Functions : MonoBehaviour
                 Menu = GameObject.FindGameObjectWithTag("BadEnd").GetComponent<SpriteRenderer>();
                 EE = GameObject.FindGameObjectWithTag("BadEnd").GetComponent<Ending>(); CanWalk = false; yield return new WaitForSeconds(2); EE.BackToMenu();
             }
-            ActivateMenu(Menu); canDelete = false;
+            
         }
         
         if(PP.hasPassword){Menu = GameObject.FindGameObjectWithTag("BearEnd").GetComponent<SpriteRenderer>(); PP.Ending = 1;} 
-        
+        if(isntDead && PP.hasPassword){ActivateMenu(Menu); canDelete = false;}
         ActivateMenu(Menu); if(!isntDead && PP.hasPassword){EE = GameObject.FindGameObjectWithTag("BearEnd").GetComponent<Ending>(); CanWalk = false; yield return new WaitForSeconds(2); EE.BackToMenu();}
 
         
@@ -680,7 +680,7 @@ public class Functions : MonoBehaviour
         playerSpeed = 0f; Destroy(Sound);
         if (anim != null) { anim.SetBool("isRunning", false); anim.SetBool("isWatching", true);}
         isMoving = false;
-        if(PP.hasBucket){Menu = GameObject.FindGameObjectWithTag("FallEnd").GetComponent<SpriteRenderer>();PP.Ending = 6;}
+        if(PP.hasBucket){Player.GetComponent<Animator>().SetTrigger("Fall"); yield return new WaitForSeconds(3); Menu = GameObject.FindGameObjectWithTag("FallEnd").GetComponent<SpriteRenderer>();PP.Ending = 6;}
         ActivateMenu(Menu);
         if(PP.hasBucket){EE = GameObject.FindGameObjectWithTag("FallEnd").GetComponent<Ending>(); CanWalk = false; yield return new WaitForSeconds(2); EE.BackToMenu();}
         if(!PP.hasBucket){canDelete = true;}
@@ -746,7 +746,7 @@ public class Functions : MonoBehaviour
         isMoving = false;
         if(PP.hasLadder){LadderPlus = Instantiate(PlayerLadder, LadderPoint.position, Quaternion.identity); anim.SetBool("isClimbing", true); Menu = GameObject.FindGameObjectWithTag("TubeNothingM").GetComponent<SpriteRenderer>(); WantDestroy = true; PlusObject = tubeObj; CanTube.SetActive(false); CantTube.SetActive(true);}
         ActivateMenu(Menu); 
-        if(!isDeadinVent){canDelete = true;}else{PP.Ending = 5;}
+        if(!isDeadinVent){canDelete = true;}else{PP.Ending = 5; EE = GameObject.FindGameObjectWithTag("VentEnd").GetComponent<Ending>(); CanWalk = false; yield return new WaitForSeconds(2); EE.BackToMenu();}
     }
 
     void DisActMenu()
