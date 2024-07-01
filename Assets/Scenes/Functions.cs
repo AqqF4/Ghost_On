@@ -4,12 +4,12 @@ using UnityEngine.UI;
 
 public class Functions : MonoBehaviour
 {
-    private GameObject list; public bool isDeadinVent; public bool isntDead;
+    private GameObject list; public bool isDeadinVent; public bool isntDead; public GameObject FirstP; public GameObject DownP;
     public GameObject PlayerLadder; GameObject LadderPlus; public GameObject nullM;
     private GameObject DoorObj; Functions NextF; public GameObject FunM;
     Functions PreviosF; public bool CanWalk = true;
     public GameObject WalkSound; public GameObject DownRoom;
-    public GameObject TopRoom; GameObject holeObj;
+    public GameObject TopRoom; GameObject holeObj; public GameObject GroupNull;
     public GameObject DoorSound; public GameObject ElevatorSound;
     private GameObject ElevatorObj; // Объект лифта
     private Animator anim; public GameObject TMP;
@@ -334,15 +334,15 @@ public class Functions : MonoBehaviour
 
     public void GetDown()
     {
-        DisActMenu();DownRoom.SetActive(true);
+        DisActMenu();DownRoom.SetActive(true); FirstP.SetActive(false); DownP.SetActive(true);
         CurrentRoom.SetActive(false);
         FunM.SetActive(false); nullM.SetActive(true);
     }
 
     public void GetUp()
     {
-        DisActMenu();TopRoom.SetActive(true);
-        CurrentRoom.SetActive(false);
+        DisActMenu();TopRoom.SetActive(true); FirstP.SetActive(true); DownP.SetActive(false);
+        GroupNull.SetActive(false);
         FunM.SetActive(true); nullM.SetActive(false);
     }
 
