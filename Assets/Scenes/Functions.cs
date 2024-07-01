@@ -5,10 +5,11 @@ using UnityEngine.UI;
 public class Functions : MonoBehaviour
 {
     private GameObject list; public bool isDeadinVent; public bool isntDead;
-    public GameObject PlayerLadder; GameObject LadderPlus;
-    private GameObject DoorObj; Functions NextF;
+    public GameObject PlayerLadder; GameObject LadderPlus; public GameObject nullM;
+    private GameObject DoorObj; Functions NextF; public GameObject FunM;
     Functions PreviosF; public bool CanWalk = true;
-    public GameObject WalkSound;
+    public GameObject WalkSound; public GameObject DownRoom;
+    public GameObject TopRoom; GameObject holeObj;
     public GameObject DoorSound; public GameObject ElevatorSound;
     private GameObject ElevatorObj; // Объект лифта
     private Animator anim; public GameObject TMP;
@@ -71,6 +72,12 @@ public class Functions : MonoBehaviour
     {if(CanWalk){
         Menu = GameObject.FindGameObjectWithTag("BucketM").GetComponent<SpriteRenderer>();
         if (!isMoving) { StartCoroutine(GoToBucket()); }
+    }}
+
+    public void ToHole()
+    {if(CanWalk){
+        Menu = GameObject.FindGameObjectWithTag("HoleM").GetComponent<SpriteRenderer>();
+        if (!isMoving) { StartCoroutine(GoToHole()); }
     }}
 
     public void ToExit()
@@ -212,7 +219,7 @@ public class Functions : MonoBehaviour
 
     void Start()
     { CanWalk = true;
-        Player = GameObject.FindGameObjectWithTag("Player"); LadderPoint = GameObject.FindGameObjectWithTag("PointL").GetComponent<Transform>();  
+        Player = GameObject.FindGameObjectWithTag("Player"); LadderPoint = GameObject.FindGameObjectWithTag("PointL").GetComponent<Transform>();   holeObj = GameObject.FindGameObjectWithTag("Hole");
         if (Player != null) { anim = Player.GetComponent<Animator>(); } gunObj = GameObject.FindGameObjectWithTag("Gun"); paintObj = GameObject.FindGameObjectWithTag("Paint");
         list = GameObject.FindGameObjectWithTag("List"); exitObj = GameObject.FindGameObjectWithTag("Exit");  GravObj = GameObject.FindGameObjectWithTag("GravityCh");  chairObj = GameObject.FindGameObjectWithTag("Chair"); 
         ElevatorObj = GameObject.FindGameObjectWithTag("Elevator"); ladderObj = GameObject.FindGameObjectWithTag("Ladder"); keyObj = GameObject.FindGameObjectWithTag("Key"); 
@@ -295,6 +302,48 @@ public class Functions : MonoBehaviour
         isMoving = false; PlusObject = bodyObj; WantDestroy = true;
         ActivateMenu(Menu);
         canDelete = true;
+    }
+
+    public IEnumerator GoToHole()
+    {
+        isMoving = true; canDelete = false;
+        playerSpeed = 5f;
+        if (anim != null) { anim.SetBool("isWatching", false); anim.SetBool("isRunning", true); }
+        DisActMenu(); 
+        Vector3 targetPosition = holeObj.transform.position; Sound = Instantiate(WalkSound, transform.position, Quaternion.identity);
+        while (Mathf.Abs(Player.transform.position.x - targetPosition.x) > 0.1f)
+        {
+            if (Player.transform.position.x < targetPosition.x)
+            {
+                Player.transform.localScale = new Vector3(Mathf.Abs(Player.transform.localScale.x), Player.transform.localScale.y, Player.transform.localScale.z);
+            }
+            else if (Player.transform.position.x > targetPosition.x)
+            {
+                Player.transform.localScale = new Vector3(-Mathf.Abs(Player.transform.localScale.x), Player.transform.localScale.y, Player.transform.localScale.z);
+            }
+            Vector3 newPosition = Vector2.MoveTowards(Player.transform.position, new Vector3(targetPosition.x, Player.transform.position.y, Player.transform.position.z), playerSpeed * Time.deltaTime);
+            newPosition.y = fixedYPosition;
+            Player.transform.position = newPosition;
+            yield return null;
+        }
+        playerSpeed = 0f; Destroy(Sound);
+        if (anim != null) { anim.SetBool("isRunning", false); anim.SetBool("isWatching", true); }
+        isMoving = false;
+        ActivateMenu(Menu);
+    }
+
+    public void GetDown()
+    {
+        DisActMenu();DownRoom.SetActive(true);
+        CurrentRoom.SetActive(false);
+        FunM.SetActive(false); nullM.SetActive(true);
+    }
+
+    public void GetUp()
+    {
+        DisActMenu();TopRoom.SetActive(true);
+        CurrentRoom.SetActive(false);
+        FunM.SetActive(true); nullM.SetActive(false);
     }
 
     public IEnumerator GoToChair()
@@ -1033,6 +1082,11 @@ public class Functions : MonoBehaviour
         if(colaObj == null)
         {
             colaObj = GameObject.FindGameObjectWithTag("Cola");
+        }
+
+        if(holeObj == null)
+        {
+            holeObj = GameObject.FindGameObjectWithTag("Hole");
         }
 
         if(flashObj == null)

@@ -69,6 +69,8 @@ TagManager:
   - SoundEffect
   - FallM
   - HasPM
+  - Hole
+  - HoleM
   layers:
   - Default
   - TransparentFX
