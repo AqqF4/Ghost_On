@@ -28,35 +28,35 @@ AnimationClip:
       value: {fileID: 21300000, guid: 6d861312e1bef9e4fb8d57f772776013, type: 3}
     - time: 0.23333333
       value: {fileID: 21300000, guid: d5ce3a6246f7c934b976de354492eddb, type: 3}
-    - time: 0.41666666
+    - time: 0.6666667
       value: {fileID: 21300000, guid: d9aacd7119b56704cb83a2831c5beb36, type: 3}
-    - time: 0.5
+    - time: 0.75
       value: {fileID: 21300000, guid: 3f801866a82d92e49a80b52b2225eaea, type: 3}
-    - time: 0.8333333
+    - time: 1.0833334
       value: {fileID: 21300000, guid: f304d38162d9bbe40b6f85aad050be4c, type: 3}
-    - time: 1
+    - time: 1.25
       value: {fileID: 21300000, guid: 8fddbbf732dc4ba4e8246fb5899781ac, type: 3}
-    - time: 1.1666666
+    - time: 1.4166666
       value: {fileID: 21300000, guid: f304d38162d9bbe40b6f85aad050be4c, type: 3}
-    - time: 1.35
+    - time: 1.6
       value: {fileID: 21300000, guid: 3f801866a82d92e49a80b52b2225eaea, type: 3}
-    - time: 1.5166667
+    - time: 1.7666667
       value: {fileID: 21300000, guid: f304d38162d9bbe40b6f85aad050be4c, type: 3}
-    - time: 1.6833333
+    - time: 1.9333333
       value: {fileID: 21300000, guid: 8fddbbf732dc4ba4e8246fb5899781ac, type: 3}
-    - time: 1.85
+    - time: 2.1
       value: {fileID: 21300000, guid: f304d38162d9bbe40b6f85aad050be4c, type: 3}
-    - time: 2.0166667
+    - time: 2.2666667
       value: {fileID: 21300000, guid: 8fddbbf732dc4ba4e8246fb5899781ac, type: 3}
-    - time: 2.2166667
+    - time: 2.4666667
       value: {fileID: 21300000, guid: 23787acc648ce564988fcf2bc99309db, type: 3}
-    - time: 2.3666666
+    - time: 2.5666666
       value: {fileID: 21300000, guid: 1d70c08f255f58f4bae94ff3fa6df871, type: 3}
-    - time: 2.5333333
+    - time: 2.6833334
       value: {fileID: 21300000, guid: 88260bddf2b5bb54abc25cf8233a9d17, type: 3}
-    - time: 2.6666667
+    - time: 2.7666667
       value: {fileID: 21300000, guid: 88260bddf2b5bb54abc25cf8233a9d17, type: 3}
-    - time: 2.85
+    - time: 2.9
       value: {fileID: 21300000, guid: b2fe6e8ad631a044da1b8a631ad026ce, type: 3}
     - time: 3
       value: {fileID: 21300000, guid: b2fe6e8ad631a044da1b8a631ad026ce, type: 3}

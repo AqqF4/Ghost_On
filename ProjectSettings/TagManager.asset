@@ -68,6 +68,7 @@ TagManager:
   - BodyM
   - SoundEffect
   - FallM
+  - HasPM
   layers:
   - Default
   - TransparentFX

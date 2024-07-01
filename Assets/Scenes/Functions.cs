@@ -632,27 +632,39 @@ public class Functions : MonoBehaviour
         playerSpeed = 0f; Destroy(Sound);
         if (anim != null) { anim.SetBool("isRunning", false); anim.SetBool("isWatching", true); }
         isMoving = false; 
-        if(!isntDead && !PP.hasPassword){canDelete = true;}
+
+        if(isntDead && PP.hasPassword){Menu = GameObject.FindGameObjectWithTag("HasPM").GetComponent<SpriteRenderer>(); ActivateMenu(Menu);}else{Menu = GameObject.FindGameObjectWithTag("ExitM").GetComponent<SpriteRenderer>(); ActivateMenu(Menu); canDelete = true;}
+        if(PP.hasPassword == false){Menu = GameObject.FindGameObjectWithTag("ExitM").GetComponent<SpriteRenderer>(); ActivateMenu(Menu); canDelete = true;}
+    }
+    public void ExitLabs()
+    {
+        StartCoroutine(EnterTheExit());
+    }
+
+    IEnumerator EnterTheExit()
+    {
+        if(!isntDead && !PP.hasPassword){ActivateMenu(Menu); canDelete = true;}
         if(isntDead && PP.hasPassword)
         {
             if(PP.hasCola)
             {
                 Menu = GameObject.FindGameObjectWithTag("HappyEnd").GetComponent<SpriteRenderer>();
-                EE = GameObject.FindGameObjectWithTag("HappyEnd").GetComponent<Ending>(); CanWalk = false; yield return new WaitForSeconds(2); EE.BackToMenu();
+                
             }
             else
             {
                 Menu = GameObject.FindGameObjectWithTag("BadEnd").GetComponent<SpriteRenderer>();
-                EE = GameObject.FindGameObjectWithTag("BadEnd").GetComponent<Ending>(); CanWalk = false; yield return new WaitForSeconds(2); EE.BackToMenu();
+                
             }
             
         }
         
-        if(PP.hasPassword){Menu = GameObject.FindGameObjectWithTag("BearEnd").GetComponent<SpriteRenderer>(); PP.Ending = 1;} 
-        if(isntDead && PP.hasPassword){ActivateMenu(Menu); canDelete = false;}
-        ActivateMenu(Menu); if(!isntDead && PP.hasPassword){EE = GameObject.FindGameObjectWithTag("BearEnd").GetComponent<Ending>(); CanWalk = false; yield return new WaitForSeconds(2); EE.BackToMenu();}
-
-        
+        if(PP.hasPassword && !isntDead){Menu = GameObject.FindGameObjectWithTag("BearEnd").GetComponent<SpriteRenderer>(); PP.Ending = 1;} 
+        if(isntDead && PP.hasPassword){canDelete = false;}
+        ActivateMenu(Menu);
+        if(!isntDead && PP.hasPassword){EE = GameObject.FindGameObjectWithTag("BearEnd").GetComponent<Ending>(); CanWalk = false; yield return new WaitForSeconds(2); EE.BackToMenu();} 
+        if(isntDead && PP.hasPassword && PP.hasCola){EE = GameObject.FindGameObjectWithTag("HappyEnd").GetComponent<Ending>(); CanWalk = false; yield return new WaitForSeconds(2); EE.BackToMenu();} 
+        if(isntDead && PP.hasPassword && !PP.hasCola){EE = GameObject.FindGameObjectWithTag("BadEnd").GetComponent<Ending>(); CanWalk = false; yield return new WaitForSeconds(2); EE.BackToMenu();} 
     }
 
     public IEnumerator GoToTrash()
@@ -733,10 +745,10 @@ public class Functions : MonoBehaviour
             yield return null;
         }
         playerSpeed = 0f; Destroy(Sound);
-        if (anim != null) { anim.SetBool("isRunning", false); anim.SetBool("isWatching", true); PP.Ending = 2;}
+        if (anim != null) { anim.SetBool("isRunning", false); anim.SetBool("isWatching", true);}
         isMoving = false;
         
-        if(PP.hasKey){Menu = GameObject.FindGameObjectWithTag("TubeNothingMVent").GetComponent<SpriteRenderer>(); GameObject.FindGameObjectWithTag("Grounded").GetComponent<Animator>().SetTrigger("Open"); }else{Menu = GameObject.FindGameObjectWithTag("LuckM").GetComponent<SpriteRenderer>();}
+        if(PP.hasKey){Menu = GameObject.FindGameObjectWithTag("TubeNothingMVent").GetComponent<SpriteRenderer>();  GameObject.FindGameObjectWithTag("Grounded").GetComponent<Animator>().SetTrigger("Open"); }else{Menu = GameObject.FindGameObjectWithTag("LuckM").GetComponent<SpriteRenderer>();}
         ActivateMenu(Menu);
         if(!PP.hasKey){canDelete = true;}
     }
@@ -753,7 +765,7 @@ public class Functions : MonoBehaviour
         Player.transform.localScale = new Vector3(Mathf.Abs(Player.transform.localScale.x), Player.transform.localScale.y, Player.transform.localScale.z);
         Menu = null;
         Menu = GameObject.FindGameObjectWithTag("VentEnd").GetComponent<SpriteRenderer>(); Player.GetComponent<Animator>().SetTrigger("Stuck");
-        yield return new WaitForSeconds(1); ActivateMenu(Menu);
+        yield return new WaitForSeconds(1); ActivateMenu(Menu); PP.Ending = 2;
         EE = GameObject.FindGameObjectWithTag("VentEnd").GetComponent<Ending>(); CanWalk = false; yield return new WaitForSeconds(2); EE.BackToMenu();
     }
 
@@ -766,7 +778,7 @@ public class Functions : MonoBehaviour
     {
         DisActMenu(); canDelete = false;
         Player.transform.localScale = new Vector3(Mathf.Abs(Player.transform.localScale.x), Player.transform.localScale.y, Player.transform.localScale.z);
-        Menu = null;
+        Menu = null; Player.GetComponent<Animator>().SetTrigger("SeeV"); yield return new WaitForSeconds(3);
         Menu = GameObject.FindGameObjectWithTag("HeartEnd").GetComponent<SpriteRenderer>(); Player.GetComponent<Animator>().SetTrigger("ScareV");
         yield return new WaitForSeconds(3); ActivateMenu(Menu);
         EE = GameObject.FindGameObjectWithTag("HeartEnd").GetComponent<Ending>(); CanWalk = false; yield return new WaitForSeconds(2); EE.BackToMenu();
@@ -798,9 +810,15 @@ public class Functions : MonoBehaviour
         playerSpeed = 0f;  LadderPlus = null; Destroy(Sound);
         if (anim != null) {if(!PP.hasLadder){ anim.SetBool("isRunning", false); anim.SetBool("isWatching", true); }else{ anim.SetBool("isRunning", false); anim.SetBool("isWatching", false); anim.SetBool("isClimbing", true);}}
         isMoving = false;
-        if(PP.hasLadder){LadderPlus = Instantiate(PlayerLadder, LadderPoint.position, Quaternion.identity); anim.SetBool("isClimbing", true); Menu = GameObject.FindGameObjectWithTag("TubeNothingM").GetComponent<SpriteRenderer>(); WantDestroy = true; PlusObject = tubeObj; CanTube.SetActive(false); CantTube.SetActive(true);}
+        if(PP.hasLadder){LadderPlus = Instantiate(PlayerLadder, LadderPoint.position, Quaternion.identity); anim.SetBool("isClimbing", true); if(isDeadinVent)
+        {anim.SetBool("isClimbing", false); anim.SetTrigger("See"); yield return new WaitForSeconds(3);} Menu = GameObject.FindGameObjectWithTag("TubeNothingM").GetComponent<SpriteRenderer>(); WantDestroy = true; PlusObject = tubeObj; CanTube.SetActive(false); CantTube.SetActive(true);}
         ActivateMenu(Menu); 
         if(!isDeadinVent){canDelete = true;}else{PP.Ending = 5; EE = GameObject.FindGameObjectWithTag("VentEnd").GetComponent<Ending>(); CanWalk = false; yield return new WaitForSeconds(2); EE.BackToMenu();}
+    }
+
+    public void CloseHatch()
+    {
+        GameObject.FindGameObjectWithTag("Grounded").GetComponent<Animator>().SetTrigger("Close");
     }
 
     void DisActMenu()
