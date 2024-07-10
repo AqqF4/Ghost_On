@@ -71,6 +71,11 @@ TagManager:
   - HasPM
   - Hole
   - HoleM
+  - DarkR1
+  - DarkR2
+  - DarkR3
+  - DarkR4
+  - DarkR5
   layers:
   - Default
   - TransparentFX
