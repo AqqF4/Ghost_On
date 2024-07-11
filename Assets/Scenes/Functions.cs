@@ -12,7 +12,7 @@ public class Functions : MonoBehaviour
     public GameObject TopRoom; GameObject holeObj; public GameObject GroupNull;
     public GameObject DoorSound; public GameObject ElevatorSound;
     private GameObject ElevatorObj; // Объект лифта
-    private Animator anim; public GameObject TMP; public bool WasInEveryDR;
+    private Animator anim; public GameObject TMP;
     private Animator animGlobal; Ending EE;
     private Animator animGlobalUp; float CCC = 0.3f;
     private Animator animGlobalDown; public GameObject WalkSoundFast;
@@ -25,14 +25,6 @@ public class Functions : MonoBehaviour
     public GameObject LastRoom;
     public GameObject CurrentRoom; 
     public bool Gravitied;
-
-
-    int W1;
-    int W2;
-    int W3;
-    int W4;
-    int W5;
-
 
     public GameObject NextRoom;
     GameObject[] pressedDoors;
@@ -1006,51 +998,9 @@ public class Functions : MonoBehaviour
         isMoving = false;
     }
 
+
     void Update()
     {
-        if(gameObject.CompareTag("DarkR1"))
-        {
-            W1 = 1;
-            
-        }
-
-        if(gameObject.CompareTag("DarkR2"))
-        {
-
-            W2 = 2;
-            
-        }
-
-        if(gameObject.CompareTag("DarkR3"))
-{
-            W3 = 1;
-            
-        }
-
-        if(gameObject.CompareTag("DarkR4"))
-        {
-
-            W4 = 1;
-            
-        }
-
-        if(gameObject.CompareTag("DarkR5"))
-        {
-
-            W5 = 1;
-            
-        }
-
-        if(W4 == 1 && W3 == 1 && W5 == 1)
-        {
-            if(W1 == 1 && W2 == 1)
-            {
-                WasInEveryDR =  true;
-            }
-        }
-
-
-
 
         if(PP == null)
         {

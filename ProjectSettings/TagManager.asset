@@ -76,6 +76,7 @@ TagManager:
   - DarkR3
   - DarkR4
   - DarkR5
+  - SameEnd
   layers:
   - Default
   - TransparentFX
