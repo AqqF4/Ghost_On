@@ -14,6 +14,8 @@ public class PlayerTook : MonoBehaviour
     public bool turnedLight;
     public bool hasBucket;
     public bool hasCola;
+    public GameObject GunSound;
+    public GameObject WaterSound;
 
 
     public int Ending;
@@ -28,5 +30,15 @@ public class PlayerTook : MonoBehaviour
     {
         PlayerPrefs.SetInt("Ending", Ending);
         PlayerPrefs.Save();
+    }
+
+    public void Shoot()
+    {
+        Instantiate(GunSound, transform.position, Quaternion.identity);
+    }
+
+    public void Pour()
+    {
+        Instantiate(WaterSound, transform.position, Quaternion.identity);
     }
 }

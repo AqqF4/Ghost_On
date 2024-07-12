@@ -468,11 +468,13 @@ MonoBehaviour:
   UnlightedRoom: {fileID: 0}
   FlashlightPref: {fileID: 0}
   Flashpoint: {fileID: 0}
+  IsFirstClone: 0
   playerSpeed: 5
   isPainted: 0
   fixedYPosition: 10
   LastRoom: {fileID: 185464832}
   CurrentRoom: {fileID: 34875834}
+  Gravitied: 0
   NextRoom: {fileID: 0}
   TopEtazh: {fileID: 0}
   CurrentEtazh: {fileID: 387877275}
@@ -1136,6 +1138,8 @@ MonoBehaviour:
   turnedLight: 0
   hasBucket: 0
   hasCola: 0
+  GunSound: {fileID: 0}
+  WaterSound: {fileID: 0}
   Ending: 0
 --- !u!1 &79158842
 GameObject:
@@ -2936,11 +2940,13 @@ MonoBehaviour:
   UnlightedRoom: {fileID: 1507809113}
   FlashlightPref: {fileID: 2028966068376930794, guid: 6399c0e7374f56948b7784eac81bc1a8, type: 3}
   Flashpoint: {fileID: 1853960350}
+  IsFirstClone: 0
   playerSpeed: 5
   isPainted: 0
   fixedYPosition: 10
   LastRoom: {fileID: 0}
   CurrentRoom: {fileID: 185464832}
+  Gravitied: 0
   NextRoom: {fileID: 34875834}
   TopEtazh: {fileID: 0}
   CurrentEtazh: {fileID: 387877275}
@@ -8091,6 +8097,8 @@ MonoBehaviour:
   turnedLight: 0
   hasBucket: 0
   hasCola: 0
+  GunSound: {fileID: 0}
+  WaterSound: {fileID: 0}
   Ending: 0
 --- !u!1 &496336684
 GameObject:
@@ -12925,11 +12933,13 @@ MonoBehaviour:
   UnlightedRoom: {fileID: 0}
   FlashlightPref: {fileID: 0}
   Flashpoint: {fileID: 0}
+  IsFirstClone: 0
   playerSpeed: 5
   isPainted: 0
   fixedYPosition: 0
   LastRoom: {fileID: 1729826916}
   CurrentRoom: {fileID: 886082057}
+  Gravitied: 0
   NextRoom: {fileID: 2074921491}
   TopEtazh: {fileID: 387877275}
   CurrentEtazh: {fileID: 1558255541}
@@ -23236,11 +23246,13 @@ MonoBehaviour:
   UnlightedRoom: {fileID: 0}
   FlashlightPref: {fileID: 0}
   Flashpoint: {fileID: 0}
+  IsFirstClone: 0
   playerSpeed: 5
   isPainted: 0
   fixedYPosition: 0
   LastRoom: {fileID: 0}
   CurrentRoom: {fileID: 1729826916}
+  Gravitied: 0
   NextRoom: {fileID: 886082057}
   TopEtazh: {fileID: 387877275}
   CurrentEtazh: {fileID: 1558255541}
@@ -26338,6 +26350,8 @@ MonoBehaviour:
   turnedLight: 0
   hasBucket: 0
   hasCola: 0
+  GunSound: {fileID: 4051587607609618667, guid: 2a12d12511ca08d4d85e9cef4de73829, type: 3}
+  WaterSound: {fileID: 33739639034350513, guid: 389a49a94d6c5c540a57515f7022ae97, type: 3}
   Ending: 0
 --- !u!114 &2055825635
 MonoBehaviour:
@@ -26488,11 +26502,13 @@ MonoBehaviour:
   UnlightedRoom: {fileID: 0}
   FlashlightPref: {fileID: 2028966068376930794, guid: 6399c0e7374f56948b7784eac81bc1a8, type: 3}
   Flashpoint: {fileID: 0}
+  IsFirstClone: 0
   playerSpeed: 5
   isPainted: 0
   fixedYPosition: -10
   LastRoom: {fileID: 0}
   CurrentRoom: {fileID: 2064202429}
+  Gravitied: 0
   NextRoom: {fileID: 0}
   TopEtazh: {fileID: 1558255541}
   CurrentEtazh: {fileID: 568963537}
@@ -26596,11 +26612,13 @@ MonoBehaviour:
   UnlightedRoom: {fileID: 0}
   FlashlightPref: {fileID: 0}
   Flashpoint: {fileID: 0}
+  IsFirstClone: 0
   playerSpeed: 5
   isPainted: 0
   fixedYPosition: 0
   LastRoom: {fileID: 886082057}
   CurrentRoom: {fileID: 2074921491}
+  Gravitied: 0
   NextRoom: {fileID: 886082057}
   TopEtazh: {fileID: 387877275}
   CurrentEtazh: {fileID: 1558255541}

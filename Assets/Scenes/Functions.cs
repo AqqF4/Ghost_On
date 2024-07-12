@@ -12,7 +12,7 @@ public class Functions : MonoBehaviour
     public GameObject TopRoom; GameObject holeObj; public GameObject GroupNull;
     public GameObject DoorSound; public GameObject ElevatorSound;
     private GameObject ElevatorObj; // Объект лифта
-    private Animator anim; public GameObject TMP;
+    private Animator anim; public GameObject TMP; GameObject shotObj;
     private Animator animGlobal; Ending EE;
     private Animator animGlobalUp; float CCC = 0.3f;
     private Animator animGlobalDown; public GameObject WalkSoundFast;
@@ -24,7 +24,7 @@ public class Functions : MonoBehaviour
     public float fixedYPosition = -0.5f;
     public GameObject LastRoom;
     public GameObject CurrentRoom; 
-    public bool Gravitied;
+    public bool Gravitied; 
 
     public GameObject NextRoom;
     GameObject[] pressedDoors;
@@ -107,6 +107,11 @@ public class Functions : MonoBehaviour
     {if(CanWalk){
         Menu = GameObject.FindGameObjectWithTag("TrashM").GetComponent<SpriteRenderer>();
         if (!isMoving) { StartCoroutine(GoToTrash());}
+    }}
+
+    public void ToShoot()
+    {if(CanWalk){
+        if (!isMoving) { StartCoroutine(GoAndShoot());}
     }}
 
     public void ToHatch()
@@ -405,6 +410,8 @@ public class Functions : MonoBehaviour
         ActivateMenu(Menu);
         canDelete = true;
     }
+
+    
 
     public IEnumerator GoToGravity()
     {
@@ -745,6 +752,36 @@ public class Functions : MonoBehaviour
         if(PP.hasBucket){Menu = GameObject.FindGameObjectWithTag("FallM").GetComponent<SpriteRenderer>();}
         ActivateMenu(Menu);
         if(!PP.hasBucket){canDelete = true;}
+    }
+
+    public IEnumerator GoAndShoot()
+    {
+        isMoving = true; canDelete = false;
+        playerSpeed = 5f;
+        if (anim != null) { anim.SetBool("isWatching", false); anim.SetBool("isRunning", true); }
+        DisActMenu();
+        Vector3 targetPosition = shotObj.transform.position; Sound = Instantiate(WalkSound, transform.position, Quaternion.identity);
+        while (Mathf.Abs(Player.transform.position.x - targetPosition.x) > 0.1f)
+        {
+            if (Player.transform.position.x < targetPosition.x)
+            {
+                Player.transform.localScale = new Vector3(Mathf.Abs(Player.transform.localScale.x), Player.transform.localScale.y, Player.transform.localScale.z);
+            }
+            else if (Player.transform.position.x > targetPosition.x)
+            {
+                Player.transform.localScale = new Vector3(-Mathf.Abs(Player.transform.localScale.x), Player.transform.localScale.y, Player.transform.localScale.z);
+            }
+            Vector3 newPosition = Vector2.MoveTowards(Player.transform.position, new Vector3(targetPosition.x, Player.transform.position.y, Player.transform.position.z), playerSpeed * Time.deltaTime);
+            newPosition.y = fixedYPosition;
+            Player.transform.position = newPosition;
+            yield return null;
+        }
+        playerSpeed = 0f; Destroy(Sound);
+        if (anim != null) { anim.SetBool("isRunning", false); anim.SetBool("isWatching", true);}
+        isMoving = false;
+        if(PP.hasGun){anim.SetBool("isWatching", false); anim.SetTrigger("Shot"); yield return new WaitForSeconds(2); Menu = GameObject.FindGameObjectWithTag("NULLEnd").GetComponent<SpriteRenderer>(); PP.Ending = 0;}
+        ActivateMenu(Menu);
+        if(PP.hasGun){EE = GameObject.FindGameObjectWithTag("NULLEnd").GetComponent<Ending>(); CanWalk = false; yield return new WaitForSeconds(2); EE.BackToMenu();}
     }
 
     public void FallOut()
@@ -1095,6 +1132,11 @@ public class Functions : MonoBehaviour
         if(flashObj == null)
         {
             flashObj = GameObject.FindGameObjectWithTag("Flashlight");
+        }
+
+        if(shotObj == null)
+        {
+            shotObj = GameObject.FindGameObjectWithTag("Shot");
         }
 
         if(bucketObj == null)
