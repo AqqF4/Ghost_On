@@ -45,27 +45,27 @@ public class CloneButtons : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.R))
-        {
+        //if (Input.GetKeyDown(KeyCode.R))
+        //{
             // —брос данных и деактиваци€ объектов
-            PlayerPrefs.DeleteKey("W047");
-            PlayerPrefs.DeleteKey("W325");
-            PlayerPrefs.DeleteKey("W586");
-            PlayerPrefs.DeleteKey("W993");
-            PlayerPrefs.DeleteKey("Ending");
-            PlayerPrefs.Save();
+        //    PlayerPrefs.DeleteKey("W047");
+        //    PlayerPrefs.DeleteKey("W325");
+        //    PlayerPrefs.DeleteKey("W586");
+        //    PlayerPrefs.DeleteKey("W993");
+        //    PlayerPrefs.DeleteKey("Ending");
+        //    PlayerPrefs.Save();
 
-            WasOn047 = false;
-            WasOn325 = false;
-            WasOn586 = false;
-            WasOn993 = false;
-            C047.SetActive(false);
-            C325.SetActive(false);
-            C586.SetActive(false);
-            C993.SetActive(false);
-            Ending = 0;
-            PlayerPrefs.Save();
-        }
+        //    WasOn047 = false;
+        //   WasOn325 = false;
+        //    WasOn586 = false;
+        //    WasOn993 = false;
+        //   C047.SetActive(false);
+        //   C325.SetActive(false);
+        //    C586.SetActive(false);
+        //   C993.SetActive(false);
+        //    Ending = 0;
+        //    PlayerPrefs.Save();
+        //}
     }
 
     void LateUpdate()
