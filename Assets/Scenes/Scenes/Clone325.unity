@@ -15796,7 +15796,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1729826918}
         m_TargetAssemblyTypeName: Functions, Assembly-CSharp
         m_MethodName: Stay
         m_Mode: 1
@@ -16842,7 +16842,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1729826918}
         m_TargetAssemblyTypeName: Functions, Assembly-CSharp
         m_MethodName: ExitLabs
         m_Mode: 1

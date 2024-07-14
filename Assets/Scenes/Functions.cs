@@ -383,7 +383,7 @@ public class Functions : MonoBehaviour
         {
             PP.Ending = 4;
             PP.SaveEnding();
-        } EE = GameObject.FindGameObjectWithTag("ElektroEnd").GetComponent<Ending>(); CanWalk = false; yield return new WaitForSeconds(2); PaintInt = 1;
+        } EE = GameObject.FindGameObjectWithTag("ElektroEnd").GetComponent<Ending>(); CanWalk = false; yield return new WaitForSeconds(2); PaintInt = 0;
             PlayerPrefs.SetInt("PaintInt", PaintInt);
             PlayerPrefs.Save(); EE.BackToMenu();
     }
@@ -603,7 +603,8 @@ public class Functions : MonoBehaviour
         if(PP.hasMarker){Menu = Painted.GetComponent<SpriteRenderer>(); PaintedR.SetActive(true); UnPaintedR.SetActive(false); PP.hasMarker = false;}
         ActivateMenu(Menu);
         if(PP.hasMarker){WantDestroy = true; canDelete = true;}
-        isPainted = true;
+        isPainted = true; PaintInt = 1;PlayerPrefs.SetInt("PaintInt", PaintInt);
+            PlayerPrefs.Save(); 
         canDelete = true;
     }
 
@@ -729,13 +730,13 @@ public class Functions : MonoBehaviour
         }} 
         if(isntDead && PP.hasPassword){canDelete = false;}
         ActivateMenu(Menu);
-        if(!isntDead && PP.hasPassword){EE = GameObject.FindGameObjectWithTag("BearEnd").GetComponent<Ending>(); CanWalk = false; yield return new WaitForSeconds(2); PaintInt = 1;
+        if(!isntDead && PP.hasPassword){EE = GameObject.FindGameObjectWithTag("BearEnd").GetComponent<Ending>(); CanWalk = false; yield return new WaitForSeconds(2); PaintInt = 0;
             PlayerPrefs.SetInt("PaintInt", PaintInt);
             PlayerPrefs.Save(); EE.BackToMenu();} 
-        if(isntDead && PP.hasPassword && PP.hasCola){EE = GameObject.FindGameObjectWithTag("HappyEnd").GetComponent<Ending>(); CanWalk = false; yield return new WaitForSeconds(2); PaintInt = 1;
+        if(isntDead && PP.hasPassword && PP.hasCola){EE = GameObject.FindGameObjectWithTag("HappyEnd").GetComponent<Ending>(); CanWalk = false; yield return new WaitForSeconds(2); PaintInt = 0;
             PlayerPrefs.SetInt("PaintInt", PaintInt);
             PlayerPrefs.Save(); EE.BackToMenu();} 
-        if(isntDead && PP.hasPassword && !PP.hasCola){EE = GameObject.FindGameObjectWithTag("BadEnd").GetComponent<Ending>(); CanWalk = false; yield return new WaitForSeconds(2); PaintInt = 1;
+        if(isntDead && PP.hasPassword && !PP.hasCola){EE = GameObject.FindGameObjectWithTag("BadEnd").GetComponent<Ending>(); CanWalk = false; yield return new WaitForSeconds(2); PaintInt = 0;
             PlayerPrefs.SetInt("PaintInt", PaintInt);
             PlayerPrefs.Save(); EE.BackToMenu();} 
     }
@@ -801,7 +802,7 @@ public class Functions : MonoBehaviour
             PP.SaveEnding();
         }}
         ActivateMenu(Menu);
-        if(PP.hasGun){EE = GameObject.FindGameObjectWithTag("NULLEnd").GetComponent<Ending>(); CanWalk = false; yield return new WaitForSeconds(2); PaintInt = 1;
+        if(PP.hasGun){EE = GameObject.FindGameObjectWithTag("NULLEnd").GetComponent<Ending>(); CanWalk = false; yield return new WaitForSeconds(2); PaintInt = 0;
             PlayerPrefs.SetInt("PaintInt", PaintInt);
             PlayerPrefs.Save(); EE.BackToMenu();}
     }
@@ -821,7 +822,7 @@ public class Functions : MonoBehaviour
             PP.SaveEnding();
         }}
         ActivateMenu(Menu);
-        if(PP.hasBucket){EE = GameObject.FindGameObjectWithTag("FallEnd").GetComponent<Ending>(); CanWalk = false; yield return new WaitForSeconds(2); PaintInt = 1;
+        if(PP.hasBucket){EE = GameObject.FindGameObjectWithTag("FallEnd").GetComponent<Ending>(); CanWalk = false; yield return new WaitForSeconds(2); PaintInt = 0;
             PlayerPrefs.SetInt("PaintInt", PaintInt);
             PlayerPrefs.Save(); EE.BackToMenu();}
     }
@@ -891,7 +892,7 @@ public class Functions : MonoBehaviour
         }
             PP.SaveEnding();
         }
-        EE = GameObject.FindGameObjectWithTag("VentEnd").GetComponent<Ending>(); CanWalk = false; yield return new WaitForSeconds(2); PaintInt = 1;
+        EE = GameObject.FindGameObjectWithTag("VentEnd").GetComponent<Ending>(); CanWalk = false; yield return new WaitForSeconds(2); PaintInt = 0;
             PlayerPrefs.SetInt("PaintInt", PaintInt);
             PlayerPrefs.Save(); EE.BackToMenu();
     }
@@ -912,7 +913,7 @@ public class Functions : MonoBehaviour
         {
             PP.Ending = 4;
             PP.SaveEnding();
-        } CanWalk = false; yield return new WaitForSeconds(2); PaintInt = 1;
+        } CanWalk = false; yield return new WaitForSeconds(2); PaintInt = 0;
             PlayerPrefs.SetInt("PaintInt", PaintInt);
             PlayerPrefs.Save(); EE.BackToMenu();
     }
@@ -950,7 +951,7 @@ public class Functions : MonoBehaviour
         {
             PP.Ending = 4;
             PP.SaveEnding();
-        } EE = GameObject.FindGameObjectWithTag("VentEnd").GetComponent<Ending>(); CanWalk = false; yield return new WaitForSeconds(2); PaintInt = 1;
+        } EE = GameObject.FindGameObjectWithTag("VentEnd").GetComponent<Ending>(); CanWalk = false; yield return new WaitForSeconds(2); PaintInt = 0;
             PlayerPrefs.SetInt("PaintInt", PaintInt);
             PlayerPrefs.Save(); EE.BackToMenu(); }
     }
@@ -1092,7 +1093,7 @@ public class Functions : MonoBehaviour
     {
         if(PaintInt == 0)
         {
-            PaintInt = PlayerPrefs.GetInt("PaintInt", PaintInt); if(PaintInt == 1){isPainted = true;}
+            PaintInt = PlayerPrefs.GetInt("PaintInt", PaintInt); if(PaintInt == 1){isPainted = true;}else{isPainted = false;}
         }
 
 
