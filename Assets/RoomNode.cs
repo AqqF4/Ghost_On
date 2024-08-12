@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -5,10 +6,18 @@ public class RoomNode : MonoBehaviour
 {
     public List<RoomNode> neighbors; // Соседние комнаты
 
-    // Возвращает случайного соседа, используемого в дальнейшем для случайного передвижения
-    public RoomNode GetRandomNeighbor()
+    private void OnDrawGizmos()
     {
-        if (neighbors.Count == 0) return null;
-        return neighbors[Random.Range(0, neighbors.Count)];
+        Gizmos.color = Color.green;
+        Gizmos.DrawSphere(transform.position, 0.1f);
+
+        Gizmos.color = Color.yellow;
+        foreach (var neighbor in neighbors)
+        {
+            if (neighbor != null)
+            {
+                Gizmos.DrawLine(transform.position, neighbor.transform.position);
+            }
+        }
     }
 }

@@ -75,7 +75,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 15
   m_Sprite: {fileID: 21300000, guid: 340b01e6f1798664289d3824f005967b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -99,10 +99,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7a44a313b26f894794e515588469166, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animatronic: {fileID: 0}
-  soundLevel: 5
-  soundInterval: 7
-  detectionRadius: 1.24
+  soundLevel: 2
+  soundInterval: 2
+  detectionRadius: 1.5
 --- !u!95 &2711289245441595189
 Animator:
   serializedVersion: 5
@@ -151,7 +150,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 5, y: 5, z: 1}
+  m_LocalScale: {x: 6, y: 6, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8013138622881830142}

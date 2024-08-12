@@ -3,84 +3,42 @@ using UnityEngine;
 
 public class Pathfinding : MonoBehaviour
 {
-    public static List<RoomNode> FindPath(RoomNode startNode, RoomNode targetNode)
+    // Сделать метод публичным, чтобы он был доступен для других классов
+    public List<RoomNode> FindPath(RoomNode startNode, RoomNode targetNode)
     {
-        List<RoomNode> openSet = new List<RoomNode> { startNode };
-        HashSet<RoomNode> closedSet = new HashSet<RoomNode>();
-
+        Queue<RoomNode> queue = new Queue<RoomNode>();
         Dictionary<RoomNode, RoomNode> cameFrom = new Dictionary<RoomNode, RoomNode>();
-        Dictionary<RoomNode, float> gScore = new Dictionary<RoomNode, float>();
-        Dictionary<RoomNode, float> fScore = new Dictionary<RoomNode, float>();
+        queue.Enqueue(startNode);
+        cameFrom[startNode] = null;
 
-        foreach (RoomNode node in FindObjectsOfType<RoomNode>())
+        while (queue.Count > 0)
         {
-            gScore[node] = float.MaxValue;
-            fScore[node] = float.MaxValue;
-        }
-        gScore[startNode] = 0;
-        fScore[startNode] = Heuristic(startNode, targetNode);
+            RoomNode current = queue.Dequeue();
 
-        while (openSet.Count > 0)
-        {
-            RoomNode currentNode = GetLowestFScoreNode(openSet, fScore);
-
-            if (currentNode == targetNode)
+            if (current == targetNode)
             {
-                return ReconstructPath(cameFrom, currentNode);
+                // Построение пути от targetNode до startNode
+                List<RoomNode> path = new List<RoomNode>();
+                while (current != null)
+                {
+                    path.Add(current);
+                    current = cameFrom[current];
+                }
+                path.Reverse(); // Путь строится от цели к старту, поэтому нужно развернуть список
+                return path;
             }
 
-            openSet.Remove(currentNode);
-            closedSet.Add(currentNode);
-
-            foreach (RoomNode neighbor in currentNode.neighbors)
+            foreach (RoomNode neighbor in current.neighbors)
             {
-                if (closedSet.Contains(neighbor)) continue;
-
-                float tentativeGScore = gScore[currentNode] + Vector3.Distance(currentNode.transform.position, neighbor.transform.position);
-                if (tentativeGScore < gScore[neighbor])
+                if (!cameFrom.ContainsKey(neighbor))
                 {
-                    cameFrom[neighbor] = currentNode;
-                    gScore[neighbor] = tentativeGScore;
-                    fScore[neighbor] = gScore[neighbor] + Heuristic(neighbor, targetNode);
-
-                    if (!openSet.Contains(neighbor))
-                    {
-                        openSet.Add(neighbor);
-                    }
+                    queue.Enqueue(neighbor);
+                    cameFrom[neighbor] = current;
                 }
             }
         }
 
-        return new List<RoomNode>(); // Путь не найден
-    }
-
-    private static float Heuristic(RoomNode a, RoomNode b)
-    {
-        return Vector3.Distance(a.transform.position, b.transform.position);
-    }
-
-    private static RoomNode GetLowestFScoreNode(List<RoomNode> openSet, Dictionary<RoomNode, float> fScore)
-    {
-        RoomNode lowest = openSet[0];
-        foreach (RoomNode node in openSet)
-        {
-            if (fScore[node] < fScore[lowest])
-            {
-                lowest = node;
-            }
-        }
-        return lowest;
-    }
-
-    private static List<RoomNode> ReconstructPath(Dictionary<RoomNode, RoomNode> cameFrom, RoomNode currentNode)
-    {
-        List<RoomNode> path = new List<RoomNode> { currentNode };
-        while (cameFrom.ContainsKey(currentNode))
-        {
-            currentNode = cameFrom[currentNode];
-            path.Add(currentNode);
-        }
-        path.Reverse();
-        return path;
+        // Если путь не найден
+        return new List<RoomNode>();
     }
 }

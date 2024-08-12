@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,117 +7,157 @@ public class AnimatronicMovement : MonoBehaviour
     public RoomNode[] rooms; // Список комнат (пустых объектов) в вентиляции
     public float hearingThreshold = 5f; // Порог слуха
     public float persistence = 3f; // Настойчивость аниматроника
-    public float hearingDecayRate = 1f; // Скорость уменьшения звука в единицах в секунду
+    public float hearingDecayRate = 1f; // Интервал уменьшения звука в секундах
     public float moveSpeed = 2f; // Скорость перемещения аниматроника между комнатами
-
     public float stayTime = 5f; // Время пребывания в одной комнате
-    private float stayTimer = 0f; // Таймер пребывания в комнате
+    public float minInterval = 2f; // Минимальный интервал времени для случайного перемещения
+    public float maxInterval = 5f; // Максимальный интервал времени для случайного перемещения
+    public bool enableRandomMovement = true; // Флаг для включения/выключения случайного движения
 
+    private float stayTimer = 0f; // Таймер пребывания в комнате
     private RoomNode currentRoom; // Текущая комната аниматроника
     private RoomNode targetRoom; // Целевая комната аниматроника
-    private Queue<RoomNode> path; // Путь до целевой комнаты
     private float heardSound = 0f; // Уровень услышанного звука
 
     private bool isMoving = false; // Флаг, указывающий, движется ли аниматроник
     private bool isWaiting = false; // Флаг, указывающий, ожидает ли аниматроник в комнате
+    private bool CanHear = true; // Флаг, указывающий, может ли аниматроник слышать звуки
+    private Queue<RoomNode> pathQueue = new Queue<RoomNode>(); // Очередь для хранения пути
 
-    private Dictionary<RoomNode, float> soundLevels = new Dictionary<RoomNode, float>(); // Словарь уровней звука для каждой комнаты
+    private Pathfinding pathfinding;
 
     void Start()
     {
         if (rooms == null || rooms.Length == 0)
         {
-            Debug.LogError("Rooms array is not set or empty");
+            Debug.LogError("Rooms array is not initialized or empty.");
             return;
         }
 
-        currentRoom = FindNearestRoom(transform.position); // Установить начальную позицию аниматроника в ближайшую комнату
-        if (currentRoom != null)
+        // Инициализация текущей комнаты
+        currentRoom = GetCurrentRoom();
+        if (currentRoom == null)
         {
-            transform.position = currentRoom.transform.position; // Начальная позиция аниматроника
-            stayTimer = stayTime; // Установить таймер пребывания в комнате
+            Debug.LogError("Current room could not be determined.");
+            return;
         }
-        else
+        Debug.Log("Current room successfully determined: " + currentRoom.name);
+
+        stayTimer = stayTime; // Установить начальное время ожидания
+        StartCoroutine(HearingDecayRoutine());
+
+        pathfinding = GetComponent<Pathfinding>();
+        if (pathfinding == null)
         {
-            Debug.LogError("Current room not found");
+            Debug.LogError("Pathfinding component not found.");
+            return;
+        }
+
+        if (enableRandomMovement) // Запускаем случайное перемещение только если оно включено
+        {
+            StartCoroutine(RandomMoveRoutine());
         }
     }
 
     void Update()
     {
-        if (isMoving)
+        if (targetRoom != null)
         {
-            if (isWaiting)
-            {
-                StayInRoom();
-            }
-            else
-            {
-                MoveAlongPath();
-            }
+            CanHear = false; // Отключаем слух, если установлена целевая комната
+            heardSound = 0f;
+        }
+
+        if(targetRoom == currentRoom)
+        {
+            CanHear = true;
+            isMoving = false;
+            isWaiting = false;
+            targetRoom = null;
+        }
+
+        if (isWaiting)
+        {
+            HandleWaiting();
+        }
+        else if (isMoving)
+        {
+            MoveTowardsTarget();
         }
     }
 
-    // Метод для установки уровня услышанного звука
     public void HearSound(float soundLevel, Vector3 soundPosition)
     {
-        RoomNode soundRoom = FindNearestRoom(soundPosition);
-
-        if (soundRoom != null)
+        if (CanHear)
         {
-            if (soundLevels.ContainsKey(soundRoom))
+            Debug.Log("Sound heard at position: " + soundPosition + " with level: " + soundLevel);
+
+            heardSound += Mathf.Max(heardSound, soundLevel);
+            UpdateTargetRoom(soundPosition);
+
+            // Если звук громче порога, обновляем уровень услышанного звука
+            if (soundLevel > hearingThreshold && soundLevel >= persistence)
             {
-                soundLevels[soundRoom] = Mathf.Max(soundLevels[soundRoom], soundLevel);
+                Debug.Log("Animatronic have heard the sound.");
             }
             else
             {
-                soundLevels.Add(soundRoom, soundLevel);
-            }
-
-            // Выбираем комнату с максимальным уровнем звука
-            RoomNode highestSoundRoom = GetRoomWithHighestSound();
-            if (highestSoundRoom != null)
-            {
-                targetRoom = highestSoundRoom;
-                path = new Queue<RoomNode>(Pathfinding.FindPath(currentRoom, targetRoom));
-                isMoving = true; // Начать движение
-                isWaiting = false; // Убедиться, что аниматроник не ожидает в комнате
+                Debug.Log("Sound level is below animatronic persistence.");
             }
         }
     }
 
-    // Метод для нахождения комнаты с наибольшим уровнем звука
-    RoomNode GetRoomWithHighestSound()
+    void UpdateTargetRoom(Vector3 soundPosition)
     {
-        RoomNode highestSoundRoom = null;
-        float maxSoundLevel = -1f;
+        if (heardSound <= persistence) return;
 
-        foreach (var kvp in soundLevels)
+        // Находим ближайшую комнату к источнику звука
+        RoomNode nearestRoom = FindNearestRoom(soundPosition);
+        if (nearestRoom != null && nearestRoom != currentRoom)
         {
-            if (kvp.Value > maxSoundLevel)
-            {
-                maxSoundLevel = kvp.Value;
-                highestSoundRoom = kvp.Key;
-            }
-        }
+            targetRoom = nearestRoom;
+            pathQueue = new Queue<RoomNode>(pathfinding.FindPath(currentRoom, targetRoom));
 
-        return highestSoundRoom;
+            // Устанавливаем флаги для начала движения
+            isMoving = pathQueue.Count > 0;
+            isWaiting = !isMoving;
+            stayTimer = stayTime; // Устанавливаем таймер ожидания
+
+            heardSound = 0f; // Сбрасываем heardSound
+            Debug.Log("New target room set: " + targetRoom.name);
+        }
+        else
+        {
+            Debug.Log("No suitable target room found or it is the current room.");
+        }
     }
 
-    // Метод для поиска ближайшей комнаты к заданной позиции
-    RoomNode FindNearestRoom(Vector3 position)
+    RoomNode FindNearestRoom(Vector3 soundPosition)
     {
-        if (rooms == null || rooms.Length == 0) return null;
+        if (rooms == null || rooms.Length == 0)
+        {
+            Debug.LogError("Rooms array is not initialized or empty.");
+            return null;
+        }
 
         RoomNode nearestRoom = null;
-        float minDistance = float.MaxValue;
+        float maxSoundLevel = -1f;
 
         foreach (RoomNode room in rooms)
         {
-            float distance = Vector3.Distance(room.transform.position, position);
-            if (distance < minDistance)
+            if (room == null)
             {
-                minDistance = distance;
+                Debug.LogWarning("Encountered a null room in the rooms array.");
+                continue;
+            }
+
+            float distance = Vector2.Distance((Vector2)soundPosition, (Vector2)room.transform.position);
+            float soundLevelAtRoom = heardSound - (distance * hearingDecayRate);
+
+            Debug.Log($"Checking room {room.name}. Distance: {distance}. Sound Level at Room: {soundLevelAtRoom}");
+
+            if (soundLevelAtRoom > maxSoundLevel)
+            {
+                maxSoundLevel = soundLevelAtRoom;
                 nearestRoom = room;
             }
         }
@@ -124,41 +165,152 @@ public class AnimatronicMovement : MonoBehaviour
         return nearestRoom;
     }
 
-    // Метод для перемещения аниматроника по пути
-    void MoveAlongPath()
+    void MoveTowardsTarget()
     {
-        if (path == null || path.Count == 0) return;
+        if (targetRoom == null || pathQueue.Count == 0) return;
 
-        // Получить следующую комнату в пути
-        RoomNode nextRoom = path.Peek(); // Не удаляем из очереди, пока не достигнем
+        // Двигаемся к следующей комнате в пути
+        RoomNode nextRoom = pathQueue.Peek();
+        Vector3 targetPosition = nextRoom.transform.position;
+        transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
 
-        transform.position = Vector3.MoveTowards(transform.position, nextRoom.transform.position, moveSpeed * Time.deltaTime);
-
-        // Если аниматроник достиг следующей комнаты, начать ожидание
-        if (Vector3.Distance(transform.position, nextRoom.transform.position) < 0.1f)
+        // Проверяем, достигли ли мы следующей комнаты
+        if (Vector3.Distance(transform.position, targetPosition) < 0.0001f)
         {
-            currentRoom = path.Dequeue(); // Удаляем комнату из очереди
-            isWaiting = true; // Включаем режим ожидания
-        }
-    }
+            // Устанавливаем текущую комнату как достигнутую
+            currentRoom = pathQueue.Dequeue(); 
 
-    // Метод для ожидания в комнате
-    void StayInRoom()
-    {
-        stayTimer -= Time.deltaTime;
-        if (stayTimer <= 0)
-        {
-            stayTimer = stayTime; // Сброс таймера
-            isWaiting = false; // Возобновить движение
-            if (path.Count > 0)
+            if (pathQueue.Count > 0)
             {
-                // Продолжить движение, если в очереди есть еще комнаты
-                isMoving = true;
+                // Если есть еще комнаты в пути, ожидаем в текущей комнате
+                isMoving = false;
+                isWaiting = true;
+                stayTimer = stayTime; // Устанавливаем таймер ожидания
+                Debug.Log("Arrived at room: " + currentRoom.name + ". Waiting...");
             }
             else
             {
-                // Если путь завершен, остановить движение
+                // Если путь исчерпан, аниматроник завершает движение
                 isMoving = false;
+                isWaiting = false;
+                CanHear = true;
+                stayTimer = stayTime; // Таймер ожидания не нужен после достижения конечной цели
+                Debug.Log("Arrived at target room: " + currentRoom.name);
+            }
+        }
+    }
+
+    void HandleWaiting()
+    {
+        if (stayTimer > 0)
+        {
+            stayTimer -= Time.deltaTime;
+        }
+        else
+        {
+            // Таймер истёк, переходим к следующему состоянию
+            isWaiting = false;
+            isMoving = true;
+            CanHear = false;
+            heardSound = 0f; // Сбрасываем heardSound
+            Debug.Log("Finished waiting, ready to move.");
+        }
+    }
+
+    public void SetTargetRoom(RoomNode room)
+    {
+        if (room == null || room == currentRoom) return;
+
+        targetRoom = room;
+        pathQueue = new Queue<RoomNode>(pathfinding.FindPath(currentRoom, targetRoom));
+        isMoving = pathQueue.Count > 0;
+        isWaiting = !isMoving;
+        stayTimer = stayTime; // Устанавливаем таймер ожидания
+        heardSound = 0f; // Сбрасываем heardSound
+        Debug.Log("New target room set: " + targetRoom.name);
+    }
+
+    public RoomNode GetCurrentRoom()
+    {
+        if (rooms == null || rooms.Length == 0)
+        {
+            Debug.LogError("Rooms array is not initialized or empty.");
+            return null;
+        }
+
+        foreach (RoomNode room in rooms)
+        {
+            if (room == null)
+            {
+                Debug.LogWarning("Encountered a null room in the rooms array.");
+                continue;
+            }
+
+            float distance = Vector3.Distance(transform.position, room.transform.position);
+            if (distance < 0.1f)
+            {
+                return room;
+            }
+            Debug.Log($"Current room check: {room.name}, Distance: {distance}");
+        }
+
+        return null;
+    }
+
+    IEnumerator HearingDecayRoutine()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(hearingDecayRate);
+            if (heardSound > 0)
+            {
+                heardSound -= 1f;
+
+                if (heardSound <= 0 && !isMoving)
+                {
+                    isWaiting = true;
+                    Debug.Log("Sound level dropped to zero, staying in current room: " + currentRoom.name);
+                }
+            }
+        }
+    }
+
+    IEnumerator RandomMoveRoutine()
+    {
+        while (true)
+        {
+            if (!enableRandomMovement) // Проверяем, активировано ли случайное перемещение
+            {
+                yield return null;
+                continue;
+            }
+
+            // Проверяем, если целевая комната пуста
+            if (targetRoom == null)
+            {
+                // Случайный интервал времени
+                float interval = Random.Range(minInterval, maxInterval);
+                yield return new WaitForSeconds(interval);
+
+                // Получаем текущую комнату аниматроника
+                RoomNode currentRoom = GetCurrentRoom();
+
+                // Случайная соседняя комната, отличная от текущей
+                RoomNode randomRoom = null;
+                if (currentRoom != null && currentRoom.neighbors != null && currentRoom.neighbors.Count > 0)
+                {
+                    do
+                    {
+                        randomRoom = currentRoom.neighbors[Random.Range(0, currentRoom.neighbors.Count)];
+                    } while (randomRoom == currentRoom);
+
+                    // Устанавливаем новую целевую комнату для аниматроника
+                    SetTargetRoom(randomRoom);
+                }
+            }
+            else
+            {
+                yield return null;
             }
         }
     }
