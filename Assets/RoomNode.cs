@@ -5,6 +5,7 @@ using UnityEngine;
 public class RoomNode : MonoBehaviour
 {
     public List<RoomNode> neighbors; // Соседние комнаты
+    public int roomNumber;
 
     private void OnDrawGizmos()
     {

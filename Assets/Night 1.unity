@@ -3512,6 +3512,7 @@ MonoBehaviour:
   neighbors:
   - {fileID: 566183767}
   - {fileID: 1081034379}
+  roomNumber: 10
 --- !u!1 &441052722
 GameObject:
   m_ObjectHideFlags: 0
@@ -4403,6 +4404,7 @@ MonoBehaviour:
   neighbors:
   - {fileID: 1171289730}
   - {fileID: 1604978191}
+  roomNumber: 14
 --- !u!1 &538736735
 GameObject:
   m_ObjectHideFlags: 0
@@ -4607,6 +4609,7 @@ MonoBehaviour:
   - {fileID: 1082866041}
   - {fileID: 2026944980}
   - {fileID: 428345292}
+  roomNumber: 6
 --- !u!1001 &568404552
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5697,7 +5700,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!82 &698040600
 AudioSource:
   m_ObjectHideFlags: 0
@@ -6299,7 +6302,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!82 &793947875
 AudioSource:
   m_ObjectHideFlags: 0
@@ -7204,6 +7207,7 @@ MonoBehaviour:
   - {fileID: 1591829288}
   - {fileID: 1497987855}
   - {fileID: 1118958597}
+  roomNumber: 4
 --- !u!1 &923313495
 GameObject:
   m_ObjectHideFlags: 0
@@ -7999,6 +8003,7 @@ MonoBehaviour:
   - {fileID: 428345292}
   - {fileID: 2026944980}
   - {fileID: 1870548758}
+  roomNumber: 11
 --- !u!1 &1082866039
 GameObject:
   m_ObjectHideFlags: 0
@@ -8046,6 +8051,7 @@ MonoBehaviour:
   neighbors:
   - {fileID: 1182474733}
   - {fileID: 566183767}
+  roomNumber: 1
 --- !u!1 &1118958595
 GameObject:
   m_ObjectHideFlags: 0
@@ -8093,6 +8099,7 @@ MonoBehaviour:
   neighbors:
   - {fileID: 911098363}
   - {fileID: 1604978191}
+  roomNumber: 8
 --- !u!1 &1171289728
 GameObject:
   m_ObjectHideFlags: 0
@@ -8141,6 +8148,7 @@ MonoBehaviour:
   - {fileID: 1870548758}
   - {fileID: 535824630}
   - {fileID: 1118958597}
+  roomNumber: 13
 --- !u!1 &1182474731
 GameObject:
   m_ObjectHideFlags: 0
@@ -8189,6 +8197,7 @@ MonoBehaviour:
   - {fileID: 1082866041}
   - {fileID: 1591829288}
   - {fileID: 2026944980}
+  roomNumber: 2
 --- !u!1 &1191759887
 GameObject:
   m_ObjectHideFlags: 0
@@ -10095,6 +10104,7 @@ MonoBehaviour:
   neighbors:
   - {fileID: 911098363}
   - {fileID: 1604978191}
+  roomNumber: 5
 --- !u!1 &1503534837
 GameObject:
   m_ObjectHideFlags: 0
@@ -10837,6 +10847,7 @@ MonoBehaviour:
   neighbors:
   - {fileID: 1182474733}
   - {fileID: 911098363}
+  roomNumber: 3
 --- !u!1 &1604978189
 GameObject:
   m_ObjectHideFlags: 0
@@ -10885,6 +10896,7 @@ MonoBehaviour:
   - {fileID: 1497987855}
   - {fileID: 1118958597}
   - {fileID: 535824630}
+  roomNumber: 9
 --- !u!1 &1634600935
 GameObject:
   m_ObjectHideFlags: 0
@@ -11983,6 +11995,7 @@ MonoBehaviour:
   neighbors:
   - {fileID: 1081034379}
   - {fileID: 1171289730}
+  roomNumber: 12
 --- !u!1 &1918949199
 GameObject:
   m_ObjectHideFlags: 0
@@ -12454,7 +12467,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1988924320
 Transform:
   m_ObjectHideFlags: 0
@@ -12512,7 +12525,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 100
   m_Sprite: {fileID: 21300000, guid: 1e5f7d2b02dd09049be232b84f1b92cc, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -13121,6 +13134,7 @@ MonoBehaviour:
   - {fileID: 1182474733}
   - {fileID: 566183767}
   - {fileID: 1081034379}
+  roomNumber: 7
 --- !u!1 &2069341549
 GameObject:
   m_ObjectHideFlags: 0
@@ -13222,6 +13236,7 @@ GameObject:
   - component: {fileID: 2121670858}
   - component: {fileID: 2121670857}
   - component: {fileID: 2121670859}
+  - component: {fileID: 2121670862}
   - component: {fileID: 2121670860}
   - component: {fileID: 2121670861}
   m_Layer: 0
@@ -13332,7 +13347,7 @@ MonoBehaviour:
   stayTime: 6
   minInterval: 2
   maxInterval: 5
-  enableRandomMovement: 0
+  enableRandomMovement: 1
 --- !u!114 &2121670860
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13360,6 +13375,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 100ebc5688eae9d4a86a8264da78eada, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2121670862
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2121670856}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d133a1eefec4d04490ca71a3b1e5535, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  anim: {fileID: 1988924322}
+  targetRoomNumber: 12
 --- !u!1 &2136750754 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5422556285686702035, guid: d5daa8ddd1eced943920b0b864052443, type: 3}
