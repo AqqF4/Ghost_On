@@ -9,32 +9,53 @@ public class RandomMovement : MonoBehaviour
 
     private float timer = 0f; // Таймер для отслеживания времени
 
+    float cooldownTimer;
+
     void Update()
     {
-
-        // Обновляем таймер
-        timer += Time.deltaTime;
-
-        if (timer >= Random.Range(minInterval, maxInterval))
+        if(cooldownTimer > 0f)
         {
-            // Сброс таймера
-            timer = 0f;
-
-            // Получаем текущую комнату аниматроника
-            RoomNode currentRoom = animatronic.GetCurrentRoom();
-
-            // Случайная соседняя комната, отличная от текущей
-            RoomNode randomRoom = null;
-            if (currentRoom != null && currentRoom.neighbors != null && currentRoom.neighbors.Count > 0)
+            cooldownTimer -= Time.deltaTime;
+        }
+        else
+        {
+            if(animatronic.heardSound == 0f)
             {
-                do
-                {
-                    randomRoom = currentRoom.neighbors[Random.Range(0, currentRoom.neighbors.Count)];
-                } while (randomRoom == currentRoom);
+            timer += Time.deltaTime;
 
-                // Устанавливаем новую целевую комнату для аниматроника
-                animatronic.SetTargetRoom(randomRoom);
+            if (timer >= Random.Range(minInterval, maxInterval))
+            {
+                timer = 0f;
+
+                RoomNode currentRoom = animatronic.GetCurrentRoom();
+
+                RoomNode randomRoom = null;
+                if (currentRoom != null && currentRoom.neighbors != null && currentRoom.neighbors.Count > 0)
+                {
+                    do
+                    {
+                        randomRoom = currentRoom.neighbors[Random.Range(0, currentRoom.neighbors.Count)];
+                    } while (randomRoom == currentRoom);
+
+                    
+                    if(animatronic.targetRoom == null)
+                    {
+                        animatronic.SetTargetRoom(randomRoom);
+                    }
+                    
+                    // Запуск ожидания перед случайным движением
+                    animatronic.StartRandomMovementWaiting(Random.Range(minInterval, maxInterval));
+                    cooldownTimer = animatronic.stayTime;
+                }
+            }
             }
         }
     }
+
+    public void ResetTimer()
+    {
+        timer = 0f;
+    }
+
+
 }
