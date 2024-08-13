@@ -11,6 +11,10 @@ public class VENT_Controler : MonoBehaviour
 
     public GameObject Computer;
     public GameObject VENTSound;
+    public SpriteRenderer[] sr;
+    public Color color;
+
+    public SoundGenerator sg;
     
     void Update()
     {
@@ -18,12 +22,18 @@ public class VENT_Controler : MonoBehaviour
         {
             if(ComputerOn)
             {
+                foreach(SpriteRenderer animatronic in sr)
+                {
+                    animatronic.color = color;
+                }
+                sg.soundLevel -= 1.2f;
                 Computer.SetActive(false);
                 ComputerOn = false;
                 Instantiate(ComputerS, transform.position, Quaternion.identity);
             }
             else
             {
+                sg.soundLevel += 1.2f;
                 Computer.SetActive(true);
                 ComputerOn = true;
                 Instantiate(ComputerS, transform.position, Quaternion.identity);
@@ -34,12 +44,14 @@ public class VENT_Controler : MonoBehaviour
         {
             if(isFreething)
             {
+                sg.soundLevel -= 1.8f;
                 VENTSound.SetActive(false);
                 isFreething = false;
                 Instantiate(VENTS, transform.position, Quaternion.identity);
             }
             else
             {
+                sg.soundLevel -= 1.8f;
                 VENTSound.SetActive(true);
                 isFreething = true;
                 Instantiate(VENTS, transform.position, Quaternion.identity);
