@@ -8,6 +8,7 @@ public class VENT_Controler : MonoBehaviour
     public bool ComputerOn;
     public GameObject VENTS;
     public GameObject ComputerS;
+    public Tasks[] TasksBB;
 
     public GameObject Computer;
     public GameObject VENTSound;
@@ -26,6 +27,13 @@ public class VENT_Controler : MonoBehaviour
                 {
                     animatronic.color = color;
                 }
+
+                foreach(Tasks t in TasksBB)
+                {
+                    t.NonEndedStop();
+                }
+
+
                 sg.soundLevel -= 1.2f;
                 Computer.SetActive(false);
                 ComputerOn = false;

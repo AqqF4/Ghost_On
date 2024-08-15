@@ -4,42 +4,24 @@ using UnityEngine;
 
 public class TaskManager : MonoBehaviour
 {
-    public Tasks[] allTasks; // Массив всех заданий на сцене
-    public int CompletedTasks { get; private set; } = 0; // Количество выполненных заданий
-    public bool AllTasksCompleted { get; private set; } = false; // Флаг выполнения всех заданий
+    public int CompletedTasks = 0;  // Счётчик выполненных заданий
+    public int NeededTasks;         // Необходимое количество заданий для завершения всех
 
-    public int NeededTasks // Количество всех заданий
+    public bool AllTasksCompleted = false;  // Флаг завершения всех заданий
+
+    public void TaskCompleted(GameObject taskObject)
     {
-        get { return allTasks.Length; }
-    }
+        // Увеличиваем счётчик выполненных заданий
+        CompletedTasks++;
 
-    void Start()
-    {
-        // Подписываемся на события завершения заданий
-        foreach (var task in allTasks)
-        {
-            task.TaskCompleted += OnTaskCompleted;
-        }
-    }
-
-    private void OnTaskCompleted()
-    {
-        CompletedTasks++; // Увеличиваем количество выполненных заданий
-
-        // Проверяем, достигнуто ли нужное количество выполненных заданий
+        // Проверяем, достигли ли необходимого количества выполненных заданий
         if (CompletedTasks >= NeededTasks)
         {
-            AllTasksCompleted = true; // Устанавливаем флаг выполнения всех заданий
-            Debug.Log("All tasks completed!");
+            AllTasksCompleted = true;
+            Debug.Log("All tasks are completed!");
         }
-    }
 
-    void OnDestroy()
-    {
-        // Отписываемся от событий при уничтожении объекта
-        foreach (var task in allTasks)
-        {
-            task.TaskCompleted -= OnTaskCompleted;
-        }
+        // Удаляем объект, в котором задание выполнено
+        Destroy(taskObject);
     }
 }

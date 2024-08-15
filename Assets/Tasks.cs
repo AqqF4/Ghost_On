@@ -1,4 +1,4 @@
-using System; // Добавлено это пространство имён
+using System; // Пространство имён для Action
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -21,8 +21,13 @@ public class Tasks : MonoBehaviour
     GameObject PlayableSound;
     GameObject Loading;
 
+    private TaskManager taskManager; // Ссылка на TaskManager
+
     void Start()
     {
+        // Ищем TaskManager в сцене
+        taskManager = FindObjectOfType<TaskManager>();
+
         // Ищем объект с компонентом, который называется Loading, среди дочерних объектов
         Loading = GetComponentInChildren<Transform>().Find("Loading")?.gameObject;
 
@@ -63,7 +68,6 @@ public class Tasks : MonoBehaviour
             // Воспроизводим случайный звук задачи
             PlayableSound = Instantiate(TaskSounds[UnityEngine.Random.Range(0, TaskSounds.Length)], transform.position, Quaternion.identity);
 
-
             Increase();
         }
     }
@@ -91,8 +95,34 @@ public class Tasks : MonoBehaviour
             isTaskActive = false; // Сбрасываем флаг активности задачи
 
             TaskCompleted?.Invoke(); // Вызываем событие завершения задания
-            Debug.Log("Task Stopped");
+
+            // Уведомляем TaskManager о завершении задачи и передаем текущий объект для удаления
+            if (taskManager != null)
+            {
+                taskManager.TaskCompleted(gameObject);
+            }
+
+            
         }
+    }
+
+    public void NonEndedStop()
+    {
+        if (Loading != null)
+        {
+            Loading.SetActive(false); // Отключаем объект Loading, если он существует
+        }
+
+        // Уничтожаем звук задачи, если он существует
+        if (PlayableSound != null)
+        {
+            Destroy(PlayableSound);
+        }
+        
+        Dismiss();
+        isTaskActive = false; // Сбрасываем флаг активности задачи
+        Debug.Log("Task Stopped");
+        
     }
 
     void Increase()
