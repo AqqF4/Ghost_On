@@ -1,14 +1,17 @@
 using System.Collections;
 using UnityEngine;
-using TMPro; // Не забудьте добавить эту директиву
+using TMPro;
 
 public class Temperature : MonoBehaviour
 {
-    public int temperature; // Изменено с Temperatura на temperature для соответствия стандартам именования
+    public int temperature; // Текущая температура
     public float coolDown = 1f; // Интервал времени в секундах
     public bool isFreezing;
+    public TMP_Text PlusObject;
 
-    public TMP_Text sign; // Объект для отображения температуры
+    public TMP_Text sign; // Текстовый объект для отображения температуры
+    public Color lowTemperatureColor = Color.blue; // Цвет для низкой температуры (например, 60 градусов)
+    public Color highTemperatureColor = Color.red; // Цвет для высокой температуры (например, 105 градусов)
 
     private Coroutine temperatureCoroutine; // Ссылка на корутину
 
@@ -31,20 +34,27 @@ public class Temperature : MonoBehaviour
             // Проверяем состояние freezing
             if (isFreezing)
             {
-                if(temperature >= 61)
+                if (temperature > 60)
                 {
                     temperature -= 1; // Уменьшаем температуру
                 }
+            }
+            else
+            {
+                if (temperature < 105)
+                {
+                    temperature += 1; // Увеличиваем температуру
+                }
+            }
 
-                UpdateTemperatureDisplay(); // Обновляем отображение температуры
+            UpdateTemperatureDisplay(); // Обновляем отображение температуры
 
+            if(isFreezing)
+            {
                 yield return new WaitForSeconds(coolDown); // Ждём заданное количество секунд
             }
             else
             {
-                temperature += 1; // Увеличиваем температуру
-                UpdateTemperatureDisplay(); // Обновляем отображение температуры
-
                 yield return new WaitForSeconds(coolDown - 1f); // Ждём заданное количество секунд
             }
         }
@@ -55,6 +65,16 @@ public class Temperature : MonoBehaviour
         if (sign != null)
         {
             sign.text = temperature.ToString(); // Обновляем текст на экране
+
+            // Определяем процентное соотношение температуры между 60 и 105 градусами
+            float t = Mathf.InverseLerp(60f, 105f, temperature);
+
+            // Интерполируем цвет между lowTemperatureColor и highTemperatureColor
+            Color currentColor = Color.Lerp(lowTemperatureColor, highTemperatureColor, t);
+
+            // Применяем цвет к тексту
+            sign.color = currentColor;
+            PlusObject.color = currentColor;
         }
     }
 

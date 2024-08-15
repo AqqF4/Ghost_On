@@ -51,7 +51,7 @@ public class VENT_Controler : MonoBehaviour
             }
             else
             {
-                sg.soundLevel -= 1.8f;
+                sg.soundLevel += 1.8f;
                 VENTSound.SetActive(true);
                 isFreething = true;
                 Instantiate(VENTS, transform.position, Quaternion.identity);
