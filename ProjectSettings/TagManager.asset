@@ -8,6 +8,8 @@ TagManager:
   - StopSign
   - Animatronic
   - Ventelator
+  - PlayingSound
+  - Silent
   layers:
   - Default
   - TransparentFX

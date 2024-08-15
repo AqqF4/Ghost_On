@@ -8,6 +8,7 @@ public class Temperature : MonoBehaviour
     public float coolDown = 1f; // Интервал времени в секундах
     public bool isFreezing;
     public TMP_Text PlusObject;
+    public SoundGenerator sg;
 
     public TMP_Text sign; // Текстовый объект для отображения температуры
     public Color lowTemperatureColor = Color.blue; // Цвет для низкой температуры (например, 60 градусов)
@@ -25,6 +26,17 @@ public class Temperature : MonoBehaviour
     {
         // Обновляем состояние freezing на основе наличия объекта с тегом "Ventelator"
         isFreezing = GameObject.FindGameObjectWithTag("Ventelator") != null;
+
+        if(temperature >= 100)
+        {
+            sg.soundInterval = 2;
+            sg.detectionRadius = 2.3f;
+        }
+        else if(temperature >= 103)
+        {
+            sg.soundInterval = 1;
+            sg.detectionRadius = 4.1f;
+        }
     }
 
     private IEnumerator TemperatureControl()

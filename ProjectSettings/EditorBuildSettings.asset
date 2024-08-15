@@ -6,21 +6,15 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/OldGame/Scenes/Scenes/Menu.unity
-    guid: 2cda990e2423bbf4892e6590ba056729
+    path: Assets/CutscenePre.unity
+    guid: 08a82a00d1c85454180e9127438eed39
   - enabled: 1
-    path: Assets/OldGame/Scenes/Scenes/Clone000.unity
-    guid: a85dfa1cd1e13fb4291b148ad60b962e
+    path: Assets/Menu.unity
+    guid: ee0785e163a3e0c449138c0b5aa325b8
   - enabled: 1
-    path: Assets/OldGame/Scenes/Scenes/Clone047.unity
-    guid: b91f1fd7e4eff5e4caf60840f99dee49
+    path: Assets/Night 1.unity
+    guid: 4fe315d97ece1844db4a1ad470456678
   - enabled: 1
-    path: Assets/OldGame/Scenes/Scenes/Clone325.unity
-    guid: 655d5e7449c021f48b50a45cbbe23e7d
-  - enabled: 1
-    path: Assets/OldGame/Scenes/Scenes/Clone586.unity
-    guid: 795f2331ed5fd1f419d0b312e9e51b68
-  - enabled: 1
-    path: Assets/OldGame/Scenes/Scenes/Clone993.unity
-    guid: 8a14cc519c5904542a9701c0c75b3f93
+    path: Assets/EndingNight1.unity
+    guid: 8a1e5e8618fd05e4b865cffc6d046a84
   m_configObjects: {}

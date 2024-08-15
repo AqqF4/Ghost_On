@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class TaskManager : MonoBehaviour
 {
     public int CompletedTasks = 0;  // Счётчик выполненных заданий
     public int NeededTasks;         // Необходимое количество заданий для завершения всех
+    public int EndingScene;
 
     public bool AllTasksCompleted = false;  // Флаг завершения всех заданий
 
@@ -23,5 +25,14 @@ public class TaskManager : MonoBehaviour
 
         // Удаляем объект, в котором задание выполнено
         Destroy(taskObject);
+    }
+
+
+    public void SaveTasks()
+    {
+        if(AllTasksCompleted)
+        {
+            SceneManager.LoadScene(EndingScene);
+        }
     }
 }
