@@ -18,6 +18,13 @@ public class AnimatronicMovement : MonoBehaviour
     public RoomNode targetRoom; // Целевая комната аниматроника
     public float heardSound = 0f; // Уровень услышанного звука
 
+    public GameObject soundPrefab1; // Префаб с первым звуком
+    public GameObject soundPrefab2; // Префаб со вторым звуком
+    public GameObject soundPrefab3; // Префаб с третьим звуком
+    private bool canPlaySound = true; // Флаг, разрешающий воспроизведение звука
+    private float soundCooldown = 1.0f; // Время задержки между звуками
+
+
     private bool isMoving = false; // Флаг, указывающий, движется ли аниматроник
     private bool isWaiting = false; // Флаг, указывающий, ожидает ли аниматроник в комнате
     private bool CanHear = true; // Флаг, указывающий, может ли аниматроник слышать звуки
@@ -44,17 +51,74 @@ public class AnimatronicMovement : MonoBehaviour
         currentRoom = previousRoom;
         targetRoom = null; // Сбрасываем целевую комнату
         StopMoving(); // Останавливаем движение
+
+        // Спавним звуковой префаб с шансом 60%
+        if (canPlaySound)
+        {
+            SpawnSoundPrefabWithChance(60, previousRoom);
+        }
     }
 
     // Метод для остановки движения
     public void StopMoving()
     {
         // Логика для остановки аниматроника
-        isMoving = false;
-        isWaiting = true;
-        heardSound = 0f;
-        stayTimer = stayTime;
         Debug.Log("Animatronic movement stopped.");
+    }
+
+    // Метод для спавна случайного звукового префаба с определенным шансом
+    private void SpawnSoundPrefabWithChance(int chancePercent, RoomNode previousRoom)
+    {
+        int randomValue = Random.Range(0, 100);
+        if (randomValue < chancePercent)
+        {
+            // Выбираем случайный префаб из трех доступных
+            GameObject selectedPrefab = null;
+            int prefabIndex = Random.Range(0, 3);
+            switch (prefabIndex)
+            {
+                case 0:
+                    selectedPrefab = soundPrefab1;
+                    break;
+                case 1:
+                    selectedPrefab = soundPrefab2;
+                    break;
+                case 2:
+                    selectedPrefab = soundPrefab3;
+                    break;
+            }
+
+            // Спавним выбранный префаб
+            if (selectedPrefab != null)
+            {
+                GameObject soundObject = Instantiate(selectedPrefab, transform.position, Quaternion.identity);
+
+                // Получаем компонент AudioSource и устанавливаем значение Stereo Pan
+                AudioSource audioSource = soundObject.GetComponent<AudioSource>();
+                if (audioSource != null)
+                {
+                    // Изменяем Stereo Pan в зависимости от направления движения
+                    if (previousRoom.roomNumber == 11) // Если аниматроник возвращается в левую комнату
+                    {
+                        audioSource.panStereo = -1.0f; // Левый канал
+                    }
+                    else if (previousRoom.roomNumber == 13) // Если аниматроник возвращается в правую комнату
+                    {
+                        audioSource.panStereo = 1.0f; // Правый канал
+                    }
+                }
+
+                canPlaySound = false;
+                StartCoroutine(SoundCooldownCoroutine());
+            }
+        }
+    }
+
+    // Корутина для восстановления возможности воспроизведения звука
+    private IEnumerator SoundCooldownCoroutine()
+    {
+        yield return new WaitForSeconds(soundCooldown);
+        canPlaySound = true;
     }
 
     void Start()

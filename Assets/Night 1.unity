@@ -14956,7 +14956,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 790efcf934ea26d4f9a3a493b2562cbf, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -15017,6 +15017,9 @@ MonoBehaviour:
   currentRoom: {fileID: 0}
   targetRoom: {fileID: 0}
   heardSound: 0
+  soundPrefab1: {fileID: 2968692254971153685, guid: 1dbf256cec157d045b6febb13fdbf9db, type: 3}
+  soundPrefab2: {fileID: 5797821497319989788, guid: febd086161bf13648831c7bd8669ffea, type: 3}
+  soundPrefab3: {fileID: 8386167986862383564, guid: 9c37dc957ca94ea479e74b964c2050ce, type: 3}
 --- !u!114 &2121670861
 MonoBehaviour:
   m_ObjectHideFlags: 0
