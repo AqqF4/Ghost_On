@@ -139,7 +139,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &27436018
 Transform:
   m_ObjectHideFlags: 0
@@ -149,8 +149,8 @@ Transform:
   m_GameObject: {fileID: 27436017}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.45999998, z: 0}
-  m_LocalScale: {x: 6.170126, y: 5.4467287, z: 1}
+  m_LocalPosition: {x: 0, y: -0.46, z: 0}
+  m_LocalScale: {x: 6.170126, y: 5.446729, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1634600936}
@@ -2464,6 +2464,59 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &323732358
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 323732360}
+  - component: {fileID: 323732359}
+  m_Layer: 0
+  m_Name: Teleportator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &323732359
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 323732358}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff189da2f6d4b6d429739dccd9e65052, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canSpawnRooms:
+  - {fileID: 1082866040}
+  - {fileID: 1182474732}
+  - {fileID: 1591829287}
+  - {fileID: 911098362}
+  - {fileID: 1497987854}
+  - {fileID: 566183766}
+  - {fileID: 1604978190}
+  animatronic: {fileID: 2121670856}
+--- !u!4 &323732360
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 323732358}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.05121598, y: -0.9733126, z: -3.82889}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &357506040
 GameObject:
   m_ObjectHideFlags: 0
@@ -6333,7 +6386,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &717948452
 Transform:
   m_ObjectHideFlags: 0
@@ -7342,7 +7395,6 @@ GameObject:
   - component: {fileID: 876009087}
   - component: {fileID: 876009086}
   - component: {fileID: 876009089}
-  - component: {fileID: 876009090}
   - component: {fileID: 876009091}
   - component: {fileID: 876009092}
   - component: {fileID: 876009093}
@@ -7462,27 +7514,6 @@ MonoBehaviour:
   ventForce: 1.5
   color: {r: 1, g: 1, b: 1, a: 0}
   sg: {fileID: 117304871}
---- !u!114 &876009090
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 876009085}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ff189da2f6d4b6d429739dccd9e65052, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  canSpawnRooms:
-  - {fileID: 1082866040}
-  - {fileID: 1182474732}
-  - {fileID: 1591829287}
-  - {fileID: 911098362}
-  - {fileID: 1497987854}
-  - {fileID: 566183766}
-  - {fileID: 1604978190}
-  animatronic: {fileID: 2121670856}
 --- !u!114 &876009091
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7551,6 +7582,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rightSign: {fileID: 2136750754}
   leftSign: {fileID: 188006311}
+  animatronics:
+  - {fileID: 2121670859}
+  LeftRoom: {fileID: 1081034379}
+  RightRoom: {fileID: 1171289730}
 --- !u!1 &889212867
 GameObject:
   m_ObjectHideFlags: 0
@@ -14878,7 +14913,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!212 &2121670857
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -14921,7 +14956,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 790efcf934ea26d4f9a3a493b2562cbf, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -14940,7 +14975,7 @@ Transform:
   m_GameObject: {fileID: 2121670856}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.377, y: 0.48, z: 0}
+  m_LocalPosition: {x: -1.386, y: -0.708, z: 0}
   m_LocalScale: {x: 0.46, y: 0.408825, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -15294,3 +15329,4 @@ SceneRoots:
   - {fileID: 103715170}
   - {fileID: 1074693888}
   - {fileID: 2121670858}
+  - {fileID: 323732360}

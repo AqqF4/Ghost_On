@@ -25,6 +25,38 @@ public class AnimatronicMovement : MonoBehaviour
 
     private Pathfinding pathfinding;
 
+    // Метод для перемещения аниматроника обратно в предыдущую комнату
+    public void MoveToPreviousRoom(RoomNode previousRoom)
+    {
+        StartCoroutine(MoveBackToRoom(previousRoom));
+    }
+
+    // Корутина для плавного перемещения
+    private IEnumerator MoveBackToRoom(RoomNode previousRoom)
+    {
+        while (Vector3.Distance(transform.position, previousRoom.transform.position) > 0.1f)
+        {
+            transform.position = Vector3.MoveTowards(transform.position, previousRoom.transform.position, moveSpeed * Time.deltaTime);
+            yield return null;
+        }
+
+        // Обновляем текущую комнату после завершения перемещения
+        currentRoom = previousRoom;
+        targetRoom = null; // Сбрасываем целевую комнату
+        StopMoving(); // Останавливаем движение
+    }
+
+    // Метод для остановки движения
+    public void StopMoving()
+    {
+        // Логика для остановки аниматроника
+        isMoving = false;
+        isWaiting = true;
+        heardSound = 0f;
+        stayTimer = stayTime;
+        Debug.Log("Animatronic movement stopped.");
+    }
+
     void Start()
     {
         if (rooms == null || rooms.Length == 0)
@@ -201,7 +233,7 @@ public class AnimatronicMovement : MonoBehaviour
             {
                 return room;
             }
-            Debug.Log($"Current room check: {room.name}, Distance: {distance}");
+            
         }
 
         return null;
