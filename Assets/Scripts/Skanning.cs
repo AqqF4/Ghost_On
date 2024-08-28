@@ -11,59 +11,55 @@ public class Skanning : MonoBehaviour
     public float minShowTime = 0.01f; // Минимальное время видимости
     public float maxShowTime = 0.09f; // Максимальное время видимости
 
-    private float timerCooldown; // Таймер для следующего сканирования
-    private float timerShow; // Таймер для времени видимости
     private bool isSkanning; // Флаг для проверки, сканируем ли мы
 
     void Update()
     {
         if (isSkanning)
         {
-            Skan();
+            // Можно добавить логику Update, если потребуется
         }
     }
 
     public void StartScanning()
     {
         isSkanning = true;
-        timerCooldown = Random.Range(minCooldown, maxCooldown); // Устанавливаем начальный таймер для сканирования
         SetLoadingAnimator(true); // Включаем GameObject для отображения процесса загрузки
+
+        foreach (SpriteRenderer sr in animatronicRenderers)
+        {
+            StartCoroutine(HandleAnimatronicAppearance(sr));
+        }
     }
 
     public void StopScanning()
     {
         isSkanning = false;
         // Скрыть аниматроников при остановке сканирования
-        SetAnimatronicColor(Color.clear); // Сброс цвета на прозрачный
+        foreach (SpriteRenderer sr in animatronicRenderers)
+        {
+            sr.color = Color.clear; // Сброс цвета на прозрачный
+        }
         SetLoadingAnimator(false); // Выключаем GameObject для отображения процесса загрузки
     }
 
-    void Skan()
+    IEnumerator HandleAnimatronicAppearance(SpriteRenderer sr)
     {
-        if (timerCooldown > 0f)
+        while (isSkanning)
         {
-            timerCooldown -= Time.deltaTime;
-        }
-        else
-        {
-            timerCooldown = Random.Range(minCooldown, maxCooldown); // Перезагрузить таймер
-            timerShow = Random.Range(minShowTime, maxShowTime); // Устанавливаем время показа
-            ShowFor(timerShow); // Показать аниматроников
-        }
-    }
+            // Задаем случайный интервал до следующего появления аниматроника
+            float cooldown = Random.Range(minCooldown, maxCooldown);
+            yield return new WaitForSeconds(cooldown); // Ждем интервал перед показом
 
-    void ShowFor(float ShowTime)
-    {
-        SetAnimatronicColor(Color.blue); // Изменяем цвет на синий
+            // Устанавливаем цвет аниматроника
+            sr.color = Color.white;
 
-        StartCoroutine(HideAfterDelay(ShowTime)); // Запускаем корутину для скрытия после задержки
-    }
+            // Задаем случайное время видимости
+            float showTime = Random.Range(minShowTime, maxShowTime);
+            yield return new WaitForSeconds(showTime); // Ждем, пока аниматроник будет виден
 
-    void SetAnimatronicColor(Color color)
-    {
-        foreach (SpriteRenderer sr in animatronicRenderers)
-        {
-            sr.color = color; // Устанавливаем цвет для каждого SpriteRenderer
+            // Скрываем аниматроника
+            sr.color = Color.clear;
         }
     }
 
@@ -73,11 +69,5 @@ public class Skanning : MonoBehaviour
         {
             loadingAnimator.SetActive(state); // Включаем или выключаем GameObject
         }
-    }
-
-    IEnumerator HideAfterDelay(float delay)
-    {
-        yield return new WaitForSeconds(delay); // Ждём указанное время
-        SetAnimatronicColor(Color.clear); // Устанавливаем цвет на прозрачный (или любой другой, который сделает аниматроника невидимым)
     }
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class StartTeleportation : MonoBehaviour
 {
-    public Transform[] canSpawnRooms; // Список комнат, в которые можно переместиться
+    public GameObject[] canSpawnRooms; // Список комнат, в которые можно переместиться
     public GameObject animatronic; // Ссылка на объект аниматроника
 
     void Awake()
@@ -29,9 +29,20 @@ public class StartTeleportation : MonoBehaviour
     void TeleportAnimatronicToRandomRoom()
     {
         // Выбираем случайную комнату из списка
-        Transform randomRoom = canSpawnRooms[Random.Range(0, canSpawnRooms.Length)];
+        GameObject randomRoom = canSpawnRooms[Random.Range(0, canSpawnRooms.Length)];
 
-        // Перемещаем аниматроника в выбранную комнату
-        animatronic.transform.position = randomRoom.position;
+        if(randomRoom.GetComponent<RoomNode>().isFree)
+        {
+            // Перемещаем аниматроника в выбранную комнату
+            animatronic.transform.position = randomRoom.GetComponent<Transform>().position;
+
+            randomRoom.GetComponent<RoomNode>().isFree = false;
+        }
+        else
+        {
+            // Выбираем случайную комнату из списка
+            randomRoom = canSpawnRooms[Random.Range(0, canSpawnRooms.Length)];
+        }
+
     }
 }

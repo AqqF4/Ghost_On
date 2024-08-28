@@ -6,7 +6,7 @@ public class RoomNode : MonoBehaviour
 {
     public List<RoomNode> neighbors; // Соседние комнаты
     public int roomNumber;
-
+    public bool isFree = true;
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.green;
