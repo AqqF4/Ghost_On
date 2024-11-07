@@ -3196,6 +3196,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   soundCheckManager: {fileID: 1421843655}
+  soundCheck: {fileID: 0}
   timeLimit: 5
   timer: 0
 --- !u!114 &1421843655
@@ -3230,6 +3231,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   soundClips:
+  - {fileID: 8300000, guid: ce5e2187ed43d584f92bfa06e418f0c8, type: 3}
   - {fileID: 8300000, guid: b5e66912bb4f2834b956098d4b1cfa51, type: 3}
   - {fileID: 8300000, guid: 3c4433e4840e1814f8193614b67bb5b1, type: 3}
   - {fileID: 8300000, guid: 03e9b5b3fe990b242807eeaf07a5b65d, type: 3}
@@ -3240,7 +3242,7 @@ MonoBehaviour:
   - {fileID: 491923356}
   - {fileID: 2084309692}
   firstSoundOnStart: 0
-  HasCheckMark: 01010101
+  HasCheckMark: 0001010101
   audioSource: {fileID: 1421843657}
   scm: {fileID: 1421843655}
 --- !u!82 &1421843657

@@ -12,7 +12,7 @@ public class DeathTimer : MonoBehaviour
 
     void Update()
     {
-        if (soundCheckManager.soundCheck.IsCheckmarkPlaced(soundCheckManager.currentSoundIndex - 1))
+        if (soundCheckManager.soundCheck.IsCheckmarkPlaced(soundCheckManager.currentSoundIndex - 2))
         {
             timer = 0; // Reset the timer
             CanTimer = false;
