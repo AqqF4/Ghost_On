@@ -10,6 +10,7 @@ TagManager:
   - Ventelator
   - PlayingSound
   - Silent
+  - ListButton
   layers:
   - Default
   - TransparentFX

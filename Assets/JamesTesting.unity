@@ -737,7 +737,7 @@ GameObject:
   - component: {fileID: 208854583}
   m_Layer: 5
   m_Name: ListActivator
-  m_TagString: Untagged
+  m_TagString: ListButton
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1371,7 +1371,7 @@ GameObject:
   - component: {fileID: 408751098}
   m_Layer: 5
   m_Name: ListDisactivator
-  m_TagString: Untagged
+  m_TagString: ListButton
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3212,6 +3212,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   soundCheck: {fileID: 1421843656}
   continueButton: {fileID: 615255456}
+  listButton: {fileID: 208854581}
+  List: {fileID: 118848953}
   pauseButton: {fileID: 786348402}
   currentSoundIndex: 0
   isPaused: 1
@@ -3228,7 +3230,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   soundClips:
-  - {fileID: 8300000, guid: ce5e2187ed43d584f92bfa06e418f0c8, type: 3}
   - {fileID: 8300000, guid: b5e66912bb4f2834b956098d4b1cfa51, type: 3}
   - {fileID: 8300000, guid: 3c4433e4840e1814f8193614b67bb5b1, type: 3}
   - {fileID: 8300000, guid: 03e9b5b3fe990b242807eeaf07a5b65d, type: 3}
@@ -3239,7 +3240,7 @@ MonoBehaviour:
   - {fileID: 491923356}
   - {fileID: 2084309692}
   firstSoundOnStart: 0
-  HasCheckMark: 0001010101
+  HasCheckMark: 01010101
   audioSource: {fileID: 1421843657}
   scm: {fileID: 1421843655}
 --- !u!82 &1421843657

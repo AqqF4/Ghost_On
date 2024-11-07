@@ -5,26 +5,37 @@ using UnityEngine;
 public class SoundCheckManager : MonoBehaviour
 {
     public SoundCheck soundCheck; // Ссылка на скрипт SoundCheck
-    public GameObject continueButton; // Кнопка продолжения
+    public GameObject continueButton, listButton, List; // Кнопка продолжения
+
     public GameObject pauseButton; // Кнопка паузы
     public int currentSoundIndex = 0; // Индекс текущего звука
     public bool isPaused = false; // Флаг состояния паузы
 
     void Update()
     {
-        // Проверка, закончился ли звук
+        // Проверка завершения текущего звука
         if (!isPaused && !soundCheck.audioSource.isPlaying)
         {
-            // Если отметка не нужна, сразу переход к следующему звуку
-            if (!soundCheck.HasCheckMark[currentSoundIndex - 1])
+            // Если HasCheckMark для текущего звука равно true, показать кнопку продолжения
+            if (currentSoundIndex < soundCheck.soundClips.Length && soundCheck.HasCheckMark[currentSoundIndex])
             {
-                PlayNextSound();
+                if(soundCheck.HasCheckMark[currentSoundIndex - 1])
+                {
+                    if(!GameObject.FindGameObjectWithTag("ListButton"))
+                    {
+                        listButton.SetActive(true);
+                    }
+                    pauseButton.SetActive(false);
+                }
+                else
+                {
+                    PlayNextSound();
+                }
             }
             else
             {
-                // Показать кнопку для установки отметки
-                continueButton.SetActive(true);
-                pauseButton.SetActive(false);
+                // Если HasCheckMark == false, сразу перейти к следующему звуку
+                PlayNextSound();
             }
         }
     }
@@ -53,23 +64,16 @@ public class SoundCheckManager : MonoBehaviour
 
     public void PlayNextSound()
     {
-        if (currentSoundIndex < soundCheck.soundClips.Length)
+        if (currentSoundIndex < (soundCheck.soundClips.Length + 1))
         {
             soundCheck.PlaySound(currentSoundIndex);
-            
-            // Проверяем, должна ли быть установлена отметка для текущего звука
+
+            // Если текущий звук требует отметки, активируем кнопку паузы
             if (soundCheck.HasCheckMark[currentSoundIndex])
             {
-                pauseButton.SetActive(true); // Показать кнопку паузы для установки отметки
+                pauseButton.SetActive(true);
             }
-            else
-            {
-                // Если отметка не требуется, сразу переходим к следующему звуку
-                currentSoundIndex++;
-                PlayNextSound();
-                return;
-            }
-
+            
             currentSoundIndex++;
         }
         else
