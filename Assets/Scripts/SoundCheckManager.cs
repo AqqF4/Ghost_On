@@ -17,7 +17,7 @@ public class SoundCheckManager : MonoBehaviour
         if (!isPaused && !soundCheck.audioSource.isPlaying)
         {
             // Если HasCheckMark для текущего звука равно true, показать кнопку продолжения
-            if (currentSoundIndex < soundCheck.soundClips.Length && soundCheck.HasCheckMark[currentSoundIndex])
+            if (currentSoundIndex < (soundCheck.soundClips.Length + 1) && soundCheck.HasCheckMark[currentSoundIndex - 1])
             {
                 if(soundCheck.HasCheckMark[currentSoundIndex - 1])
                 {

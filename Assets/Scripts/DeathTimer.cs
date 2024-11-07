@@ -32,13 +32,17 @@ public class DeathTimer : MonoBehaviour
 
     public void AfterCheckMark()
     {
+        
         if(!soundCheckManager.List.activeSelf)
         {
             soundCheckManager.listButton.SetActive(false);
             soundCheckManager.pauseButton.SetActive(true);
             soundCheckManager.PlayNextSound();
-            soundCheck.PauseSound();
+            soundCheck.audioSource.Pause();
+            soundCheckManager.isPaused = true;
         }
+
+        
     }
 
 }
