@@ -3812,6 +3812,7 @@ MonoBehaviour:
   - {fileID: 566183767}
   - {fileID: 1081034379}
   roomNumber: 10
+  isFree: 1
 --- !u!1 &441052722
 GameObject:
   m_ObjectHideFlags: 0
@@ -4704,6 +4705,7 @@ MonoBehaviour:
   - {fileID: 1171289730}
   - {fileID: 1604978191}
   roomNumber: 14
+  isFree: 1
 --- !u!1 &538736735
 GameObject:
   m_ObjectHideFlags: 0
@@ -4909,6 +4911,7 @@ MonoBehaviour:
   - {fileID: 2026944980}
   - {fileID: 428345292}
   roomNumber: 6
+  isFree: 1
 --- !u!1001 &568404552
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6575,7 +6578,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 28.650215, w: 0}
+  m_margin: {x: 0, y: 0, z: 28.65022, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -8059,6 +8062,7 @@ MonoBehaviour:
   - {fileID: 1497987855}
   - {fileID: 1118958597}
   roomNumber: 4
+  isFree: 1
 --- !u!1 &923313495
 GameObject:
   m_ObjectHideFlags: 0
@@ -8983,6 +8987,7 @@ MonoBehaviour:
   - {fileID: 2026944980}
   - {fileID: 1870548758}
   roomNumber: 11
+  isFree: 1
 --- !u!1 &1082866039
 GameObject:
   m_ObjectHideFlags: 0
@@ -9031,6 +9036,7 @@ MonoBehaviour:
   - {fileID: 1182474733}
   - {fileID: 566183767}
   roomNumber: 1
+  isFree: 1
 --- !u!1 &1118958595
 GameObject:
   m_ObjectHideFlags: 0
@@ -9079,6 +9085,7 @@ MonoBehaviour:
   - {fileID: 911098363}
   - {fileID: 1604978191}
   roomNumber: 8
+  isFree: 1
 --- !u!1 &1171289728
 GameObject:
   m_ObjectHideFlags: 0
@@ -9128,6 +9135,7 @@ MonoBehaviour:
   - {fileID: 535824630}
   - {fileID: 1118958597}
   roomNumber: 13
+  isFree: 1
 --- !u!1 &1182474731
 GameObject:
   m_ObjectHideFlags: 0
@@ -9177,6 +9185,7 @@ MonoBehaviour:
   - {fileID: 1591829288}
   - {fileID: 2026944980}
   roomNumber: 2
+  isFree: 1
 --- !u!1 &1191759887
 GameObject:
   m_ObjectHideFlags: 0
@@ -9289,7 +9298,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 73c0b3eac812e99478ed9437848aefc3, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 0cb3b7aa500e47647a14d99ad1ffdd2f, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.6
   m_Pitch: 1.1
@@ -10215,7 +10224,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 28.650215, w: 0}
+  m_margin: {x: 0, y: 0, z: 28.65022, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -11358,6 +11367,7 @@ MonoBehaviour:
   - {fileID: 911098363}
   - {fileID: 1604978191}
   roomNumber: 5
+  isFree: 1
 --- !u!1 &1503534837
 GameObject:
   m_ObjectHideFlags: 0
@@ -12117,6 +12127,7 @@ MonoBehaviour:
   - {fileID: 1182474733}
   - {fileID: 911098363}
   roomNumber: 3
+  isFree: 1
 --- !u!1 &1604978189
 GameObject:
   m_ObjectHideFlags: 0
@@ -12166,6 +12177,7 @@ MonoBehaviour:
   - {fileID: 1118958597}
   - {fileID: 535824630}
   roomNumber: 9
+  isFree: 1
 --- !u!1 &1634600935
 GameObject:
   m_ObjectHideFlags: 0
@@ -13511,6 +13523,7 @@ MonoBehaviour:
   - {fileID: 1081034379}
   - {fileID: 1171289730}
   roomNumber: 12
+  isFree: 1
 --- !u!1 &1918949199
 GameObject:
   m_ObjectHideFlags: 0
@@ -14803,6 +14816,7 @@ MonoBehaviour:
   - {fileID: 566183767}
   - {fileID: 1081034379}
   roomNumber: 7
+  isFree: 1
 --- !u!1 &2069341549
 GameObject:
   m_ObjectHideFlags: 0
