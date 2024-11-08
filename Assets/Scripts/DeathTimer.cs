@@ -4,28 +4,56 @@ using UnityEngine;
 
 public class DeathTimer : MonoBehaviour
 {
-    public SoundCheckManager soundCheckManager; // Reference to the SoundCheckManager
+    public SoundCheckManager soundCheckManager; // Ссылка на SoundCheckManager
+    public float timeLimit = 5f; // Лимит времени для проверки отметки
+    public float timer; // Таймер
+    public Animator animatronicAnim; // Аниматор для аниматроника
+    private bool phase2Triggered = false;
+    private bool phase3Triggered = false;
+    private bool phase4Triggered = false;
+    private bool jumpscareTriggered = false;
     public SoundCheck soundCheck;
-    public float timeLimit = 5f; // Time limit to check for the correct checkmark
-    [HideInInspector] public float timer; // Timer variable
-    bool CanTimer;
+    public List L;
 
     void Update()
     {
+
         if (soundCheckManager.soundCheck.IsCheckmarkPlaced(soundCheckManager.currentSoundIndex - 2))
         {
-            timer = 0; // Reset the timer
-            CanTimer = false;
             AfterCheckMark();
         }
 
-        if (soundCheckManager.List.activeSelf && CanTimer) // If the continue button is active
+        if (soundCheckManager.List.activeSelf && !soundCheckManager.soundCheck.IsCheckmarkPlaced(soundCheckManager.currentSoundIndex - 2)) // Таймер работает только если список активен
         {
-            timer += Time.deltaTime; // Increment the timer
+            timer += Time.deltaTime; // Увеличиваем таймер
 
-            if (timer >= timeLimit) // If time runs out
+            // Проверка на 30% от лимита времени
+            if (!phase2Triggered && timer >= timeLimit * 0.3f)
             {
-                Debug.Log("Jumpscare");
+                animatronicAnim.SetTrigger("s2"); // Запускаем анимацию фазы 2
+                phase2Triggered = true;
+            }
+
+            // Проверка на 60% от лимита времени
+            if (!phase3Triggered && timer >= timeLimit * 0.6f)
+            {
+                animatronicAnim.SetTrigger("s3"); // Запускаем анимацию фазы 3
+                phase3Triggered = true;
+            }
+
+            // Проверка на 90% от лимита времени
+            if (!phase4Triggered && timer >= timeLimit * 0.9f)
+            {
+                animatronicAnim.SetTrigger("s4"); // Запускаем анимацию фазы 4
+                phase4Triggered = true;
+            }
+
+            // Проверка на 100% от лимита времени
+            if (!jumpscareTriggered && timer >= timeLimit)
+            {
+                L.ListDown();
+                animatronicAnim.SetTrigger("Jumpscare"); // Запускаем jumpscare
+                jumpscareTriggered = true;
             }
         }
     }
@@ -40,6 +68,8 @@ public class DeathTimer : MonoBehaviour
             soundCheckManager.PlayNextSound();
             soundCheck.audioSource.Pause();
             soundCheckManager.isPaused = true;
+            soundCheckManager.pauseButton.SetActive(false);
+            soundCheckManager.continueButton.SetActive(true);
         }
 
         
