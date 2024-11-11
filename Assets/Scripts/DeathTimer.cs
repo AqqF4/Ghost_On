@@ -8,10 +8,10 @@ public class DeathTimer : MonoBehaviour
     public float timeLimit = 5f; // Лимит времени для проверки отметки
     public float timer; // Таймер
     public Animator animatronicAnim; // Аниматор для аниматроника
-    private bool phase2Triggered = false;
-    private bool phase3Triggered = false;
-    private bool phase4Triggered = false;
-    private bool jumpscareTriggered = false;
+    public bool phase2Triggered = false;
+    public bool phase3Triggered = false;
+    public bool phase4Triggered = false;
+    public bool jumpscareTriggered = false;
     public SoundCheck soundCheck;
     public List L;
 

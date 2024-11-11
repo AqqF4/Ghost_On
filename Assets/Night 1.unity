@@ -2494,13 +2494,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canSpawnRooms:
-  - {fileID: 1082866040}
-  - {fileID: 1182474732}
-  - {fileID: 1591829287}
-  - {fileID: 911098362}
-  - {fileID: 1497987854}
-  - {fileID: 566183766}
-  - {fileID: 1604978190}
+  - {fileID: 1082866039}
+  - {fileID: 1591829286}
+  - {fileID: 1497987853}
   animatronic: {fileID: 2121670856}
 --- !u!4 &323732360
 Transform:
@@ -14989,7 +14985,7 @@ Transform:
   m_GameObject: {fileID: 2121670856}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.386, y: -0.708, z: 0}
+  m_LocalPosition: {x: -1.386, y: 0.542, z: 0}
   m_LocalScale: {x: 0.46, y: 0.408825, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

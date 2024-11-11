@@ -5,23 +5,27 @@ using UnityEngine;
 public class SoundCheckManager : MonoBehaviour
 {
     public SoundCheck soundCheck; // Ссылка на скрипт SoundCheck
-    public GameObject continueButton, listButton, List; // Кнопка продолжения
-
+    public GameObject continueButton, listButton, List, shockButton, dislistButton; // Кнопка продолжения
     public GameObject pauseButton; // Кнопка паузы
     public int currentSoundIndex = 0; // Индекс текущего звука
     public bool isPaused = false; // Флаг состояния паузы
+    public bool isRespawning = false; // Флаг состояния респауна
 
     void Update()
     {
+        // Если идет респаун, не выполняем обновления кнопок
+        if (isRespawning)
+            return;
+
         // Проверка завершения текущего звука
         if (!isPaused && !soundCheck.audioSource.isPlaying)
         {
             // Если HasCheckMark для текущего звука равно true, показать кнопку продолжения
             if (currentSoundIndex < (soundCheck.soundClips.Length + 1) && soundCheck.HasCheckMark[currentSoundIndex - 1])
             {
-                if(soundCheck.HasCheckMark[currentSoundIndex - 1])
+                if (soundCheck.HasCheckMark[currentSoundIndex - 1])
                 {
-                    if(!GameObject.FindGameObjectWithTag("ListButton"))
+                    if (!GameObject.FindGameObjectWithTag("ListButton"))
                     {
                         listButton.SetActive(true);
                     }
@@ -85,5 +89,21 @@ public class SoundCheckManager : MonoBehaviour
     public bool IsPaused()
     {
         return isPaused;
+    }
+
+    // Метод для включения режима респауна
+    public void StartRespawn()
+    {
+        isRespawning = true;
+        dislistButton.SetActive(false);
+        shockButton.SetActive(false);
+    }
+
+    // Метод для завершения режима респауна
+    public void EndRespawn()
+    {
+        isRespawning = false;
+        dislistButton.SetActive(false); // Включаем только если нужно
+        shockButton.SetActive(true); // Включаем только если нужно
     }
 }
