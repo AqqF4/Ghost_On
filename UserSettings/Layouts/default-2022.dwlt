@@ -175,7 +175,7 @@ MonoBehaviour:
   - {fileID: 15}
   - {fileID: 16}
   m_Selected: 0
-  m_LastSelected: 2
+  m_LastSelected: 1
 --- !u!114 &8
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -712,9 +712,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: -1.5253217, y: -0.08891073, z: 1226.3599}
+    m_Target: {x: -3.3063576, y: 0.1665218, z: 1338.7806}
     speed: 2
-    m_Value: {x: -1.5253217, y: -0.08891073, z: 1226.3599}
+    m_Value: {x: -3.3063576, y: 0.1665218, z: 1338.7806}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -764,9 +764,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-    m_Target: 5.3390913
+    m_Target: 5.7950735
     speed: 2
-    m_Value: 5.3390913
+    m_Value: 5.7950735
   m_Ortho:
     m_Target: 1
     speed: 2
@@ -1057,14 +1057,14 @@ MonoBehaviour:
       e31: 0
       e32: 0
       e33: 1
-    - e00: 0.5408254
+    - e00: 0.52526313
       e01: 0
       e02: 0
-      e03: 6.010895
+      e03: -11.263153
       e10: 0
-      e11: 0.5408254
+      e11: 0.52526313
       e12: 0
-      e13: 136.29507
+      e13: 141.85263
       e20: 0
       e21: 0
       e22: 1
@@ -1137,14 +1137,14 @@ MonoBehaviour:
       e31: 0
       e32: 0
       e33: 1
-    - e00: 0.72935253
+    - e00: 0.5428884
       e01: 0
       e02: 0
-      e03: 36.75708
+      e03: -21.707825
       e10: 0
-      e11: 0.72935253
+      e11: 0.5428884
       e12: 0
-      e13: 155.49767
+      e13: 102.19778
       e20: 0
       e21: 0
       e22: 1
@@ -1153,14 +1153,14 @@ MonoBehaviour:
       e31: 0
       e32: 0
       e33: 1
-    - e00: 1
+    - e00: 0.65339357
       e01: 0
       e02: 0
-      e03: 0
+      e03: -62.121033
       e10: 0
-      e11: 1
+      e11: 0.65339357
       e12: 0
-      e13: 0
+      e13: 80.1485
       e20: 0
       e21: 0
       e22: 1
@@ -1169,14 +1169,14 @@ MonoBehaviour:
       e31: 0
       e32: 0
       e33: 1
-    - e00: 1
+    - e00: 0.83166665
       e01: 0
       e02: 0
-      e03: 34.5
+      e03: 139.75
       e10: 0
-      e11: 1
+      e11: 0.83166665
       e12: 0
-      e13: 136.5
+      e13: 198.975
       e20: 0
       e21: 0
       e22: 1
@@ -1271,7 +1271,7 @@ MonoBehaviour:
     m_OverlaysVisible: 1
   m_LockTracker:
     m_IsLocked: 0
-  m_LastSelectedObjectID: 32046
+  m_LastSelectedObjectID: 42032
 --- !u!114 &18
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -1526,7 +1526,7 @@ MonoBehaviour:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: b4cbffffe2d4ffffb6e0ffff9ee9ffffeceffffff0faffff306500006c6a0000986d00000a6e00004a6e0000526e0000626e0000be6e000006730000887300002e7d0000987d0000be7d0000
+      m_ExpandedIDs: f0faffffb464000036650000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -1595,7 +1595,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets
+    - Assets/Scripts
     m_Globs: []
     m_OriginalText: 
     m_ImportLogFlags: 0
@@ -1603,16 +1603,16 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets
+  - Assets/Scripts
   m_LastFoldersGridSize: -1
   m_LastProjectPath: D:\Github\Ghost_On
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 0e680000
-    m_LastClickedID: 26638
-    m_ExpandedIDs: 000000000e680000106800001268000000ca9a3b
+    m_SelectedIDs: 50680000
+    m_LastClickedID: 26704
+    m_ExpandedIDs: 0000000032680000346800003668000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1640,7 +1640,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 000000000e6800001068000012680000
+    m_ExpandedIDs: 00000000326800003468000036680000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 

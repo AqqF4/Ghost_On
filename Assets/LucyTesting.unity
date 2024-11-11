@@ -806,6 +806,7 @@ GameObject:
   - component: {fileID: 215488775}
   - component: {fileID: 215488774}
   - component: {fileID: 215488776}
+  - component: {fileID: 215488777}
   m_Layer: 0
   m_Name: Clone1
   m_TagString: Untagged
@@ -902,6 +903,27 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &215488777
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 215488773}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0859a4917c3b9054b9bfe2f131b60241, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PlayButton: {fileID: 615255456}
+  StopButton: {fileID: 786348402}
+  ShockerButton: {fileID: 799212109}
+  JumpSound: {fileID: 1830324913}
+  dt: {fileID: 1421843654}
+  sc: {fileID: 1421843656}
+  scm: {fileID: 1421843655}
+  e: {fileID: 1202899076}
+  respawningTime: 3
 --- !u!1 &305663088
 GameObject:
   m_ObjectHideFlags: 0
@@ -2550,6 +2572,7 @@ MonoBehaviour:
   sc: {fileID: 1421843656}
   PlayButton: {fileID: 615255456}
   StopButton: {fileID: 786348402}
+  ShockButton: {fileID: 799212109}
   dt: {fileID: 1421843654}
 --- !u!1 &1220881145
 GameObject:
@@ -3309,7 +3332,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   soundCheckManager: {fileID: 1421843655}
-  timeLimit: 3
+  timeLimit: 7
   timer: 0
   animatronicAnim: {fileID: 215488776}
   phase2Triggered: 0
@@ -3334,9 +3357,12 @@ MonoBehaviour:
   continueButton: {fileID: 615255456}
   listButton: {fileID: 208854581}
   List: {fileID: 118848953}
+  shockButton: {fileID: 799212109}
+  dislistButton: {fileID: 408751096}
   pauseButton: {fileID: 786348402}
   currentSoundIndex: 0
   isPaused: 1
+  isRespawning: 0
 --- !u!114 &1421843656
 MonoBehaviour:
   m_ObjectHideFlags: 0

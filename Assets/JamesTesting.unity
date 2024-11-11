@@ -1033,11 +1033,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shockCounter: 3
+  isShoking: 0
   shockAnim: {fileID: 282819375}
   sc: {fileID: 1421843656}
+  scm: {fileID: 0}
   PlayButton: {fileID: 615255456}
   StopButton: {fileID: 786348402}
   ShockButton: {fileID: 799212109}
+  ListButton: {fileID: 208854581}
   dt: {fileID: 1421843654}
 --- !u!95 &282819375
 Animator:
@@ -1943,6 +1946,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1421843655}
+        m_TargetAssemblyTypeName: SoundCheckManager, Assembly-CSharp
+        m_MethodName: OnContinueButtonClicked
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &615255459
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2291,6 +2306,18 @@ MonoBehaviour:
       - m_Target: {fileID: 1421843656}
         m_TargetAssemblyTypeName: SoundCheck, Assembly-CSharp
         m_MethodName: PauseSound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1421843655}
+        m_TargetAssemblyTypeName: SoundCheckManager, Assembly-CSharp
+        m_MethodName: OnPauseButtonClicked
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3228,7 +3255,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   soundCheckManager: {fileID: 1421843655}
-  timeLimit: 5
+  timeLimit: 10
   timer: 0
   animatronicAnim: {fileID: 215488776}
   phase2Triggered: 0
@@ -3258,6 +3285,7 @@ MonoBehaviour:
   pauseButton: {fileID: 786348402}
   currentSoundIndex: 0
   isPaused: 1
+  e: {fileID: 282819374}
   isRespawning: 0
 --- !u!114 &1421843656
 MonoBehaviour:

@@ -9,10 +9,29 @@ public class SoundCheckManager : MonoBehaviour
     public GameObject pauseButton; // Кнопка паузы
     public int currentSoundIndex = 0; // Индекс текущего звука
     public bool isPaused = false; // Флаг состояния паузы
+    public Electricity e;
     public bool isRespawning = false; // Флаг состояния респауна
 
     void Update()
     {
+        if(shockButton.activeSelf)
+        {
+            if(!pauseButton.activeSelf)
+            {
+                continueButton.SetActive(true);
+            }
+            else
+            {
+                pauseButton.SetActive(true);
+            }
+            
+        }
+        else
+        {
+            continueButton.SetActive(false);
+            pauseButton.SetActive(false);
+        }
+
         // Если идет респаун, не выполняем обновления кнопок
         if (isRespawning)
             return;
@@ -27,9 +46,13 @@ public class SoundCheckManager : MonoBehaviour
                 {
                     if (!GameObject.FindGameObjectWithTag("ListButton"))
                     {
-                        listButton.SetActive(true);
+                        if(!e.isShoking)
+                        {
+                            listButton.SetActive(true);
+                        }
                     }
                     pauseButton.SetActive(false);
+
                 }
                 else
                 {
