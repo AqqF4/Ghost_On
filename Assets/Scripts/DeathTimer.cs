@@ -18,10 +18,38 @@ public class DeathTimer : MonoBehaviour
     void Update()
     {
 
-        if (soundCheckManager.soundCheck.IsCheckmarkPlaced(soundCheckManager.currentSoundIndex - 2))
+        if(soundCheckManager.soundCheck.IsCheckmarkPlaced(soundCheckManager.currentSoundIndex - 2))
         {
             AfterCheckMark();
         }
+
+        if(soundCheckManager.soundCheck.IsCheckmarkPlaced(soundCheckManager.currentSoundIndex - 1))
+        {
+            L.ListDown();
+            animatronicAnim.SetTrigger("Jumpscare"); // Запускаем jumpscare
+            jumpscareTriggered = true;
+            Debug.Log("Activated Jumpscare, because of incorrect checkmark");
+        }
+
+        if(soundCheckManager.soundCheck.IsCheckmarkPlaced(soundCheckManager.currentSoundIndex))
+        {
+            L.ListDown();
+            animatronicAnim.SetTrigger("Jumpscare"); // Запускаем jumpscare
+            jumpscareTriggered = true;
+            Debug.Log("Activated Jumpscare, because of incorrect checkmark");
+        }
+
+        if(soundCheckManager.soundCheck.IsCheckmarkPlaced(soundCheckManager.currentSoundIndex + 1))
+        {
+            L.ListDown();
+            animatronicAnim.SetTrigger("Jumpscare"); // Запускаем jumpscare
+            jumpscareTriggered = true;
+            Debug.Log("Activated Jumpscare, because of incorrect checkmark");
+        }
+
+        
+
+
 
         if (soundCheckManager.List.activeSelf && !soundCheckManager.soundCheck.IsCheckmarkPlaced(soundCheckManager.currentSoundIndex - 2)) // Таймер работает только если список активен
         {
@@ -54,6 +82,7 @@ public class DeathTimer : MonoBehaviour
                 L.ListDown();
                 animatronicAnim.SetTrigger("Jumpscare"); // Запускаем jumpscare
                 jumpscareTriggered = true;
+                Debug.Log("Activated Jumpscare, because of time limit");
             }
         }
     }

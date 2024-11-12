@@ -936,6 +936,7 @@ MonoBehaviour:
   scm: {fileID: 1421843655}
   e: {fileID: 282819374}
   respawningTime: 3
+  anim: {fileID: 215488776}
 --- !u!1 &282819370
 GameObject:
   m_ObjectHideFlags: 0

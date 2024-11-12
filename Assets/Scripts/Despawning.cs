@@ -10,6 +10,16 @@ public class Despawning : MonoBehaviour
     public SoundCheckManager scm;
     public Electricity e;
     public float respawningTime;
+    public Animator anim;
+    public void ResetAnimation()
+    {
+        anim.ResetTrigger("Jumpscare");
+        foreach(GameObject checkmark in sc.checkmarks)
+        {
+            checkmark.SetActive(false);
+        }
+        Debug.Log("Reseted Jumpscare Animation Trigger");
+    }
 
     public IEnumerator Respawn()
     {
@@ -36,6 +46,7 @@ public class Despawning : MonoBehaviour
 
     public void respawningEverything() 
     {
+
         // Сбрасываем аудио на первый клип и индекс звука
         scm.currentSoundIndex = 0;
         sc.audioSource.clip = sc.soundClips[0];
