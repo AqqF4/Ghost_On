@@ -757,6 +757,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: 799212109}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &208854584
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -924,6 +936,7 @@ MonoBehaviour:
   scm: {fileID: 1421843655}
   e: {fileID: 1202899076}
   respawningTime: 3
+  anim: {fileID: 215488776}
 --- !u!1 &305663088
 GameObject:
   m_ObjectHideFlags: 0
@@ -1425,6 +1438,18 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 208854581}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 799212109}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
         m_Mode: 6
@@ -2568,11 +2593,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shockCounter: 3
+  isShoking: 0
   shockAnim: {fileID: 1202899075}
   sc: {fileID: 1421843656}
+  scm: {fileID: 1421843655}
   PlayButton: {fileID: 615255456}
   StopButton: {fileID: 786348402}
   ShockButton: {fileID: 799212109}
+  ListButton: {fileID: 208854581}
   dt: {fileID: 1421843654}
 --- !u!1 &1220881145
 GameObject:
@@ -3362,6 +3390,7 @@ MonoBehaviour:
   pauseButton: {fileID: 786348402}
   currentSoundIndex: 0
   isPaused: 1
+  e: {fileID: 1202899076}
   isRespawning: 0
 --- !u!114 &1421843656
 MonoBehaviour:
