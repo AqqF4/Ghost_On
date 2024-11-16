@@ -92,6 +92,12 @@ public class DeathTimer : MonoBehaviour
         
         if(!soundCheckManager.List.activeSelf)
         {
+
+            if(soundCheckManager.currentSoundIndex == 5 && soundCheck.HasCheckMark[soundCheckManager.currentSoundIndex - 1])
+            {
+                AfterChecks();
+                soundCheckManager.StartRespawn();
+            }
             soundCheckManager.listButton.SetActive(false);
             soundCheckManager.pauseButton.SetActive(true);
             soundCheckManager.PlayNextSound();
@@ -102,6 +108,12 @@ public class DeathTimer : MonoBehaviour
         }
 
         
+    }
+
+    public void AfterChecks()
+    {
+        Debug.Log("Все звуки были проиграны.");
+        soundCheckManager.e.SuccesAnimation();
     }
 
 }

@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 public class Electricity : MonoBehaviour
 {
     public int shockCounter;
@@ -11,6 +11,20 @@ public class Electricity : MonoBehaviour
     public SoundCheckManager scm;
     public GameObject PlayButton, StopButton, ShockButton, ListButton;
     public DeathTimer dt;
+    public int mainSceneId;
+
+    public void SuccesAnimation()
+    {
+        shockAnim.SetTrigger("Succes");
+        ListButton.SetActive(false);
+        ShockButton.SetActive(false);
+        StopButton.SetActive(false);
+    }
+
+    public void LoadmainScene()
+    {
+        SceneManager.LoadScene(mainSceneId);
+    }
 
 
     public void Shocker()

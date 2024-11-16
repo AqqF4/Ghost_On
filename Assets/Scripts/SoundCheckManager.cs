@@ -42,6 +42,7 @@ public class SoundCheckManager : MonoBehaviour
             // Если HasCheckMark для текущего звука равно true, показать кнопку продолжения
             if (currentSoundIndex < (soundCheck.soundClips.Length + 1) && soundCheck.HasCheckMark[currentSoundIndex - 1])
             {
+
                 if (soundCheck.HasCheckMark[currentSoundIndex - 1])
                 {
                     if (!GameObject.FindGameObjectWithTag("ListButton"))
@@ -102,10 +103,6 @@ public class SoundCheckManager : MonoBehaviour
             }
             
             currentSoundIndex++;
-        }
-        else
-        {
-            Debug.Log("Все звуки были проиграны.");
         }
     }
 
