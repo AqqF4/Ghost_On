@@ -14,7 +14,7 @@ public class NightSaver : MonoBehaviour
     // Увеличить номер ночи
     public void IncrementNight()
     {
-        currentNight++;
+        currentNight += 1;
         SaveNight();
     }
 
@@ -23,7 +23,7 @@ public class NightSaver : MonoBehaviour
     {
         if (currentNight > 0) // Номер ночи не должен быть отрицательным
         {
-            currentNight--;
+            currentNight -= 1;
             SaveNight();
         }
     }
