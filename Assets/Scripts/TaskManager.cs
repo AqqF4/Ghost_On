@@ -8,6 +8,7 @@ public class TaskManager : MonoBehaviour
     public int CompletedTasks = 0;  // Счётчик выполненных заданий
     public int NeededTasks;         // Необходимое количество заданий для завершения всех
     public int EndingScene;
+    public NightSaver ns;
 
     public bool AllTasksCompleted = false;  // Флаг завершения всех заданий
 
@@ -32,6 +33,7 @@ public class TaskManager : MonoBehaviour
     {
         if(AllTasksCompleted)
         {
+            ns.IncrementNight();
             SceneManager.LoadScene(EndingScene);
         }
     }

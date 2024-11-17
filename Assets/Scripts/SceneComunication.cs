@@ -3,14 +3,14 @@ using UnityEngine.SceneManagement;
 
 public class SceneComunication : MonoBehaviour
 {
-    public int sceneId; // Сцена по умолчанию
+    public int sceneId; // ID сцены по умолчанию
     public int SecondNightSceneID; // ID второй ночи
     public int ThirdNightSceneID; // ID третьей ночи
     public int FourthNightSceneID; // ID четвертой ночи
     public int FifthNightSceneID; // ID пятой ночи
     public int FinalNightSceneID; // ID финальной сцены
 
-    public float Money; // Сумма для добавления к бюджету на сцене пиццерии
+    public int Money; // Сумма для добавления к бюджету на сцене пиццерии
 
     private const string AdditionalMoneyKey = "AdditionalMoney"; // Ключ для сохранения добавочной суммы
     private NightSaver nightSaver; // Ссылка на NightSaver
@@ -25,9 +25,21 @@ public class SceneComunication : MonoBehaviour
 
     public void TransformB_Teleportation()
     {
-        // Сохранение суммы, которую нужно добавить к бюджету, в PlayerPrefs
-        PlayerPrefs.SetFloat(AdditionalMoneyKey, Money);
+        // Сохраняем значение Money в PlayerPrefs
+        PlayerPrefs.SetInt(AdditionalMoneyKey, 50);
         PlayerPrefs.Save();
+
+        // Перемещаемся на сцену
+        SceneManager.LoadScene(sceneId);
+    }
+
+    public void TransformA_Teleportation()
+    {
+        // Сохраняем значение Money в PlayerPrefs
+        PlayerPrefs.SetInt(AdditionalMoneyKey, 100);
+        PlayerPrefs.Save();
+
+        // Перемещаемся на сцену
         SceneManager.LoadScene(sceneId);
     }
 

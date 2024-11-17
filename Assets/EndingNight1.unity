@@ -438,6 +438,7 @@ GameObject:
   - component: {fileID: 1904318641}
   - component: {fileID: 1904318643}
   - component: {fileID: 1904318644}
+  - component: {fileID: 1904318645}
   m_Layer: 0
   m_Name: Square
   m_TagString: Untagged
@@ -547,7 +548,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneId: 2
+  SecondNightSceneID: 0
+  ThirdNightSceneID: 0
+  FourthNightSceneID: 0
+  FifthNightSceneID: 0
+  FinalNightSceneID: 0
   Money: 50
+--- !u!114 &1904318645
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1904318640}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f1949515500dd7438887bfcd93a6e0b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

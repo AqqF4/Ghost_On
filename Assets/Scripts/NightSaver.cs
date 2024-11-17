@@ -11,6 +11,15 @@ public class NightSaver : MonoBehaviour
         currentNight = PlayerPrefs.GetInt(NightKey, 0);
     }
 
+    void Update()
+    {
+        if(Input.GetKey(KeyCode.R))
+        {
+            currentNight = 0;
+            SaveNight();
+        }
+    }
+
     // Увеличить номер ночи
     public void IncrementNight()
     {

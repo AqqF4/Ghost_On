@@ -2171,7 +2171,7 @@ MonoBehaviour:
   currentPrice: 15
   budget: 15
   startingBudget: 0
-  additionSpeed: 1
+  additionSpeed: 25
 --- !u!114 &1666414885
 MonoBehaviour:
   m_ObjectHideFlags: 0
