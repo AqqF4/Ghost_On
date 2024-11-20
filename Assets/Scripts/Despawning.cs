@@ -14,6 +14,7 @@ public class Despawning : MonoBehaviour
     public void ResetAnimation()
     {
         anim.ResetTrigger("Jumpscare");
+        scm.StartRespawn();
         foreach(GameObject checkmark in sc.checkmarks)
         {
             checkmark.SetActive(false);
@@ -29,7 +30,7 @@ public class Despawning : MonoBehaviour
         // Отключаем все кнопки во время деспауна
         PlayButton.SetActive(false);
         StopButton.SetActive(false);
-        scm.StartRespawn();
+        
         ShockerButton.SetActive(false);
 
         // Ждём время респауна

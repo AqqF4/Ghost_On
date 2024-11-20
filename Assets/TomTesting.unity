@@ -817,8 +817,8 @@ GameObject:
   m_Component:
   - component: {fileID: 215488775}
   - component: {fileID: 215488774}
-  - component: {fileID: 215488776}
   - component: {fileID: 215488777}
+  - component: {fileID: 215488778}
   m_Layer: 0
   m_Name: Clone1
   m_TagString: Untagged
@@ -867,7 +867,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: -1
-  m_Sprite: {fileID: 21300000, guid: 5fe65fe5f9dedf2428db3ecab1d6a60d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: aee05bc4984a47a45a52a0a20c7c9532, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -894,27 +894,6 @@ Transform:
   - {fileID: 1830324914}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!95 &215488776
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 215488773}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 0fac33a78a8aef244ab880ae1f1a90b1, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &215488777
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -936,7 +915,28 @@ MonoBehaviour:
   scm: {fileID: 1421843655}
   e: {fileID: 282819374}
   respawningTime: 3
-  anim: {fileID: 215488776}
+  anim: {fileID: 215488778}
+--- !u!95 &215488778
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 215488773}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 9a269c5bac3d0884a90465bec4efb467, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &282819370
 GameObject:
   m_ObjectHideFlags: 0
@@ -3412,7 +3412,7 @@ MonoBehaviour:
   soundCheckManager: {fileID: 1421843655}
   timeLimit: 10
   timer: 0
-  animatronicAnim: {fileID: 215488776}
+  animatronicAnim: {fileID: 215488778}
   phase2Triggered: 0
   phase3Triggered: 0
   phase4Triggered: 0
@@ -3455,7 +3455,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   soundClips:
-  - {fileID: 8300000, guid: ce5e2187ed43d584f92bfa06e418f0c8, type: 3}
+  - {fileID: 8300000, guid: eea3754710c6ad943a5d1e2e7adaeeb9, type: 3}
   - {fileID: 8300000, guid: b5e66912bb4f2834b956098d4b1cfa51, type: 3}
   - {fileID: 8300000, guid: 3c4433e4840e1814f8193614b67bb5b1, type: 3}
   - {fileID: 8300000, guid: 03e9b5b3fe990b242807eeaf07a5b65d, type: 3}
