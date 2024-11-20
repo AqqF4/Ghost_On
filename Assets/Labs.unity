@@ -2165,7 +2165,7 @@ MonoBehaviour:
   newStatus: {fileID: 390228991}
   upgradeSoundPrefab: {fileID: 360379873911218344, guid: 1d92c0cbf0a1be6429b4fecd28c64bee, type: 3}
   upgradeButton: {fileID: 1839880115}
-  DoConsequenses: 1
+  DoConsequenses: 0
   currentUpgradeLevel: 1
   priceMultiplier: 1.3
   currentPrice: 15
@@ -2747,9 +2747,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sceneId: 3
   SecondNightSceneID: 6
+  FirstTesting: 0
   ThirdNightSceneID: 7
+  SecondTesting: 0
   FourthNightSceneID: 0
+  ThirdTesting: 0
   FifthNightSceneID: 0
+  FourthTesting: 0
   FinalNightSceneID: 0
   Money: 0
 --- !u!1 &1810322679

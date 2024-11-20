@@ -549,9 +549,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sceneId: 2
   SecondNightSceneID: 0
+  FirstTesting: 5
   ThirdNightSceneID: 0
+  SecondTesting: 8
   FourthNightSceneID: 0
+  ThirdTesting: 0
   FifthNightSceneID: 0
+  FourthTesting: 0
   FinalNightSceneID: 0
   Money: 50
 --- !u!114 &1904318645

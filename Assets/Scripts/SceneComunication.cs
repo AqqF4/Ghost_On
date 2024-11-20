@@ -4,10 +4,10 @@ using UnityEngine.SceneManagement;
 public class SceneComunication : MonoBehaviour
 {
     public int sceneId; // ID сцены по умолчанию
-    public int SecondNightSceneID; // ID второй ночи
-    public int ThirdNightSceneID; // ID третьей ночи
-    public int FourthNightSceneID; // ID четвертой ночи
-    public int FifthNightSceneID; // ID пятой ночи
+    public int SecondNightSceneID, FirstTesting; // ID второй ночи
+    public int ThirdNightSceneID, SecondTesting; // ID третьей ночи
+    public int FourthNightSceneID, ThirdTesting; // ID четвертой ночи
+    public int FifthNightSceneID, FourthTesting; // ID пятой ночи
     public int FinalNightSceneID; // ID финальной сцены
 
     public int Money; // Сумма для добавления к бюджету на сцене пиццерии
@@ -36,11 +36,35 @@ public class SceneComunication : MonoBehaviour
     public void TransformA_Teleportation()
     {
         // Сохраняем значение Money в PlayerPrefs
-        PlayerPrefs.SetInt(AdditionalMoneyKey, 100);
+        PlayerPrefs.SetInt(AdditionalMoneyKey, 150);
         PlayerPrefs.Save();
 
         // Перемещаемся на сцену
         SceneManager.LoadScene(sceneId);
+    }
+
+    public void TransformTesting()
+    {
+        // Получаем текущий номер ночи
+        int currentNight = nightSaver.GetCurrentNight();
+
+        // Логика переключения сцен
+        if (currentNight == 1)
+        {
+            SceneManager.LoadScene(FirstTesting);
+        }
+        else if (currentNight == 2)
+        {
+            SceneManager.LoadScene(SecondTesting);
+        }
+        else if (currentNight == 3)
+        {
+            SceneManager.LoadScene(ThirdTesting);
+        }
+        else if (currentNight == 4)
+        {
+            SceneManager.LoadScene(FourthTesting);
+        }
     }
 
     public void LoadPublicScene()

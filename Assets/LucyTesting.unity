@@ -2616,6 +2616,7 @@ GameObject:
   - component: {fileID: 1202899073}
   - component: {fileID: 1202899075}
   - component: {fileID: 1202899076}
+  - component: {fileID: 1202899077}
   m_Layer: 5
   m_Name: Shocker
   m_TagString: Untagged
@@ -2732,6 +2733,29 @@ MonoBehaviour:
   ListButton: {fileID: 208854581}
   dt: {fileID: 1421843654}
   mainSceneId: 0
+--- !u!114 &1202899077
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1202899071}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69b0a3114f527aa49a5d653cdb796821, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneId: 2
+  SecondNightSceneID: 0
+  FirstTesting: 0
+  ThirdNightSceneID: 0
+  SecondTesting: 0
+  FourthNightSceneID: 0
+  ThirdTesting: 0
+  FifthNightSceneID: 0
+  FourthTesting: 0
+  FinalNightSceneID: 0
+  Money: 0
 --- !u!1 &1220881145
 GameObject:
   m_ObjectHideFlags: 0

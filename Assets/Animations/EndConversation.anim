@@ -190,7 +190,7 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_Events:
   - time: 13.75
-    functionName: LoadmainScene
+    functionName: TransformA_Teleportation
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
